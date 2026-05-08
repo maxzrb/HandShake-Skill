@@ -14,7 +14,7 @@ skills/
 Current release:
 
 ```text
-1.1.2
+1.2.0
 ```
 
 ## What It Provides
@@ -22,6 +22,7 @@ Current release:
 - A reusable Codex skill named HandShake.
 - A project initialization script.
 - Repository-local handoff templates.
+- Device and local environment continuity checks.
 - Python project workflow notes.
 - Academic writing workflow notes.
 - Versioned release rules for management workflow skills.

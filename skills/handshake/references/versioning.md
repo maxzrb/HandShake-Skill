@@ -2,7 +2,25 @@
 
 ## Current Release
 
-Version: 1.1.2
+Version: 1.2.0
+Date: 2026-05-08
+Status: device/environment continuity release
+
+Changes:
+
+- Added startup guidance to identify the current device or local environment signature.
+- Added rules for comparing the current device with the latest recorded device before reusing local setup assumptions.
+- Added template fields for device identity, same-device comparison, and environment reuse status.
+- Required handoff records to note whether local paths, virtual environments, dependencies, and command results may be reused.
+
+Compatibility:
+
+- Backward compatible with `1.1.2`.
+
+## Previous Releases
+
+### 1.1.2
+
 Date: 2026-05-08
 Status: repository rename documentation release
 
@@ -13,8 +31,6 @@ Changes:
 Compatibility:
 
 - Backward compatible with `1.1.1`.
-
-## Previous Releases
 
 ### 1.1.1
 

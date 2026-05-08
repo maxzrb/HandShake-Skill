@@ -53,10 +53,12 @@ Recommended fields:
 - Last updated
 - Current objective
 - Current state
+- Current device/environment
 - Active work
 - Recently completed
 - Current risks
 - Synchronization state
+- Environment reuse status
 - Next recommended step
 
 ## `docs/codex/HANDOFF.md`
@@ -68,6 +70,9 @@ Purpose:
 Recommended fields:
 
 - Date
+- Current device
+- Previous device comparison
+- Environment reuse guidance
 - Session summary
 - Work completed
 - Commands run
@@ -108,12 +113,16 @@ Use checkbox lists and include blockers for active tasks.
 Purpose:
 
 - Portable setup instructions and local-only notes.
+- Device identity and environment continuity records.
 
 Rules:
 
 - Do not record secret values.
 - Prefer relative paths.
 - Mark machine-specific paths as local.
+- Record whether the current device matches the previous device.
+- Record whether local paths, virtual environments, dependencies, and command results may be reused.
+- If device identity is unknown or different, require local environment verification before command execution.
 
 ## `docs/codex/PYTHON.md`
 

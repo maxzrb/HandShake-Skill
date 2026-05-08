@@ -2,7 +2,8 @@
 
 Last updated: YYYY-MM-DD HH:MM
 Updated by: Codex or user
-Device/session: optional
+Device/session: optional stable label
+Environment reuse: same-device reusable / recheck required / unknown
 
 ## Current Objective
 
@@ -36,6 +37,9 @@ Summarize what is currently true about the project.
 - Last known commit:
 - Uncommitted changes:
 - Cross-device concerns:
+- Last recorded device:
+- Current device comparison:
+- Local environment reuse:
 
 ## Next Recommended Step
 

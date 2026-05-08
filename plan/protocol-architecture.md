@@ -83,11 +83,13 @@ Only `INDEX.md`, `STATUS.md`, and `HANDOFF.md` are required for a minimal projec
 4. Find `docs/codex/INDEX.md`.
 5. If `INDEX.md` exists, follow its links to status, handoff, decisions, todos, and environment files.
 6. If `INDEX.md` does not exist, search for obvious project state files before falling back to general inspection.
-7. Check whether the workspace is a Git repository.
-8. If Git exists, inspect branch, last commit, and working tree status.
-9. Detect applicable domain files such as `PYTHON.md` or `PAPER.md`.
-10. Detect whether another skill or project workflow has explicit management rules.
-11. Summarize orientation sources before substantial edits.
+7. Identify the current device/environment from practical evidence such as hostname, OS, shell, workspace root, interpreter, virtual environment, and package manager.
+8. Compare the current device with the latest recorded device and decide whether local environment assumptions can be reused.
+9. Check whether the workspace is a Git repository.
+10. If Git exists, inspect branch, last commit, and working tree status.
+11. Detect applicable domain files such as `PYTHON.md` or `PAPER.md`.
+12. Detect whether another skill or project workflow has explicit management rules.
+13. Summarize orientation sources, device comparison, and environment reuse status before substantial edits.
 
 ## Shutdown Algorithm
 
@@ -97,10 +99,12 @@ Only `INDEX.md`, `STATUS.md`, and `HANDOFF.md` are required for a minimal projec
 4. Record decisions made.
 5. Record blockers and open questions.
 6. Record next recommended action.
-7. Update `STATUS.md` if current project state changed.
-8. Update `HANDOFF.md` with latest handoff.
-9. Update `TODO.md` if tasks changed.
-10. If Git exists, report whether changes are committed, staged, unstaged, or untracked.
+7. Record current device identity and whether local environment assumptions may be reused.
+8. Update `STATUS.md` if current project state changed.
+9. Update `HANDOFF.md` with latest handoff.
+10. Update `ENVIRONMENT.md` if device identity or local setup changed.
+11. Update `TODO.md` if tasks changed.
+12. If Git exists, report whether changes are committed, staged, unstaged, or untracked.
 
 ## Conflict Rules
 
@@ -123,6 +127,8 @@ Git state is authoritative for code history and file changes. Status files are a
 ### Local Environment vs. Repository Records
 
 Machine-local environment notes may override setup commands for that PC, but they must be clearly marked local. Do not make local-only paths the only reproducible setup path.
+
+Machine-local notes from a previous PC must not be treated as current until the current device is matched or the local environment is rechecked.
 
 ## Missing File Behavior
 

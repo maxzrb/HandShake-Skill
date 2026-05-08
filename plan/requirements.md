@@ -11,6 +11,7 @@ The protocol must make each new Codex session reliably discover:
 - Active tasks.
 - Recent decisions.
 - Local environment constraints.
+- Whether the current device matches the previous device and whether local environment assumptions can be reused.
 - Handoff notes from the previous session.
 
 ## Target Users
@@ -61,6 +62,7 @@ The protocol must support:
 - If Git does not exist, the protocol must still work by reading and updating status files.
 - Status files are intended to be committed unless they contain sensitive or local-only data.
 - Local machine details may be recorded only when they help reproduce work; absolute paths should be avoided or clearly marked as local.
+- Local machine details from a previous device must be treated as stale until the current device is matched or the environment is rechecked.
 - User-facing Chinese progress and version documents should be generated under `version/`, but Codex management must not depend on them.
 
 ## Initialization Requirement
@@ -96,6 +98,8 @@ At session start, Codex must:
 - Locate and read `AGENTS.md` if present.
 - Locate and read `docs/codex/INDEX.md` if present.
 - Read the current status and latest handoff records.
+- Compare the current device/environment with the latest recorded device.
+- Recheck local paths, interpreters, dependencies, and commands when the device is different or unknown.
 - Check Git state when the directory is a Git repository.
 - Identify applicable project-specific skills.
 - Report which files were used for orientation before making substantial edits.
@@ -107,6 +111,7 @@ Before ending substantial work, Codex must:
 - Update the latest handoff record.
 - Update task status and decisions when they changed.
 - Record commands run and verification results.
+- Record current device identity and environment reuse guidance.
 - Record unresolved blockers and next steps.
 - Note uncommitted changes or synchronization risks.
 

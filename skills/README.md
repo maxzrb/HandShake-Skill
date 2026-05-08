@@ -22,7 +22,7 @@ Skill is valid!
 当前版本：
 
 ```text
-1.1.2
+1.2.0
 ```
 
 它是一个自包含 skill，包含：
@@ -44,6 +44,7 @@ handshake/
 
 - 当前项目目标是什么。
 - 上一次做到哪里。
+- 当前设备和上次设备是否相同，能不能沿用本地环境。
 - 哪些文件被改过。
 - 哪些命令跑过。
 - 哪些测试通过或没跑。
@@ -249,7 +250,7 @@ python skills\handshake\scripts\init_project_handoff.py F:\my-project --all
 决策记录。记录长期有效的设计选择和原因。
 
 `docs/codex/ENVIRONMENT.md`：
-环境说明。记录安装、运行、测试命令和本地环境差异。
+环境说明。记录安装、运行、测试命令、本地环境差异、设备识别和环境是否可沿用。
 
 `docs/codex/PYTHON.md`：
 Python 项目专用说明。记录 Python 版本、依赖管理、运行命令、测试命令等。
@@ -293,7 +294,7 @@ Skill is valid!
 Current version:
 
 ```text
-1.1.2
+1.2.0
 ```
 
 The skill is self-contained:
@@ -315,6 +316,7 @@ Before work starts, Codex reads project rules and project state. Before work end
 
 - The current goal.
 - What was done last.
+- Whether the current device matches the previous device and whether local environment assumptions can be reused.
 - Which files changed.
 - Which commands were run.
 - What was verified.
@@ -517,7 +519,7 @@ Active, waiting, done, and dropped tasks.
 Durable project decisions and rationale.
 
 `docs/codex/ENVIRONMENT.md`:
-Setup, run, test commands, and local environment differences.
+Setup, run, test commands, local environment differences, device identity, and environment reuse status.
 
 `docs/codex/PYTHON.md`:
 Python-specific setup, dependency, run, test, lint, and project layout notes.

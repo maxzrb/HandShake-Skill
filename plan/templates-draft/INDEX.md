@@ -28,4 +28,5 @@ This directory stores project-local state for Codex handoff across devices and s
 - Update handoff records before ending substantial work.
 - Keep sensitive values out of repository files.
 - Prefer relative paths over absolute paths.
+- Treat local environment notes as device-scoped unless the current device matches the latest recorded device and reuse is explicitly marked safe.
 - If Git state and status records differ, report the mismatch and update records after confirming the current state.

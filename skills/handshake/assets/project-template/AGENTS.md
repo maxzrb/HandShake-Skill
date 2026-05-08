@@ -8,7 +8,9 @@ Before substantial work, Codex must:
 2. Read `docs/codex/INDEX.md`.
 3. Read the latest project status and handoff files linked from the index.
 4. Check Git status when this is a Git repository.
-5. Report the orientation files used before editing.
+5. Compare the current device/environment with the latest recorded device in `STATUS.md`, `HANDOFF.md`, or `ENVIRONMENT.md`.
+6. If the device is different or unknown, verify local paths, interpreters, virtual environments, dependencies, and commands before relying on previous environment notes.
+7. Report the orientation files used and whether the local environment appears reusable before editing.
 
 ## Required Handoff
 
@@ -19,6 +21,7 @@ At minimum, update:
 - `docs/codex/STATUS.md` when current state changes.
 - `docs/codex/HANDOFF.md` with completed work, changed files, verification, blockers, and next steps.
 - `docs/codex/TODO.md` when task status changes.
+- `docs/codex/ENVIRONMENT.md` when device identity, local paths, virtual environments, dependency state, or command availability changes.
 
 Codex should also update these Chinese user-facing summaries when meaningful progress or version information changed:
 
@@ -48,6 +51,7 @@ Do not treat `version/工作进度.md` or `version/版本迭代记录.md` as aut
 - Do not run destructive Git commands unless explicitly requested.
 - Do not store secrets in repository files.
 - Record local-only paths as local notes, not portable setup instructions.
+- Do not reuse local environment assumptions from another device until they have been verified on the current device.
 
 ## Versioning
 

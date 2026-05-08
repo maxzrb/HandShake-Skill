@@ -42,11 +42,12 @@ skills/handshake/
 Current version:
 
 ```text
-1.1.2
+1.2.0
 ```
 
 Rationale:
 
+- `1.2.0` adds device/environment continuity checks so Codex can decide whether local setup assumptions can be reused across sessions.
 - `1.1.2` updates repository URLs after the GitHub repository rename to `HandShake-Skill`.
 - The workflow is considered the first named usable release.
 - Breaking changes after `1.0.0` require a future major version bump.
@@ -77,9 +78,11 @@ Codex must:
 2. Read `docs/codex/INDEX.md` when present.
 3. Read linked status, handoff, todo, decision, and environment records.
 4. Check Git state when Git is available.
-5. Detect domain-specific records such as `PYTHON.md` and `PAPER.md`.
-6. Detect specialized skills or project workflows.
-7. Summarize orientation sources before substantial edits.
+5. Identify the current device/environment and compare it with the latest recorded device.
+6. Decide whether local setup facts can be reused or must be rechecked.
+7. Detect domain-specific records such as `PYTHON.md` and `PAPER.md`.
+8. Detect specialized skills or project workflows.
+9. Summarize orientation sources and environment reuse status before substantial edits.
 
 ### Work Execution Rules
 
@@ -102,7 +105,8 @@ Codex must:
 4. Update decisions when durable choices were made.
 5. Record commands and verification.
 6. Record blockers and next steps.
-7. Report synchronization risks.
+7. Record the current device and environment reuse guidance.
+8. Report synchronization risks.
 
 ### Initialization Script
 
