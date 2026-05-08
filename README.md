@@ -14,7 +14,7 @@ skills/
 Current release:
 
 ```text
-1.1.0
+1.1.1
 ```
 
 ## What It Provides
@@ -38,6 +38,24 @@ Preview first:
 ```text
 python skills\handshake\scripts\init_project_handoff.py <target-project> --all --dry-run
 ```
+
+## Update On Another PC
+
+On each PC, keep a clone of this repository, then mirror `skills/handshake/` into the global Codex skills directory.
+
+```text
+git clone https://github.com/maxzrb/HandShake.git
+cd HandShake
+```
+
+After this repository is updated on GitHub, update another PC with:
+
+```text
+git pull --ff-only
+robocopy skills\handshake "$env:USERPROFILE\.codex\skills\handshake" /MIR
+```
+
+`robocopy /MIR` makes the global skill folder exactly match the repository copy. Do not keep private local edits inside `$env:USERPROFILE\.codex\skills\handshake`.
 
 ## Documentation
 

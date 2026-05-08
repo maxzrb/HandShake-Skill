@@ -2,7 +2,22 @@
 
 ## Current Release
 
-Version: 1.1.0
+Version: 1.1.1
+Date: 2026-05-08
+Status: update-instructions documentation release
+
+Changes:
+
+- Added documentation for updating HandShake on other PCs after GitHub releases.
+
+Compatibility:
+
+- Backward compatible with `1.1.0`.
+
+## Previous Releases
+
+### 1.1.0
+
 Date: 2026-05-08
 Status: user-facing version document release
 
@@ -16,8 +31,6 @@ Changes:
 Compatibility:
 
 - Backward compatible with `1.0.0`.
-
-## Previous Releases
 
 ### 1.0.0
 

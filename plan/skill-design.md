@@ -42,12 +42,12 @@ skills/handshake/
 Current version:
 
 ```text
-1.1.0
+1.1.1
 ```
 
 Rationale:
 
-- `1.1.0` adds Chinese user-facing progress and version documents under `version/`.
+- `1.1.1` documents how other PCs update their global HandShake skill after GitHub releases.
 - The workflow is considered the first named usable release.
 - Breaking changes after `1.0.0` require a future major version bump.
 

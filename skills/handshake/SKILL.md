@@ -5,7 +5,7 @@ description: Use HandShake when Codex needs to continue, inspect, initialize, or
 
 # HandShake
 
-Version: 1.1.0
+Version: 1.1.1
 
 Use this skill to make Codex sessions portable across devices. The skill defines how to start from repository-local records, continue work without prior conversation history, and leave a clear handoff for the next session.
 

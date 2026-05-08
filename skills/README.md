@@ -22,7 +22,7 @@ Skill is valid!
 当前版本：
 
 ```text
-1.1.0
+1.1.1
 ```
 
 它是一个自包含 skill，包含：
@@ -110,6 +110,33 @@ C:\Users\maxzr\.codex\skills\
 ```text
 使用 HandShake 初始化这个项目的 Codex 交接记录。
 ```
+
+#### 方式 C：其他电脑如何更新全局 HandShake
+
+建议每台电脑都保留一份本 GitHub 仓库克隆，然后把仓库里的 `skills/handshake/` 同步到全局 Codex skills 目录。
+
+第一次在某台电脑配置：
+
+```text
+git clone https://github.com/maxzrb/HandShake.git
+cd HandShake
+robocopy skills\handshake "$env:USERPROFILE\.codex\skills\handshake" /MIR
+```
+
+以后当你在主电脑更新 HandShake 并推送到 GitHub 后，其他电脑这样更新：
+
+```text
+cd HandShake
+git pull --ff-only
+robocopy skills\handshake "$env:USERPROFILE\.codex\skills\handshake" /MIR
+```
+
+注意：
+
+- `git pull --ff-only` 只接受正常快进更新，能避免意外合并。
+- `robocopy /MIR` 会让全局 skill 目录完全等于仓库中的 `skills/handshake/`。
+- 不要在 `$env:USERPROFILE\.codex\skills\handshake` 里保留私人手改内容；要改就改仓库，再提交和推送。
+- 更新后开启新的 Codex 会话，通常就会读取新版 skill。
 
 ### 5. 如何初始化一个目标项目？
 
@@ -266,7 +293,7 @@ Skill is valid!
 Current version:
 
 ```text
-1.1.0
+1.1.1
 ```
 
 The skill is self-contained:
@@ -353,6 +380,33 @@ After global installation, you can use it in any project by asking:
 ```text
 Use HandShake to initialize Codex handoff records for this project.
 ```
+
+#### Option C: Update HandShake On Other PCs
+
+Recommended setup: keep one clone of this GitHub repository on each PC, then mirror `skills/handshake/` into the global Codex skills directory.
+
+First-time setup on another PC:
+
+```text
+git clone https://github.com/maxzrb/HandShake.git
+cd HandShake
+robocopy skills\handshake "$env:USERPROFILE\.codex\skills\handshake" /MIR
+```
+
+After you update HandShake on the main PC and push to GitHub, update another PC with:
+
+```text
+cd HandShake
+git pull --ff-only
+robocopy skills\handshake "$env:USERPROFILE\.codex\skills\handshake" /MIR
+```
+
+Notes:
+
+- `git pull --ff-only` avoids accidental merge commits.
+- `robocopy /MIR` makes the global skill folder exactly match `skills/handshake/` from the repository.
+- Do not keep private manual edits inside `$env:USERPROFILE\.codex\skills\handshake`; edit the repository, then commit and push.
+- Start a new Codex session after updating so the new skill version is loaded.
 
 ### 5. Initialize a target project
 
