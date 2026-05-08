@@ -14,7 +14,7 @@ skills/
 Current release:
 
 ```text
-1.1.1
+1.1.2
 ```
 
 ## What It Provides
@@ -44,7 +44,7 @@ python skills\handshake\scripts\init_project_handoff.py <target-project> --all -
 On each PC, keep a clone of this repository, then mirror `skills/handshake/` into the global Codex skills directory.
 
 ```text
-git clone https://github.com/maxzrb/HandShake.git
+git clone https://github.com/maxzrb/HandShake-Skill.git
 cd HandShake
 ```
 

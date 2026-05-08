@@ -42,12 +42,12 @@ skills/handshake/
 Current version:
 
 ```text
-1.1.1
+1.1.2
 ```
 
 Rationale:
 
-- `1.1.1` documents how other PCs update their global HandShake skill after GitHub releases.
+- `1.1.2` updates repository URLs after the GitHub repository rename to `HandShake-Skill`.
 - The workflow is considered the first named usable release.
 - Breaking changes after `1.0.0` require a future major version bump.
 

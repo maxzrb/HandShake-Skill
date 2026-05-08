@@ -22,7 +22,7 @@ Skill is valid!
 当前版本：
 
 ```text
-1.1.1
+1.1.2
 ```
 
 它是一个自包含 skill，包含：
@@ -118,7 +118,7 @@ C:\Users\maxzr\.codex\skills\
 第一次在某台电脑配置：
 
 ```text
-git clone https://github.com/maxzrb/HandShake.git
+git clone https://github.com/maxzrb/HandShake-Skill.git
 cd HandShake
 robocopy skills\handshake "$env:USERPROFILE\.codex\skills\handshake" /MIR
 ```
@@ -293,7 +293,7 @@ Skill is valid!
 Current version:
 
 ```text
-1.1.1
+1.1.2
 ```
 
 The skill is self-contained:
@@ -388,7 +388,7 @@ Recommended setup: keep one clone of this GitHub repository on each PC, then mir
 First-time setup on another PC:
 
 ```text
-git clone https://github.com/maxzrb/HandShake.git
+git clone https://github.com/maxzrb/HandShake-Skill.git
 cd HandShake
 robocopy skills\handshake "$env:USERPROFILE\.codex\skills\handshake" /MIR
 ```

@@ -2,7 +2,22 @@
 
 ## Current Release
 
-Version: 1.1.1
+Version: 1.1.2
+Date: 2026-05-08
+Status: repository rename documentation release
+
+Changes:
+
+- Updated repository URLs after the GitHub repository was renamed to `HandShake-Skill`.
+
+Compatibility:
+
+- Backward compatible with `1.1.1`.
+
+## Previous Releases
+
+### 1.1.1
+
 Date: 2026-05-08
 Status: update-instructions documentation release
 
@@ -13,8 +28,6 @@ Changes:
 Compatibility:
 
 - Backward compatible with `1.1.0`.
-
-## Previous Releases
 
 ### 1.1.0
 
