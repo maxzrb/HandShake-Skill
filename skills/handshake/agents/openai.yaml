@@ -1,0 +1,4 @@
+interface:
+  display_name: "HandShake"
+  short_description: "Initialize and maintain Codex project continuity across devices."
+  default_prompt: "Use HandShake to initialize or inspect project handoff records, continue work safely, and update status before ending."
