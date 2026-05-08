@@ -153,3 +153,31 @@ Rules:
 - Do not invent citations.
 - Mark unsupported claims as pending verification.
 - Do not mark chapters complete without source or evidence status.
+
+## `version/工作进度.md`
+
+Purpose:
+
+- Chinese user-facing progress summary.
+- Helps the user quickly understand project progress without reading Codex's internal handoff files.
+
+Rules:
+
+- Keep it readable for a non-technical or semi-technical Chinese-speaking user.
+- Summarize current goal, current progress, recent work, risks, and next recommendations.
+- Do not treat it as Codex's source of truth.
+- If it disagrees with `docs/codex/` or Git state, update it from authoritative records.
+
+## `version/版本迭代记录.md`
+
+Purpose:
+
+- Chinese user-facing version history and release/change log.
+- Helps the user understand version changes, impact, verification, and migration needs.
+
+Rules:
+
+- Prefer semantic versioning.
+- Explain changes in user-facing language.
+- Record verification and known risks.
+- Do not treat it as Codex's source of truth.

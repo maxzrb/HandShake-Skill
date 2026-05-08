@@ -1,7 +1,7 @@
 # Validation Report
 
 Date: 2026-05-08
-Skill version: 1.0.0
+Skill version: 1.1.0
 
 ## Scope
 
@@ -20,6 +20,8 @@ Validated the initial `handshake` skill package and planning artifacts created f
 - `skills/handshake/references/protocol.md`
 - `skills/handshake/references/templates.md`
 - `skills/handshake/references/versioning.md`
+- `skills/handshake/assets/project-template/version/工作进度.md`
+- `skills/handshake/assets/project-template/version/版本迭代记录.md`
 
 ## Automated Validation
 
@@ -71,6 +73,8 @@ Result:
 - Created `docs/codex/ENVIRONMENT.md`.
 - Created `docs/codex/PYTHON.md`.
 - Created `docs/codex/PAPER.md`.
+- Created `version/工作进度.md`.
+- Created `version/版本迭代记录.md`.
 
 Second run without `--force`:
 
@@ -94,8 +98,8 @@ Result:
 
 Confirmed:
 
-- `SKILL.md` declares `Version: 1.0.0`.
-- `references/versioning.md` records the current release as `1.0.0`.
+- `SKILL.md` declares `Version: 1.1.0`.
+- `references/versioning.md` records the current release as `1.1.0`.
 - Semantic versioning rules are documented.
 - The immutability rule for released workflow versions is documented.
 - The release checklist requires version update, release notes, reference validation, structure validation, and sensitive-data review.
@@ -160,4 +164,4 @@ Status: covered at protocol level.
 
 ## Recommendation
 
-Treat `handshake` version `1.0.0` as the first named HandShake release with initialization and global-use support. The next design step should forward-test the skill from a fresh session against a real Python project and a real writing project.
+Treat `handshake` version `1.1.0` as the HandShake release with initialization, global-use support, and Chinese user-facing progress/version documents. The next design step should forward-test the skill from a fresh session against a real Python project and a real writing project.

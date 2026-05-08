@@ -14,7 +14,7 @@ skills/
 Current release:
 
 ```text
-1.0.0
+1.1.0
 ```
 
 ## What It Provides
@@ -25,6 +25,7 @@ Current release:
 - Python project workflow notes.
 - Academic writing workflow notes.
 - Versioned release rules for management workflow skills.
+- Chinese user-facing progress and version documents under `version/`.
 
 ## Initialize a Target Project
 

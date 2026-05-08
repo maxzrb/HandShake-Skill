@@ -61,6 +61,7 @@ The protocol must support:
 - If Git does not exist, the protocol must still work by reading and updating status files.
 - Status files are intended to be committed unless they contain sensitive or local-only data.
 - Local machine details may be recorded only when they help reproduce work; absolute paths should be avoided or clearly marked as local.
+- User-facing Chinese progress and version documents should be generated under `version/`, but Codex management must not depend on them.
 
 ## Initialization Requirement
 
@@ -72,6 +73,7 @@ The script must:
 - Default to non-overwriting behavior.
 - Support a dry-run mode.
 - Support optional Python and academic-writing template files.
+- Create Chinese user-facing `version/工作进度.md` and `version/版本迭代记录.md`.
 - Require an explicit overwrite flag before replacing existing project files.
 
 ## Instruction Priority

@@ -64,6 +64,8 @@ def required_files() -> list[Path]:
         Path("docs/codex/DECISIONS.md"),
         Path("docs/codex/TODO.md"),
         Path("docs/codex/ENVIRONMENT.md"),
+        Path("version/工作进度.md"),
+        Path("version/版本迭代记录.md"),
     ]
 
 

@@ -20,6 +20,13 @@ At minimum, update:
 - `docs/codex/HANDOFF.md` with completed work, changed files, verification, blockers, and next steps.
 - `docs/codex/TODO.md` when task status changes.
 
+Codex should also update these Chinese user-facing summaries when meaningful progress or version information changed:
+
+- `version/工作进度.md`
+- `version/版本迭代记录.md`
+
+These two files are for users to read. Codex project management must not depend on them.
+
 ## Workflow Priority
 
 Use this priority order:
@@ -32,6 +39,8 @@ Use this priority order:
 6. General cross-device handoff skill defaults.
 
 If a specialized workflow has its own management records, use that workflow but keep `docs/codex/` updated or clearly cross-linked.
+
+Do not treat `version/工作进度.md` or `version/版本迭代记录.md` as authoritative project state. They are derived summaries for Chinese-speaking users.
 
 ## Safety
 

@@ -27,6 +27,16 @@ docs/codex/
   PAPER.md
 ```
 
+User-facing summaries:
+
+```text
+version/
+  工作进度.md
+  版本迭代记录.md
+```
+
+The `version/` files are readable Chinese summaries for users. They are not authoritative project management records for Codex.
+
 ## Startup Workflow
 
 1. Identify the workspace root and current working directory.
@@ -41,6 +51,8 @@ docs/codex/
    - staged, unstaged, and untracked files
 8. Detect whether a specialized skill or project workflow applies.
 9. Summarize orientation sources and current risks before substantial edits.
+
+Do not use `version/工作进度.md` or `version/版本迭代记录.md` as startup source-of-truth files. Read them only when the user specifically asks about user-facing progress/version summaries or when updating those summaries.
 
 ## Work Rules
 
@@ -64,7 +76,8 @@ Before ending substantial work:
 6. Record blockers and open questions.
 7. Record next steps for the next session or device.
 8. Update `STATUS.md`, `HANDOFF.md`, `TODO.md`, and `DECISIONS.md` as needed.
-9. Report Git synchronization state.
+9. Update `version/工作进度.md` and `version/版本迭代记录.md` when user-facing progress or release information changed.
+10. Report Git synchronization state.
 
 ## Conflict Handling
 
@@ -83,6 +96,10 @@ Use the specialized workflow for execution. Still update common handoff records,
 ### Status Records vs. Git State
 
 Git is authoritative for file history and changed files. Status records are authoritative for intent and handoff context. If they disagree, update status records after inspecting the current state.
+
+### User-Facing Version Files vs. Project Records
+
+The `version/` files are derived summaries. If they disagree with `docs/codex/` or Git state, treat them as stale and update them from the authoritative project records.
 
 ### Local Environment vs. Portable Setup
 
@@ -116,3 +133,5 @@ A handoff is complete when a new Codex session can answer:
 - What is verified?
 - What remains blocked?
 - What should happen next?
+
+For Chinese-speaking users, the handoff should also leave `version/工作进度.md` readable enough to understand the current progress without reading Codex's internal management records.

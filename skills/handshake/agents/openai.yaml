@@ -1,4 +1,4 @@
 interface:
   display_name: "HandShake"
-  short_description: "Initialize and maintain Codex project continuity across devices."
-  default_prompt: "Use HandShake to initialize or inspect project handoff records, continue work safely, and update status before ending."
+  short_description: "Maintain Codex continuity and Chinese user-facing progress records."
+  default_prompt: "Use HandShake to initialize or inspect project handoff records, continue work safely, update Codex status, and refresh Chinese user-facing progress/version documents when relevant."

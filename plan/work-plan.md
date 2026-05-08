@@ -58,6 +58,7 @@ Create a skill under `skills/` that instructs Codex to:
 - Enforce versioned releases for management workflow skills.
 - Initialize target projects by copying repository-local handoff templates.
 - Remain self-contained so it can be installed and used globally.
+- Generate readable Chinese user-facing progress and version documents under `version/` without making Codex management depend on them.
 
 ### 3.4 Validation Materials
 

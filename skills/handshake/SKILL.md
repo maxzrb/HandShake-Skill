@@ -5,7 +5,7 @@ description: Use HandShake when Codex needs to continue, inspect, initialize, or
 
 # HandShake
 
-Version: 1.0.0
+Version: 1.1.0
 
 Use this skill to make Codex sessions portable across devices. The skill defines how to start from repository-local records, continue work without prior conversation history, and leave a clear handoff for the next session.
 
@@ -28,7 +28,8 @@ At the end of substantial work:
 3. Update `docs/codex/TODO.md` when task status changed.
 4. Update `docs/codex/DECISIONS.md` when durable decisions were made.
 5. Record commands run, verification results, blockers, and next steps.
-6. Report synchronization risks such as uncommitted changes or missing Git history.
+6. Update the Chinese user-facing progress and version summaries under `version/` when meaningful progress or release information changed.
+7. Report synchronization risks such as uncommitted changes or missing Git history.
 
 ## Initialize a Project
 
@@ -47,6 +48,13 @@ Use options as needed:
 - `--force`: overwrite existing target files only when the user explicitly asks.
 
 Default behavior creates only missing required files and skips existing files.
+
+The initializer also creates:
+
+- The Chinese progress summary under `version/`.
+- The Chinese version history under `version/`.
+
+These files are for human readers. Do not use them as Codex's source of truth.
 
 ## Global Use
 
@@ -72,6 +80,19 @@ Use this priority order:
 6. This skill's defaults.
 
 If a specialized workflow conflicts with this skill, use the specialized workflow for execution and still update or cross-link the common handoff records.
+
+## User-Facing Version Documents
+
+Maintain these Chinese user-facing documents when the target project has meaningful progress, release, or milestone changes:
+
+- the progress summary under `version/`
+- the version history under `version/`
+
+Write them for a Chinese-speaking user who wants to quickly understand progress and version changes. Prefer clear summaries, short sections, and practical next steps.
+
+Do not use these files as Codex's project management source. Codex must continue to rely on `AGENTS.md`, `docs/codex/`, the current user request, and Git state for operational decisions. If `version/` files disagree with `docs/codex/` or Git, treat the `version/` files as stale user-facing summaries and update them from the authoritative records.
+
+See `references/templates.md` for the exact Chinese filenames.
 
 ## Missing Records
 

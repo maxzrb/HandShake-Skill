@@ -42,12 +42,12 @@ skills/handshake/
 Current version:
 
 ```text
-1.0.0
+1.1.0
 ```
 
 Rationale:
 
-- `1.0.0` names the product HandShake and keeps initialization/global-use support.
+- `1.1.0` adds Chinese user-facing progress and version documents under `version/`.
 - The workflow is considered the first named usable release.
 - Breaking changes after `1.0.0` require a future major version bump.
 
@@ -127,6 +127,8 @@ Required behavior:
 - `--all` includes all optional domain templates.
 - `--dry-run` previews changes.
 - `--force` overwrites existing files only when explicitly requested.
+
+The script also creates `version/工作进度.md` and `version/版本迭代记录.md` by default. These are Chinese user-facing summaries, not Codex source-of-truth files.
 
 ### Global Use
 

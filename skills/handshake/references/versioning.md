@@ -2,7 +2,25 @@
 
 ## Current Release
 
-Version: 1.0.0
+Version: 1.1.0
+Date: 2026-05-08
+Status: user-facing version document release
+
+Changes:
+
+- Added Chinese user-facing `version/工作进度.md`.
+- Added Chinese user-facing `version/版本迭代记录.md`.
+- Updated the initializer to create the `version/` documents by default.
+- Clarified that Codex project management must not depend on the `version/` documents.
+
+Compatibility:
+
+- Backward compatible with `1.0.0`.
+
+## Previous Releases
+
+### 1.0.0
+
 Date: 2026-05-08
 Status: first named HandShake release
 
@@ -16,8 +34,6 @@ Compatibility:
 
 - Breaking rename from `cross-device-handoff` to `handshake`.
 - Users of `0.2.0` should copy or install the `handshake/` folder and refer to the skill as HandShake.
-
-## Previous Releases
 
 ### 0.2.0
 
