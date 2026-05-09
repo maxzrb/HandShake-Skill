@@ -1,39 +1,47 @@
 ---
 name: handshake
-description: Use HandShake when Codex needs to continue, inspect, initialize, or update project work across multiple computers, Codex sessions, branches, or local environments; when the user mentions handoff, project state, AGENTS.md, cross-device development, Python project continuity, academic writing continuity, or Codex workflow management; or when Codex must maintain repository-local records for progress, decisions, tasks, environment notes, and strict versioned release discipline for management workflow skills.
+description: Use HandShake for AI coding agent handoff when Codex, Claude Code, or another agent needs to resume, inspect, initialize, or update the same project across sessions, devices, directories, or virtual environments; trigger on handoff, resume, continue project, switch agent, Claude Code, Codex, cross-device, project status, AGENTS.md, CLAUDE.md, docs/codex, and Chinese requests meaning handoff, takeover, or continue development; maintains lightweight repository-local status, handoff, task, decision, environment, Python, and paper-writing records.
 ---
 
 # HandShake
 
-Version: 1.4.0
+Version: 1.5.0
 
-Use this skill to make Codex sessions portable across devices. The skill defines how to start from repository-local records, continue work without prior conversation history, and leave a clear handoff for the next session.
+Use this skill to make AI coding agent sessions portable across tools, devices, and local environments. HandShake is designed for projects that may be alternately handled by Codex and Claude Code, where the next agent must understand project state without relying on conversation history.
 
 ## Quick Start
 
 At the start of substantial work:
 
 1. Read applicable `AGENTS.md` files.
-2. Read `docs/codex/INDEX.md` if present.
-3. Read the linked status, handoff, todo, decision, and environment records.
+2. In Claude Code, read `CLAUDE.md` when present. It should import `AGENTS.md` and add Claude-specific startup/shutdown reminders.
+3. Read `docs/codex/INDEX.md` if present, then follow it to the status, handoff, todo, decision, and environment records.
 4. Check Git state if the workspace is a Git repository.
-5. Identify the current device or local environment signature from available evidence such as hostname, OS, workspace path, active shell, Python interpreter, virtual environment, and package manager.
-6. Compare the current device with the most recent device recorded in `STATUS.md`, `HANDOFF.md`, or `ENVIRONMENT.md`.
-7. If the device is the same and the relevant local environment was marked reusable, local setup facts may be reused after a light sanity check. If the device is different or unknown, re-check local paths, interpreters, dependencies, and commands before relying on them.
-8. Identify Python, academic writing, or project-specific workflow records.
-9. If another skill has a more specific project management flow, follow it and bridge results back to the repository records.
-10. Tell the user which orientation files were used and whether the local environment appears reusable before making substantial edits.
+5. Identify whether this is a new AI session, Codex taking over from Claude Code, Claude Code taking over from Codex, or a cross-device/cross-environment continuation.
+6. Identify the current device or local environment signature from available evidence such as hostname, OS, workspace path, active shell, Python interpreter, virtual environment, and package manager.
+7. Compare the current device with the most recent device recorded in `STATUS.md`, `HANDOFF.md`, or `ENVIRONMENT.md`.
+8. If the device is the same and the relevant local environment was marked reusable, local setup facts may be reused after a light sanity check. If the device is different or unknown, re-check local paths, interpreters, dependencies, and commands before relying on them.
+9. Identify Python, academic writing, or project-specific workflow records.
+10. If another skill has a more specific project management flow, follow it and bridge results back to the repository records.
+11. Tell the user which orientation files were used and whether the local environment appears reusable before making substantial edits.
 
 At the end of substantial work:
 
+Minimum required closure:
+
 1. Update `docs/codex/HANDOFF.md`.
-2. Update `docs/codex/STATUS.md` when project state changed.
-3. Update `docs/codex/TODO.md` when task status changed.
-4. Update `docs/codex/DECISIONS.md` when durable decisions were made.
-5. Record commands run, verification results, blockers, and next steps.
-6. Record the current device, whether it matches the previous device, and whether future sessions may reuse local environment assumptions.
-7. Update the Chinese user-facing progress and version summaries under `version/` when meaningful progress or release information changed.
-8. Report synchronization risks such as uncommitted changes, missing Git history, or local environment drift.
+2. Update `docs/codex/STATUS.md`.
+3. Record changed files, commands run, verification results, remaining issues, and next recommended steps.
+4. Record the current device, whether it matches the previous device, and whether future sessions may reuse local environment assumptions.
+5. Report current Git status, whether the working tree is clean, and whether a commit is recommended before switching agents or devices.
+
+Conditional updates:
+
+- Update `docs/codex/TODO.md` only when tasks were added, completed, cancelled, or reprioritized.
+- Update `docs/codex/DECISIONS.md` only when a durable design, architecture, dependency, or paper-writing stance was chosen.
+- Update `docs/codex/ENVIRONMENT.md` only when Python version, virtual environment, dependency installation, system path, command, device, or local execution environment changed.
+- Update `docs/codex/PAPER.md` or equivalent paper records only when chapter state, source state, research scope, or citation status changed.
+- Update the Chinese user-facing progress and version summaries under `version/` only when meaningful progress, milestone, or release information changed.
 
 ## Initialize a Project
 
@@ -53,12 +61,15 @@ Use options as needed:
 
 Default behavior creates only missing required files and skips existing files.
 
+The initializer creates `CLAUDE.md` by default. The template imports `AGENTS.md` with `@AGENTS.md` and adds Claude Code-specific reminders without duplicating the whole rule set.
+
 The initializer also creates:
 
+- `docs/codex/PROGRESS.zh-CN.md` for a short Chinese progress summary inside the operational record folder.
 - The Chinese progress summary under `version/`.
 - The Chinese version history under `version/`.
 
-These files are for human readers. Do not use them as Codex's source of truth.
+These files are for quick human reading. Do not use them as the source of truth when `STATUS.md`, `HANDOFF.md`, task records, environment records, or Git state provide more precise evidence.
 
 ## Global Use
 
@@ -67,6 +78,7 @@ This skill is self-contained and can be installed into a global Codex skills dir
 - `SKILL.md`
 - `agents/openai.yaml`
 - `scripts/init_project_handoff.py`
+- `scripts/check_project_handoff.py`
 - `scripts/install_claude_skill.py`
 - `assets/project-template/`
 - `references/`
@@ -106,6 +118,8 @@ When Claude Code needs to run the bundled project initializer from an installed 
 python "${CLAUDE_SKILL_DIR}/scripts/init_project_handoff.py" <target-project> --all
 ```
 
+After initializing a target project, Claude Code users can run `/memory` in that project to confirm whether project memory includes `CLAUDE.md`. The generated `CLAUDE.md` imports `AGENTS.md`, so both Codex-style and Claude-style entrypoints point to the same repository-local handoff records.
+
 ## Instruction Priority
 
 Use this priority order:
@@ -136,6 +150,8 @@ See `references/templates.md` for the exact Chinese filenames.
 
 If `AGENTS.md` is missing, continue with this skill's defaults and recommend creating one for substantial work.
 
+If `CLAUDE.md` is missing in a Claude Code workflow, continue from `AGENTS.md` and `docs/codex/INDEX.md`, then recommend running the initializer or adding the Claude entry template.
+
 If `docs/codex/INDEX.md` is missing, inspect the repository directly and recommend initializing project state records before long-running work.
 
 If Git is missing, continue with status files and warn that cross-device synchronization is weaker.
@@ -154,7 +170,9 @@ Record device-scoped details in `docs/codex/ENVIRONMENT.md` and summarize the la
 
 For Python projects, look for Python version, dependency manager, setup commands, test commands, lint/type-check commands, entry points, data requirements, and local-only paths.
 
-For academic writing projects, look for paper title, target format, chapter status, citation rules, source verification, figures/tables, data dependencies, and unsupported claims.
+For academic writing projects, look for paper title, target format, chapter status, citation rules, source verification, figures/tables, data dependencies, writing preferences, and unsupported claims.
+
+When the task is paper writing, teaching design, coursework, literature review, curriculum-standard analysis, or other formal Chinese academic writing, prefer Simplified Chinese in user-facing communication. Keep writing natural, readable, and suitable for a graduate student or teacher-training student. Avoid stiff AI-style prose, repetitive phrasing, excessive frameworks, overuse of bullet points, hollow academic wording, and fabricated citations. References, policy files, curriculum standards, journal information, data, DOI, URL, author names, titles, years, volumes, issues, and pages must be verifiable. Mark unverifiable details as `待人工复核` or state uncertainty clearly. Verify online-checkable and time-sensitive information when available before making factual claims.
 
 For mixed projects, keep code state and writing state separate but link them in the latest handoff when one depends on the other.
 
@@ -183,7 +201,7 @@ When releasing this skill repository, do not stop after `git push`. Complete the
    - `python -m json.tool .claude-plugin\plugin.json`
    - `python skills\handshake\scripts\init_project_handoff.py outputs\handshake-init-test-<version> --all --dry-run`
    - `python skills\handshake\scripts\install_claude_skill.py --dry-run`
-   - `python -m py_compile skills\handshake\scripts\init_project_handoff.py skills\handshake\scripts\install_claude_skill.py`
+   - `python -m py_compile skills\handshake\scripts\init_project_handoff.py skills\handshake\scripts\check_project_handoff.py skills\handshake\scripts\install_claude_skill.py`
    - `git diff --check`
 5. Commit the release changes with a versioned message.
 6. Push the branch, usually with `git push`.

@@ -1,9 +1,11 @@
 # Project Status
 
 Last updated: YYYY-MM-DD HH:MM
-Updated by: Codex or user
+Updated by: Codex / Claude Code / user
 Device/session: optional stable label
 Environment reuse: same-device reusable / recheck required / unknown
+Last active agent: Codex / Claude Code / user / unknown
+Likely next agent: Codex / Claude Code / either / unknown
 
 ## Current Objective
 
@@ -19,6 +21,8 @@ Summarize what is currently true about the project.
 - Owner:
 - Status:
 - Relevant files:
+- Previous agent/session:
+- Next handoff target:
 
 ## Recently Completed
 
@@ -36,6 +40,8 @@ Summarize what is currently true about the project.
 - Branch:
 - Last known commit:
 - Uncommitted changes:
+- Working tree clean: yes/no/unknown
+- Commit recommended before switching agents/devices: yes/no
 - Cross-device concerns:
 - Last recorded device:
 - Current device comparison:

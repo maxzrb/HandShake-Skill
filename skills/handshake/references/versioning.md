@@ -2,7 +2,27 @@
 
 ## Current Release
 
-Version: 1.4.0
+Version: 1.5.0
+Date: 2026-05-09
+Status: Codex and Claude Code handoff compatibility release
+
+Changes:
+
+- Added a generated `CLAUDE.md` project entry template that imports `AGENTS.md` with `@AGENTS.md`.
+- Clarified Codex to Claude Code and Claude Code to Codex takeover scenarios in the skill, protocol, and templates.
+- Changed shutdown guidance to minimum required closure plus conditional record updates.
+- Added `docs/codex/PROGRESS.zh-CN.md` and a lightweight `check_project_handoff.py` readiness script.
+- Added academic writing preferences to `PAPER.md`, `AGENTS.md`, `CLAUDE.md`, and the skill's Domain Handling section for formal Chinese writing tasks (papers, teaching designs, coursework, literature reviews).
+- Updated README copyable prompts for initialization, agent handoff, cross-device continuation, paper writing, and Python environment changes.
+
+Compatibility:
+
+- Backward compatible with `1.4.0`.
+
+## Previous Releases
+
+### 1.4.0
+
 Date: 2026-05-09
 Status: root install path compatibility release
 
@@ -15,8 +35,6 @@ Changes:
 Compatibility:
 
 - Backward compatible with `1.3.1`.
-
-## Previous Releases
 
 ### 1.3.1
 

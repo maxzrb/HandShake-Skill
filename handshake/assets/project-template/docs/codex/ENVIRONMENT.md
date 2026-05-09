@@ -1,5 +1,7 @@
 # Environment
 
+Update this file when device identity, Python version, virtual environment, dependency installation, system paths, run/test commands, or local execution behavior changes.
+
 ## Portable Setup
 
 Describe setup steps that should work across devices.
@@ -23,10 +25,14 @@ Use a stable, user-friendly device label plus enough technical evidence for Code
 - Operating system:
 - Shell:
 - Workspace root:
+- Python executable:
+- Virtual environment:
+- Package manager:
 - Last verified:
 - Previous recorded device:
 - Same as previous device: yes/no/unknown
 - Local environment reuse: safe after sanity check / recheck required / unknown
+- Last active agent: Codex / Claude Code / user / unknown
 
 ## Environment Continuity Rules
 
@@ -57,3 +63,12 @@ test command
 lint command
 run command
 ```
+
+## Last Environment Check
+
+- Checked by: Codex / Claude Code / user
+- Date:
+- Git status checked: yes/no
+- Python version:
+- Virtual environment active: yes/no/not applicable
+- Commands verified:

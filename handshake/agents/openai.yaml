@@ -1,4 +1,4 @@
 interface:
   display_name: "HandShake"
-  short_description: "Maintain Codex/Claude continuity, device checks, and Chinese progress records."
-  default_prompt: "Use HandShake to initialize or inspect project handoff records, compare the current device/environment with prior records, continue work safely, update Codex or Claude Code status, and refresh Chinese user-facing progress/version documents when relevant."
+  short_description: "Maintain Codex/Claude Code handoff, device checks, and project records."
+  default_prompt: "Use HandShake to initialize or inspect project handoff records, compare the current device/environment with prior records, continue work safely across Codex and Claude Code, update minimum closure records, and refresh conditional records only when relevant."

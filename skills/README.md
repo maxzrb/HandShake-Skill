@@ -30,7 +30,7 @@ Skill is valid!
 当前版本：
 
 ```text
-1.4.0
+1.5.0
 ```
 
 它是一个自包含 skill，包含：
@@ -40,6 +40,7 @@ handshake/
   SKILL.md                         # Codex 会读取的核心 skill 说明
   agents/openai.yaml               # Codex 界面元数据
   scripts/init_project_handoff.py  # 初始化目标项目的脚本
+  scripts/check_project_handoff.py # 检查目标项目交接文件、Git 和 Python 环境
   scripts/install_claude_skill.py  # 安装为 Claude Code standalone skill 的脚本
   assets/project-template/         # 要复制到目标项目的模板
   references/                      # 协议、模板、版本规则说明
@@ -47,9 +48,9 @@ handshake/
 
 ### 2. 这个 skill 解决什么问题？
 
-它用于解决多个电脑、多个 Codex 会话之间项目交接困难的问题。
+它用于解决 Codex、Claude Code、多台电脑和多个会话之间项目交接困难的问题。
 
-它会让 Codex 在开始工作前先查看项目规则和项目状态，在结束工作前更新交接记录。这样下一台电脑或下一次 Codex 会话可以知道：
+它会让 AI 工具在开始工作前先查看项目规则和项目状态，在结束工作前更新最低必要交接记录。这样下一台电脑、下一次 Codex 会话或下一次 Claude Code 会话可以知道：
 
 - 当前项目目标是什么。
 - 上一次做到哪里。
@@ -67,7 +68,7 @@ handshake/
 - 论文写作项目。
 - 同时包含代码和论文的项目。
 - 需要在多台电脑上继续推进的项目。
-- 需要 Codex 每次启动都先读项目记录的项目。
+- 需要 Codex 或 Claude Code 每次启动都先读项目记录的项目。
 
 ### 4. 推荐的使用方式
 
@@ -211,12 +212,14 @@ python skills\handshake\scripts\init_project_handoff.py F:\my-project --all
 
 ```text
 AGENTS.md
+CLAUDE.md
 docs/codex/INDEX.md
 docs/codex/STATUS.md
 docs/codex/HANDOFF.md
 docs/codex/DECISIONS.md
 docs/codex/TODO.md
 docs/codex/ENVIRONMENT.md
+docs/codex/PROGRESS.zh-CN.md
 docs/codex/PYTHON.md
 docs/codex/PAPER.md
 version/工作进度.md
@@ -280,7 +283,7 @@ python skills\handshake\scripts\init_project_handoff.py F:\my-project --all
 4. 每次结束较大工作时，让 Codex 更新交接：
 
 ```text
-请按 HandShake 流程更新 docs/codex/HANDOFF.md、STATUS.md 和 TODO.md。
+请按 HandShake 流程收尾：最低更新 docs/codex/HANDOFF.md 和 STATUS.md；只有任务变化才更新 TODO.md，长期决策才更新 DECISIONS.md，环境变化才更新 ENVIRONMENT.md。最后说明 git status 是否干净。
 ```
 
 ### 8. 每个文件的作用
@@ -357,7 +360,7 @@ Skill is valid!
 Current version:
 
 ```text
-1.4.0
+1.5.0
 ```
 
 The skill is self-contained:
@@ -367,6 +370,7 @@ handshake/
   SKILL.md                         # Main skill instructions for Codex
   agents/openai.yaml               # Codex UI metadata
   scripts/init_project_handoff.py  # Target project initializer
+  scripts/check_project_handoff.py # Target project Git/Python/handoff checker
   scripts/install_claude_skill.py  # Claude Code standalone skill installer
   assets/project-template/         # Templates copied into target projects
   references/                      # Protocol, templates, and versioning rules
@@ -374,9 +378,9 @@ handshake/
 
 ### 2. What problem does it solve?
 
-It helps Codex continue project work across multiple PCs and multiple Codex sessions.
+It helps Codex and Claude Code continue project work across multiple PCs, tools, and sessions.
 
-Before work starts, Codex reads project rules and project state. Before work ends, Codex updates the handoff records. The next session can then understand:
+Before work starts, the AI agent reads project rules and project state. Before work ends, it updates the minimum required handoff records. The next Codex or Claude Code session can then understand:
 
 - The current goal.
 - What was done last.
@@ -537,12 +541,14 @@ The target project will receive:
 
 ```text
 AGENTS.md
+CLAUDE.md
 docs/codex/INDEX.md
 docs/codex/STATUS.md
 docs/codex/HANDOFF.md
 docs/codex/DECISIONS.md
 docs/codex/TODO.md
 docs/codex/ENVIRONMENT.md
+docs/codex/PROGRESS.zh-CN.md
 docs/codex/PYTHON.md
 docs/codex/PAPER.md
 version/工作进度.md
@@ -604,7 +610,7 @@ Use the HandShake workflow. Read AGENTS.md and docs/codex/INDEX.md before contin
 4. Before ending substantial work, ask Codex:
 
 ```text
-Update docs/codex/HANDOFF.md, STATUS.md, and TODO.md according to the HandShake workflow.
+Close out with HandShake: at minimum update docs/codex/HANDOFF.md and STATUS.md; update TODO.md only if tasks changed, DECISIONS.md only for durable decisions, and ENVIRONMENT.md only for environment changes. Report whether git status is clean.
 ```
 
 ### 8. What each generated file does

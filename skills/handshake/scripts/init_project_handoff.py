@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Initialize Codex handoff records in a target project."""
+"""Initialize AI agent handoff records in a target project."""
 
 from __future__ import annotations
 
@@ -19,7 +19,10 @@ OPTIONAL_DOMAIN_FILES = {
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Copy cross-device Codex handoff templates into a target project."
+        description=(
+            "Copy lightweight Codex/Claude Code handoff templates into a target "
+            "project without overwriting existing files unless --force is used."
+        )
     )
     parser.add_argument(
         "target",
@@ -58,12 +61,14 @@ def parse_args() -> argparse.Namespace:
 def required_files() -> list[Path]:
     return [
         Path("AGENTS.md"),
+        Path("CLAUDE.md"),
         Path("docs/codex/INDEX.md"),
         Path("docs/codex/STATUS.md"),
         Path("docs/codex/HANDOFF.md"),
         Path("docs/codex/DECISIONS.md"),
         Path("docs/codex/TODO.md"),
         Path("docs/codex/ENVIRONMENT.md"),
+        Path("docs/codex/PROGRESS.zh-CN.md"),
         Path("version/工作进度.md"),
         Path("version/版本迭代记录.md"),
     ]

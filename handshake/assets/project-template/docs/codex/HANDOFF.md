@@ -3,6 +3,9 @@
 ## Latest Handoff
 
 Date: YYYY-MM-DD HH:MM
+Updated by: Codex / Claude Code / user
+Previous agent/session: Codex / Claude Code / user / unknown
+Recommended next agent: Codex / Claude Code / either / user decision
 Session summary:
 
 ## Device and Environment Continuity
@@ -20,6 +23,12 @@ Session summary:
 - Files changed:
 - Evidence:
 
+## Files Changed
+
+- Path:
+- Change summary:
+- Why it matters for the next agent:
+
 ## Commands Run
 
 ```text
@@ -34,11 +43,19 @@ result summary
 - Manual checks:
 - Not run:
 
+## Git Status at Handoff
+
+- Branch:
+- Working tree clean: yes/no/unknown
+- Uncommitted files:
+- Commit recommended before switching agents/devices: yes/no
+
 ## Decisions Made
 
 - Decision:
 - Reason:
 - Alternatives considered:
+- Recorded in `DECISIONS.md`: yes/no/not needed
 
 ## Open Questions
 
@@ -54,6 +71,14 @@ result summary
 
 1. Next action.
 2. Follow-up action.
+
+## Conditional Records Updated
+
+- `TODO.md`: yes/no, reason:
+- `DECISIONS.md`: yes/no, reason:
+- `ENVIRONMENT.md`: yes/no, reason:
+- `PAPER.md`: yes/no, reason:
+- `PYTHON.md`: yes/no, reason:
 
 ## Notes for Next Device
 

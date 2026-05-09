@@ -1,141 +1,198 @@
-# HandShake
+# HandShake-Skill
 
-HandShake is a private Codex workflow skill for cross-device project handoff.
+HandShake-Skill 是一个面向 AI 编程工具的项目交接工作流。它不是普通文档模板，而是让 Codex、Claude Code 等工具在交替接手同一个项目时，先读取同一组仓库内记录，再继续开发或写作。
 
-It helps Codex continue Python development and academic writing projects across multiple PCs and multiple Codex sessions by using repository-local project records.
+当前版本：`1.5.0`
 
-## Main Artifact
+## 解决的问题
 
-```text
-handshake/
-skills/
-  handshake/
-```
+当一个项目在不同会话、不同电脑、不同目录或不同虚拟环境中继续推进时，新接手的 AI 工具经常不知道：
 
-`handshake/` is the Codex direct-install path. `skills/handshake/` is kept for Claude Code plugin use and repository development.
+- 当前目标是什么；
+- 上次改了哪些文件；
+- 哪些命令跑过、哪些验证通过；
+- 本地 Python 环境能不能沿用；
+- 还有哪些阻塞、待办和下一步；
+- 上一次是 Codex、Claude Code 还是用户自己在操作。
 
-Current release:
+HandShake 通过 `AGENTS.md`、`CLAUDE.md` 和 `docs/codex/` 下的记录文件，把这些信息留在项目仓库里。
 
-```text
-1.4.0
-```
+## 适用场景
 
-## What It Provides
+- Codex 和 Claude Code 交替接手同一项目；
+- 多台电脑开发同一项目；
+- Python 项目跨虚拟环境继续开发；
+- 论文写作项目跨会话继续推进；
+- 长周期代码项目、写作项目或混合项目的会话续接。
 
-- A reusable Codex and Claude Code skill named HandShake.
-- A root-level `handshake/` skill package so Codex GitHub installers can find the skill directly.
-- Claude Code plugin metadata for `claude --plugin-dir .`.
-- A project initialization script.
-- A Claude Code standalone skill installer.
-- Repository-local handoff templates.
-- Device and local environment continuity checks.
-- Python project workflow notes.
-- Academic writing workflow notes.
-- Versioned release rules for management workflow skills.
-- Chinese user-facing progress and version documents under `version/`.
+## 不能保证的事情
 
-## Initialize a Target Project
+- 不能自动解决 Git 冲突；
+- 不能强制所有 AI 工具一定读取记录；
+- 不能替代 `git commit`、branch、worktree 或人工同步习惯；
+- 不能替代人工 review；
+- 不能保证旧设备上的本地路径、虚拟环境和依赖状态在新设备上仍然可用。
 
-```text
-python skills\handshake\scripts\init_project_handoff.py <target-project> --all
-```
-
-Preview first:
+## 仓库结构
 
 ```text
-python skills\handshake\scripts\init_project_handoff.py <target-project> --all --dry-run
+handshake/          # Codex GitHub 安装推荐路径
+skills/handshake/   # Claude Code plugin 路径，也是仓库内主维护副本
+scripts/            # 仓库维护脚本
 ```
 
-## Install From GitHub
+项目模板会生成：
 
-Codex installers can use the root-level package path without scanning the repository:
+```text
+AGENTS.md
+CLAUDE.md
+docs/codex/INDEX.md
+docs/codex/STATUS.md
+docs/codex/HANDOFF.md
+docs/codex/TODO.md
+docs/codex/DECISIONS.md
+docs/codex/ENVIRONMENT.md
+docs/codex/PROGRESS.zh-CN.md
+docs/codex/PYTHON.md
+docs/codex/PAPER.md
+version/工作进度.md
+version/版本迭代记录.md
+```
+
+其中 `PAPER.md`、`PYTHON.md` 是可选领域模板；`version/` 文件面向中文用户阅读，不作为 AI 工具的唯一依据。
+
+## Codex 安装
+
+从 GitHub 安装根目录镜像：
 
 ```text
 python C:\Users\MAX2EB\.codex\skills\.system\skill-installer\scripts\install-skill-from-github.py --repo maxzrb/HandShake-Skill --path handshake
 ```
 
-Claude Code plugin use still reads `skills/handshake/` through `.claude-plugin/plugin.json`.
+安装后，在目标项目中可以这样要求 Codex：
 
-## Use With Claude Code
+```text
+使用 HandShake 初始化这个项目的 AI 交接记录。先检查 git status，再创建缺失的 AGENTS.md、CLAUDE.md 和 docs/codex/ 记录。
+```
 
-Test this repository as a Claude Code plugin:
+## Claude Code 安装
+
+开发本仓库时可以用 plugin 方式测试：
 
 ```text
 claude --plugin-dir .
 ```
 
-Inside Claude Code, invoke:
+进入 Claude Code 后调用：
 
 ```text
 /handshake-skill:handshake
 ```
 
-Install as a personal Claude Code skill:
+长期使用可以安装为个人 Claude Code skill：
 
 ```text
 python skills\handshake\scripts\install_claude_skill.py --dry-run
 python skills\handshake\scripts\install_claude_skill.py --force
 ```
 
-After standalone installation, invoke it with:
+也可以安装到某个项目：
 
 ```text
-/handshake
+python skills\handshake\scripts\install_claude_skill.py --project F:\my-project --force
 ```
 
-## Update On Another PC
+初始化项目后，Claude Code 用户可以在项目中运行 `/memory`，检查 `CLAUDE.md` 是否被加载。模板里的 `CLAUDE.md` 会通过 `@AGENTS.md` 导入公共规则，避免两处规则重复维护。
 
-On each PC, keep a clone of this repository, then mirror `handshake/` or `skills/handshake/` into the global Codex or Claude Code skills directory.
+## 初始化目标项目
+
+先预览：
 
 ```text
-git clone https://github.com/maxzrb/HandShake-Skill.git
-cd HandShake
+python skills\handshake\scripts\init_project_handoff.py F:\my-project --all --dry-run
 ```
 
-After this repository is updated on GitHub, update another PC with:
+确认后执行：
 
 ```text
-git pull --ff-only
-robocopy skills\handshake "$env:USERPROFILE\.codex\skills\handshake" /MIR
+python skills\handshake\scripts\init_project_handoff.py F:\my-project --all
 ```
 
-For Codex direct install compatibility, this equivalent root-level path is also maintained:
+常用参数：
+
+- `--python`：额外生成 `docs/codex/PYTHON.md`；
+- `--paper`：额外生成 `docs/codex/PAPER.md`；
+- `--all`：生成所有可选模板；
+- `--dry-run`：只预览，不写文件；
+- `--force`：覆盖已有同名文件，默认不会覆盖。
+
+## 检查目标项目
+
+检查关键交接文件、Git 状态、Python 版本和虚拟环境：
 
 ```text
-robocopy handshake "$env:USERPROFILE\.codex\skills\handshake" /MIR
+python skills\handshake\scripts\check_project_handoff.py F:\my-project
 ```
 
-For Claude Code standalone skills:
+这个脚本不联网，不需要管理员权限，不依赖符号链接。
+
+## 每次开始任务的提示词
+
+新项目初始化：
 
 ```text
-robocopy skills\handshake "$env:USERPROFILE\.claude\skills\handshake" /MIR
+使用 HandShake 初始化这个项目。先看 git status，再生成缺失的 AGENTS.md、CLAUDE.md 和 docs/codex/ 记录；不要覆盖已有文件。
 ```
 
-`robocopy /MIR` makes the global skill folder exactly match the repository copy. Do not keep private local edits inside `$env:USERPROFILE\.codex\skills\handshake`.
-
-## Release This Skill
-
-Every release must push both the branch and the annotated version tag:
+Codex 接手 Claude Code 项目：
 
 ```text
-git push
-git tag -a v<version> -m "Release HandShake <version>"
-git push origin v<version>
-git ls-remote --tags origin v<version>
+请用 HandShake 接手这个项目。先读 AGENTS.md、docs/codex/INDEX.md、STATUS.md、HANDOFF.md、TODO.md、ENVIRONMENT.md，再看 git status，确认 Claude Code 上次做到哪里后再修改。
 ```
 
-If the branch was pushed without the release tag, add the missing tag to the exact release commit and push the tag before starting another release.
-
-## Documentation
-
-Beginner-friendly Chinese and English usage instructions are in:
+Claude Code 接手 Codex 项目：
 
 ```text
-skills/README.md
+请按 HandShake 流程接手。先读 CLAUDE.md、AGENTS.md 和 docs/codex/INDEX.md，再读 STATUS.md、HANDOFF.md、TODO.md、ENVIRONMENT.md，检查 git status 后继续。
 ```
 
-Planning and validation records are in:
+跨设备继续项目：
 
 ```text
-plan/
+我换了一台电脑继续这个项目。请先按 HandShake 读取记录，重点核对 ENVIRONMENT.md、HANDOFF.md、当前路径、Python/虚拟环境和 git status，再决定能否继续。
 ```
+
+论文写作项目继续写作：
+
+```text
+请按 HandShake 继续论文写作。先读 AGENTS.md、docs/codex/INDEX.md、PAPER.md、STATUS.md、HANDOFF.md 和 DECISIONS.md，核对文献状态后再写。使用简体中文，语言自然规范，不要写成 AI 腔；不要编造引用，无法核验的信息标注“待人工复核”。
+```
+
+Python 项目换环境后继续开发：
+
+```text
+这个 Python 项目换了环境。请先按 HandShake 读取 ENVIRONMENT.md、PYTHON.md、STATUS.md 和 HANDOFF.md，检查 Python 版本、虚拟环境、依赖和测试命令，再继续开发。
+```
+
+## 每次结束任务的提示词
+
+```text
+请按 HandShake 收尾：最低更新 docs/codex/HANDOFF.md 和 STATUS.md，记录本次修改文件、运行命令、验证结果、遗留问题和下一步。只有任务变化才更新 TODO.md，长期决策才更新 DECISIONS.md，环境变化才更新 ENVIRONMENT.md。最后告诉我 git status 是否干净，是否建议现在提交。
+```
+
+## 最佳实践
+
+- 一项任务结束后，先提交，或至少保持 `git diff` 清楚，再切换 Codex/Claude Code；
+- 切换电脑前确认 `HANDOFF.md` 和 `STATUS.md` 已更新；
+- 换 Python 环境后，不要直接沿用旧记录里的命令结果，先重新检查；
+- 论文写作项目必须记录文献核查状态，不能把未核实引用写成已确认；正式文本尽量使用自然、规范、研究生能够写出的简体中文；
+- `CLAUDE.md` 只放 Claude Code 专用入口说明，公共规则放在 `AGENTS.md`。
+
+## Windows 注意事项
+
+- 路径可以包含中文和空格，命令中建议给路径加引号；
+- 不需要管理员权限；
+- 不依赖 Windows 符号链接，`CLAUDE.md` 通过 `@AGENTS.md` 导入公共规则；
+- 初始化脚本默认跳过已有文件，不会静默覆盖；
+- `robocopy /MIR` 会镜像目录，使用前确认目标目录没有私人手改内容；
+- 如果 Git 输出全局 ignore 权限警告，先看 `git status` 是否仍能正常返回项目状态。
