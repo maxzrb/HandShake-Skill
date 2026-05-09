@@ -169,6 +169,10 @@ Management workflow skills must follow this release process:
 3. Validate the skill structure.
 4. Verify all referenced files exist.
 5. Record compatibility and breaking changes.
-6. Publish or tag the release according to the selected version control strategy.
+6. Commit the release changes.
+7. Push the branch.
+8. Create an annotated tag on the release commit.
+9. Push the tag.
+10. Verify that both the remote branch and remote tag are visible.
 
 Released versions must be immutable in practice. Corrections require a new version.

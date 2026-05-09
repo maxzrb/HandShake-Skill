@@ -2,7 +2,24 @@
 
 ## Current Release
 
-Version: 1.3.0
+Version: 1.3.1
+Date: 2026-05-09
+Status: release push checklist clarification
+
+Changes:
+
+- Added an explicit release push checklist covering validation, commit, branch push, annotated tag creation, tag push, and remote tag verification.
+- Documented the recovery rule for a release commit that was pushed without its release tag.
+- Updated user-facing notes to require pushing both the branch and annotated release tag.
+
+Compatibility:
+
+- Backward compatible with `1.3.0`.
+
+## Previous Releases
+
+### 1.3.0
+
 Date: 2026-05-09
 Status: Claude Code support release
 
@@ -16,8 +33,6 @@ Changes:
 Compatibility:
 
 - Backward compatible with `1.2.0`.
-
-## Previous Releases
 
 ### 1.2.0
 
@@ -162,11 +177,27 @@ Increment `PATCH` for:
 Before release:
 
 1. Update the version in `SKILL.md`.
-2. Update this file's current release section.
-3. Record changes and compatibility notes.
-4. Confirm all referenced files exist.
-5. Validate the skill frontmatter and folder structure.
-6. Confirm no secrets or local-only sensitive data are included.
+2. Update `.claude-plugin/plugin.json` when present.
+3. Update user-facing version references such as `README.md` and `skills/README.md`.
+4. Update this file's current release section.
+5. Record changes and compatibility notes.
+6. Confirm all referenced files exist.
+7. Validate the skill frontmatter and folder structure.
+8. Confirm no secrets or local-only sensitive data are included.
+
+## Git Publish Checklist
+
+After release files are validated and committed:
+
+1. Push the branch: `git push`.
+2. Create an annotated tag on the release commit: `git tag -a v<version> -m "Release HandShake <version>"`.
+3. Push the tag: `git push origin v<version>`.
+4. Verify the branch and tag:
+   - `git status --short --branch`
+   - `git log -1 --oneline --decorate`
+   - `git ls-remote --tags origin v<version>`
+
+Never consider a release complete until both the branch and the matching annotated tag are visible on the remote. If the branch was pushed first and the tag was forgotten, add the missing annotated tag to that exact release commit and push the tag before starting another release.
 
 ## Immutability Rule
 

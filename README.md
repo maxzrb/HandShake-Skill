@@ -14,7 +14,7 @@ skills/
 Current release:
 
 ```text
-1.3.0
+1.3.1
 ```
 
 ## What It Provides
@@ -92,6 +92,19 @@ robocopy skills\handshake "$env:USERPROFILE\.claude\skills\handshake" /MIR
 ```
 
 `robocopy /MIR` makes the global skill folder exactly match the repository copy. Do not keep private local edits inside `$env:USERPROFILE\.codex\skills\handshake`.
+
+## Release This Skill
+
+Every release must push both the branch and the annotated version tag:
+
+```text
+git push
+git tag -a v<version> -m "Release HandShake <version>"
+git push origin v<version>
+git ls-remote --tags origin v<version>
+```
+
+If the branch was pushed without the release tag, add the missing tag to the exact release commit and push the tag before starting another release.
 
 ## Documentation
 

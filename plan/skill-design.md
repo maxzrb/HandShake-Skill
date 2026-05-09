@@ -45,11 +45,12 @@ skills/handshake/
 Current version:
 
 ```text
-1.3.0
+1.3.1
 ```
 
 Rationale:
 
+- `1.3.1` clarifies that every release must push both the branch and the annotated release tag, with remote verification.
 - `1.3.0` adds Claude Code standalone skill and plugin support.
 - `1.2.0` adds device/environment continuity checks so Codex can decide whether local setup assumptions can be reused across sessions.
 - `1.1.2` updates repository URLs after the GitHub repository rename to `HandShake-Skill`.
@@ -71,6 +72,8 @@ Every release must:
 - Keep released versions immutable in practice.
 - Document migration notes for breaking changes.
 - Verify referenced files and templates before release.
+- Push the release branch and matching annotated release tag.
+- Verify the remote branch and tag after pushing.
 
 ## Core Workflow
 

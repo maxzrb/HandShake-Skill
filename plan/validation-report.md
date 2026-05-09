@@ -1,11 +1,11 @@
 # Validation Report
 
 Date: 2026-05-09
-Skill version: 1.3.0
+Skill version: 1.3.1
 
 ## Scope
 
-Validated the `handshake` skill package and planning artifacts for the Claude Code support update.
+Validated the `handshake` skill package and planning artifacts for the release push/tag checklist update.
 
 ## Files Checked
 
@@ -63,7 +63,7 @@ Static skill frontmatter check passed
 Dry-run command:
 
 ```text
-python skills\handshake\scripts\init_project_handoff.py outputs\handshake-init-test-1.3.0 --all --dry-run
+python skills\handshake\scripts\init_project_handoff.py outputs\handshake-init-test-1.3.1 --all --dry-run
 ```
 
 Result:
@@ -101,7 +101,7 @@ Result:
 
 - `plugin.json` parsed as valid JSON.
 - Plugin name is `handshake-skill`.
-- Plugin version is `1.3.0`.
+- Plugin version is `1.3.1`.
 
 Standalone installer dry-run command:
 
@@ -133,12 +133,12 @@ Result:
 
 Confirmed:
 
-- `SKILL.md` declares `Version: 1.3.0`.
-- `references/versioning.md` records the current release as `1.3.0`.
-- `.claude-plugin/plugin.json` records plugin version `1.3.0`.
+- `SKILL.md` declares `Version: 1.3.1`.
+- `references/versioning.md` records the current release as `1.3.1`.
+- `.claude-plugin/plugin.json` records plugin version `1.3.1`.
 - Semantic versioning rules are documented.
 - The immutability rule for released workflow versions is documented.
-- The release checklist requires version update, release notes, reference validation, structure validation, and sensitive-data review.
+- The release checklist requires version update, release notes, reference validation, structure validation, sensitive-data review, branch push, annotated tag creation, tag push, and remote verification.
 
 ## Scenario Coverage Review
 
@@ -183,6 +183,16 @@ Covered by:
 
 Status: covered at package/documentation level; not executed inside an interactive Claude Code session in this validation run.
 
+### Release Push and Tag Flow
+
+Covered by:
+
+- `SKILL.md` release push checklist.
+- `references/versioning.md` Git publish checklist.
+- Planning release flow requiring branch push, annotated tag creation, tag push, and remote verification.
+
+Status: covered at workflow/documentation level; this release should be completed by pushing `main`, creating `v1.3.1`, pushing that tag, and verifying the remote tag.
+
 ### Python Project
 
 Covered by:
@@ -222,4 +232,4 @@ Status: covered at protocol level.
 
 ## Recommendation
 
-Treat `handshake` version `1.3.0` as the HandShake release that adds Claude Code standalone skill and plugin support to the existing initialization, environment-continuity, global-use, and Chinese user-facing progress/version workflows. The next design step should forward-test the skill in Claude Code using both `claude --plugin-dir .` and `~/.claude/skills/handshake`.
+Treat `handshake` version `1.3.1` as the HandShake release that adds an explicit release push/tag checklist to prevent branch-only releases. The next release step is to push both `main` and the annotated `v1.3.1` tag, then verify the remote tag.

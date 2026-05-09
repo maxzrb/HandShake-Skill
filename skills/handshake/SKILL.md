@@ -5,7 +5,7 @@ description: Use HandShake when Codex needs to continue, inspect, initialize, or
 
 # HandShake
 
-Version: 1.3.0
+Version: 1.3.1
 
 Use this skill to make Codex sessions portable across devices. The skill defines how to start from repository-local records, continue work without prior conversation history, and leave a clear handoff for the next session.
 
@@ -160,6 +160,30 @@ Use semantic versioning unless a project selects a stricter scheme:
 - Increment `PATCH` for clarifications, typo fixes, and non-behavioral edits.
 
 Every release must record the version, release date, changes, compatibility notes, and any migration notes. Released versions must not be silently rewritten; publish a new version for corrections.
+
+## Release Push Checklist
+
+When releasing this skill repository, do not stop after `git push`. Complete the branch push and tag push as one release flow:
+
+1. Update the version in `SKILL.md`, `.claude-plugin/plugin.json` when present, `README.md`, `skills/README.md`, and `references/versioning.md`.
+2. Move the previous current release entry in `references/versioning.md` under Previous Releases.
+3. Run validation:
+   - `python C:\Users\MAX2EB\.codex\skills\.system\skill-creator\scripts\quick_validate.py skills\handshake`
+   - `python -m json.tool .claude-plugin\plugin.json`
+   - `python skills\handshake\scripts\init_project_handoff.py outputs\handshake-init-test-<version> --all --dry-run`
+   - `python skills\handshake\scripts\install_claude_skill.py --dry-run`
+   - `python -m py_compile skills\handshake\scripts\init_project_handoff.py skills\handshake\scripts\install_claude_skill.py`
+   - `git diff --check`
+4. Commit the release changes with a versioned message.
+5. Push the branch, usually with `git push`.
+6. Create an annotated release tag on the release commit: `git tag -a v<version> -m "Release HandShake <version>"`.
+7. Push the tag: `git push origin v<version>`.
+8. Verify the remote branch and tag:
+   - `git status --short --branch`
+   - `git log -1 --oneline --decorate`
+   - `git ls-remote --tags origin v<version>`
+
+If a release commit was pushed without a tag, immediately add the missing annotated tag to that exact release commit and push the tag before making the next release commit.
 
 See `references/versioning.md` before changing this skill's workflow.
 
