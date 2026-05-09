@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This project designs a cross-device Codex handoff protocol for users who work on the same Python development and academic writing projects from multiple PCs.
+This project designs a cross-device Codex and Claude Code handoff protocol for users who work on the same Python development and academic writing projects from multiple PCs.
 
 The protocol must make each new Codex session reliably discover:
 
@@ -18,6 +18,7 @@ The protocol must make each new Codex session reliably discover:
 
 - A single user working across multiple PCs.
 - Codex sessions that do not share the same conversation history.
+- Claude Code sessions that use project, personal, or plugin-provided skills.
 - Projects that may be empty, partially initialized, or already managed by another workflow.
 
 ## Primary Use Cases
@@ -56,6 +57,7 @@ The protocol must support:
 
 - Final reusable skill artifacts are kept under `skills/` in this project.
 - The skill should be self-contained so it can be copied into a global Codex skills directory.
+- The skill should also be usable as a Claude Code standalone skill or repository plugin.
 - Project-local rules should be stored in `AGENTS.md`.
 - Project-local state should be stored under `docs/codex/`.
 - If Git exists, it is the primary source for code history and synchronization state.
@@ -77,6 +79,18 @@ The script must:
 - Support optional Python and academic-writing template files.
 - Create Chinese user-facing `version/工作进度.md` and `version/版本迭代记录.md`.
 - Require an explicit overwrite flag before replacing existing project files.
+
+## Claude Code Support Requirement
+
+The repository must support Claude Code without changing the core HandShake workflow.
+
+It must:
+
+- Keep `skills/handshake/SKILL.md` compatible with Agent Skills frontmatter.
+- Provide Claude Code plugin metadata at the repository root.
+- Document personal and project skill installation under `.claude/skills/handshake`.
+- Provide a script or clear commands for installing the standalone Claude Code skill.
+- Preserve existing Codex installation and validation behavior.
 
 ## Instruction Priority
 

@@ -6,11 +6,11 @@
 
 ## Purpose
 
-Guide Codex through a strict cross-device project handoff workflow for Python development, academic writing, and mixed projects.
+Guide Codex and Claude Code through a strict cross-device project handoff workflow for Python development, academic writing, and mixed projects.
 
 ## Trigger Description
 
-Use when Codex needs to continue, inspect, initialize, or update a project across multiple computers, sessions, branches, or environments; when the user mentions handoff, project state, `AGENTS.md`, cross-device development, Python project continuity, academic writing continuity, or Codex workflow management; or when Codex must maintain repository-local status records for progress, decisions, tasks, environment notes, and release/version discipline.
+Use when Codex or Claude Code needs to continue, inspect, initialize, or update a project across multiple computers, sessions, branches, or environments; when the user mentions handoff, project state, `AGENTS.md`, cross-device development, Python project continuity, academic writing continuity, Codex workflow management, or Claude Code workflow management; or when the agent must maintain repository-local status records for progress, decisions, tasks, environment notes, and release/version discipline.
 
 ## Package Location
 
@@ -27,6 +27,7 @@ skills/handshake/
     openai.yaml
   scripts/
     init_project_handoff.py
+    install_claude_skill.py
   assets/
     project-template/
       AGENTS.md
@@ -35,6 +36,8 @@ skills/handshake/
     protocol.md
     templates.md
     versioning.md
+.claude-plugin/
+  plugin.json
 ```
 
 ## Version
@@ -42,11 +45,12 @@ skills/handshake/
 Current version:
 
 ```text
-1.2.0
+1.3.0
 ```
 
 Rationale:
 
+- `1.3.0` adds Claude Code standalone skill and plugin support.
 - `1.2.0` adds device/environment continuity checks so Codex can decide whether local setup assumptions can be reused across sessions.
 - `1.1.2` updates repository URLs after the GitHub repository rename to `HandShake-Skill`.
 - The workflow is considered the first named usable release.
@@ -137,6 +141,13 @@ The script also creates `version/工作进度.md` and `version/版本迭代记�
 ### Global Use
 
 The skill package must be self-contained. A user should be able to copy the full `handshake/` folder into a global Codex skills directory and use it from any target project.
+
+### Claude Code Use
+
+Claude Code support has two supported paths:
+
+- Standalone skill: copy `skills/handshake/` into `~/.claude/skills/handshake` or `<project>/.claude/skills/handshake`, then invoke `/handshake`.
+- Plugin development: load the repository root with `claude --plugin-dir .`, then invoke `/handshake-skill:handshake`.
 
 ## References
 

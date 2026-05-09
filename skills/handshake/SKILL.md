@@ -5,7 +5,7 @@ description: Use HandShake when Codex needs to continue, inspect, initialize, or
 
 # HandShake
 
-Version: 1.2.0
+Version: 1.3.0
 
 Use this skill to make Codex sessions portable across devices. The skill defines how to start from repository-local records, continue work without prior conversation history, and leave a clear handoff for the next session.
 
@@ -67,10 +67,35 @@ This skill is self-contained and can be installed into a global Codex skills dir
 - `SKILL.md`
 - `agents/openai.yaml`
 - `scripts/init_project_handoff.py`
+- `scripts/install_claude_skill.py`
 - `assets/project-template/`
 - `references/`
 
+For Claude Code plugin use, keep the repository root `.claude-plugin/plugin.json` with the repository-level `skills/handshake/` directory.
+
 After global installation, use this skill in any project that needs cross-device handoff, then run the initialization script against the target project when repository-local records are missing.
+
+## Claude Code Use
+
+HandShake also works as a Claude Code skill because it uses the Agent Skills `SKILL.md` layout. Claude Code can use it in three ways:
+
+1. Standalone personal skill: copy the full `skills/handshake/` directory to `~/.claude/skills/handshake/`, then invoke it with `/handshake`.
+2. Standalone project skill: copy the full `skills/handshake/` directory to `<project>/.claude/skills/handshake/`, then invoke it with `/handshake` inside that project.
+3. Plugin during development: from this repository root, start Claude Code with `claude --plugin-dir .`, then invoke it with `/handshake-skill:handshake`.
+
+The helper installer can create a standalone Claude Code skill:
+
+```text
+python scripts/install_claude_skill.py --dry-run
+python scripts/install_claude_skill.py --force
+python scripts/install_claude_skill.py --project <target-project> --force
+```
+
+When Claude Code needs to run the bundled project initializer from an installed skill, use the skill directory path rather than assuming the current working directory is the skill directory:
+
+```text
+python "${CLAUDE_SKILL_DIR}/scripts/init_project_handoff.py" <target-project> --all
+```
 
 ## Instruction Priority
 

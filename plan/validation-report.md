@@ -1,11 +1,11 @@
 # Validation Report
 
 Date: 2026-05-09
-Skill version: 1.2.0
+Skill version: 1.3.0
 
 ## Scope
 
-Validated the `handshake` skill package and planning artifacts for the device/environment continuity update.
+Validated the `handshake` skill package and planning artifacts for the Claude Code support update.
 
 ## Files Checked
 
@@ -16,12 +16,14 @@ Validated the `handshake` skill package and planning artifacts for the device/en
 - `skills/handshake/SKILL.md`
 - `skills/handshake/agents/openai.yaml`
 - `skills/handshake/scripts/init_project_handoff.py`
+- `skills/handshake/scripts/install_claude_skill.py`
 - `skills/handshake/assets/project-template/`
 - `skills/handshake/references/protocol.md`
 - `skills/handshake/references/templates.md`
 - `skills/handshake/references/versioning.md`
 - `skills/handshake/assets/project-template/version/工作进度.md`
 - `skills/handshake/assets/project-template/version/版本迭代记录.md`
+- `.claude-plugin/plugin.json`
 
 ## Automated Validation
 
@@ -61,7 +63,7 @@ Static skill frontmatter check passed
 Dry-run command:
 
 ```text
-python skills\handshake\scripts\init_project_handoff.py outputs\handshake-init-test --all --dry-run
+python skills\handshake\scripts\init_project_handoff.py outputs\handshake-init-test-1.3.0 --all --dry-run
 ```
 
 Result:
@@ -87,6 +89,33 @@ Template existence check result:
 Template file existence check passed
 ```
 
+## Claude Code Support Validation
+
+Plugin metadata command:
+
+```text
+python -m json.tool .claude-plugin\plugin.json
+```
+
+Result:
+
+- `plugin.json` parsed as valid JSON.
+- Plugin name is `handshake-skill`.
+- Plugin version is `1.3.0`.
+
+Standalone installer dry-run command:
+
+```text
+python skills\handshake\scripts\install_claude_skill.py --dry-run
+```
+
+Result:
+
+- Reported source as `skills\handshake`.
+- Reported target as `C:\Users\MAX2EB\.claude\skills\handshake`.
+- Reported that it would create the Claude Code standalone skill directory.
+- Reported standalone invocation as `/handshake`.
+
 ## Placeholder Scan
 
 Command:
@@ -104,8 +133,9 @@ Result:
 
 Confirmed:
 
-- `SKILL.md` declares `Version: 1.2.0`.
-- `references/versioning.md` records the current release as `1.2.0`.
+- `SKILL.md` declares `Version: 1.3.0`.
+- `references/versioning.md` records the current release as `1.3.0`.
+- `.claude-plugin/plugin.json` records plugin version `1.3.0`.
 - Semantic versioning rules are documented.
 - The immutability rule for released workflow versions is documented.
 - The release checklist requires version update, release notes, reference validation, structure validation, and sensitive-data review.
@@ -142,6 +172,17 @@ Covered by:
 
 Status: covered at protocol/template level; not forward-tested across two physical devices yet.
 
+### Claude Code Skill Use
+
+Covered by:
+
+- Agent Skills-compatible `SKILL.md` frontmatter.
+- `.claude-plugin/plugin.json` for repository plugin loading.
+- `scripts/install_claude_skill.py` dry-run for standalone skill installation.
+- README documentation for personal, project, and plugin-based Claude Code use.
+
+Status: covered at package/documentation level; not executed inside an interactive Claude Code session in this validation run.
+
 ### Python Project
 
 Covered by:
@@ -176,8 +217,9 @@ Status: covered at protocol level.
 
 - The workflow has not yet been forward-tested by a fresh Codex session on a real Python or writing project.
 - The device/environment continuity behavior has not yet been forward-tested across two physical devices.
+- Claude Code support has not yet been forward-tested inside an interactive Claude Code session.
 - The global skills directory path still needs to be selected per PC before installation.
 
 ## Recommendation
 
-Treat `handshake` version `1.2.0` as the HandShake release that adds device/environment continuity checks to the existing initialization, global-use support, Chinese user-facing progress/version documents, documented update steps for other PCs, and renamed `HandShake-Skill` GitHub URL. The next design step should forward-test the skill from a fresh session on the same PC and then on a second PC to confirm the reuse/recheck decision is clear in practice.
+Treat `handshake` version `1.3.0` as the HandShake release that adds Claude Code standalone skill and plugin support to the existing initialization, environment-continuity, global-use, and Chinese user-facing progress/version workflows. The next design step should forward-test the skill in Claude Code using both `claude --plugin-dir .` and `~/.claude/skills/handshake`.

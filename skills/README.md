@@ -22,7 +22,7 @@ Skill is valid!
 当前版本：
 
 ```text
-1.2.0
+1.3.0
 ```
 
 它是一个自包含 skill，包含：
@@ -30,8 +30,9 @@ Skill is valid!
 ```text
 handshake/
   SKILL.md                         # Codex 会读取的核心 skill 说明
-  agents/openai.yaml               # skill 的界面元数据
+  agents/openai.yaml               # Codex 界面元数据
   scripts/init_project_handoff.py  # 初始化目标项目的脚本
+  scripts/install_claude_skill.py  # 安装为 Claude Code standalone skill 的脚本
   assets/project-template/         # 要复制到目标项目的模板
   references/                      # 协议、模板、版本规则说明
 ```
@@ -62,7 +63,7 @@ handshake/
 
 ### 4. 推荐的使用方式
 
-有两种使用方式。
+有三类使用方式。
 
 #### 方式 A：在当前仓库中使用
 
@@ -138,6 +139,45 @@ robocopy skills\handshake "$env:USERPROFILE\.codex\skills\handshake" /MIR
 - `robocopy /MIR` 会让全局 skill 目录完全等于仓库中的 `skills/handshake/`。
 - 不要在 `$env:USERPROFILE\.codex\skills\handshake` 里保留私人手改内容；要改就改仓库，再提交和推送。
 - 更新后开启新的 Codex 会话，通常就会读取新版 skill。
+
+#### 方式 D：在 Claude Code 中使用
+
+HandShake 也可以作为 Claude Code skill 使用。仓库根目录提供了 `.claude-plugin/plugin.json`，可以直接用 Claude Code 的 plugin 方式测试：
+
+```text
+claude --plugin-dir .
+```
+
+进入 Claude Code 后调用：
+
+```text
+/handshake-skill:handshake
+```
+
+如果想作为个人 Claude Code skill 长期使用，可以复制 `skills/handshake/` 到 Claude Code 的个人 skills 目录：
+
+```text
+robocopy skills\handshake "$env:USERPROFILE\.claude\skills\handshake" /MIR
+```
+
+也可以用随包脚本安装：
+
+```text
+python skills\handshake\scripts\install_claude_skill.py --dry-run
+python skills\handshake\scripts\install_claude_skill.py --force
+```
+
+安装后在 Claude Code 中调用：
+
+```text
+/handshake
+```
+
+如果只想给某个项目启用 Claude Code project skill：
+
+```text
+python skills\handshake\scripts\install_claude_skill.py --project F:\my-project --force
+```
 
 ### 5. 如何初始化一个目标项目？
 
@@ -294,7 +334,7 @@ Skill is valid!
 Current version:
 
 ```text
-1.2.0
+1.3.0
 ```
 
 The skill is self-contained:
@@ -302,8 +342,9 @@ The skill is self-contained:
 ```text
 handshake/
   SKILL.md                         # Main skill instructions for Codex
-  agents/openai.yaml               # UI metadata
+  agents/openai.yaml               # Codex UI metadata
   scripts/init_project_handoff.py  # Target project initializer
+  scripts/install_claude_skill.py  # Claude Code standalone skill installer
   assets/project-template/         # Templates copied into target projects
   references/                      # Protocol, templates, and versioning rules
 ```
@@ -409,6 +450,45 @@ Notes:
 - `robocopy /MIR` makes the global skill folder exactly match `skills/handshake/` from the repository.
 - Do not keep private manual edits inside `$env:USERPROFILE\.codex\skills\handshake`; edit the repository, then commit and push.
 - Start a new Codex session after updating so the new skill version is loaded.
+
+#### Option D: Use With Claude Code
+
+HandShake can also run as a Claude Code skill. The repository root includes `.claude-plugin/plugin.json`, so you can test it as a Claude Code plugin:
+
+```text
+claude --plugin-dir .
+```
+
+Inside Claude Code, invoke:
+
+```text
+/handshake-skill:handshake
+```
+
+For long-term personal use, copy `skills/handshake/` into Claude Code's personal skills directory:
+
+```text
+robocopy skills\handshake "$env:USERPROFILE\.claude\skills\handshake" /MIR
+```
+
+Or use the bundled installer:
+
+```text
+python skills\handshake\scripts\install_claude_skill.py --dry-run
+python skills\handshake\scripts\install_claude_skill.py --force
+```
+
+After standalone installation, invoke:
+
+```text
+/handshake
+```
+
+For a project-local Claude Code skill:
+
+```text
+python skills\handshake\scripts\install_claude_skill.py --project F:\my-project --force
+```
 
 ### 5. Initialize a target project
 

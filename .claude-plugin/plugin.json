@@ -1,0 +1,9 @@
+{
+  "name": "handshake-skill",
+  "description": "HandShake workflow skill for cross-device project handoff, environment continuity, and repository-local Codex/Claude project records.",
+  "version": "1.3.0",
+  "author": {
+    "name": "maxzrb"
+  },
+  "repository": "https://github.com/maxzrb/HandShake-Skill"
+}

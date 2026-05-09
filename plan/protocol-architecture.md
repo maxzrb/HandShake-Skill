@@ -4,12 +4,12 @@
 
 The handoff system has four layers.
 
-### 1. Codex Skill Layer
+### 1. Agent Skill Layer
 
 Purpose:
 
 - Provides the reusable operating procedure.
-- Tells Codex how to discover project records.
+- Tells Codex or Claude Code how to discover project records.
 - Defines startup and shutdown checklists.
 - Provides fallback behavior for projects without local rules.
 - Defines versioned release rules for management workflow skills.
@@ -25,7 +25,7 @@ Primary file:
 Purpose:
 
 - Stores mandatory rules that travel with the repository.
-- Tells Codex where the project state entrypoint is.
+- Tells the agent where the project state entrypoint is.
 - Defines project-specific commands and constraints.
 - Overrides the general skill where the project requires stricter behavior.
 

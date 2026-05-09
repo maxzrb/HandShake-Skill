@@ -2,7 +2,25 @@
 
 ## Current Release
 
-Version: 1.2.0
+Version: 1.3.0
+Date: 2026-05-09
+Status: Claude Code support release
+
+Changes:
+
+- Added Claude Code plugin metadata under `.claude-plugin/plugin.json`.
+- Documented standalone Claude Code personal and project skill installation paths.
+- Added `scripts/install_claude_skill.py` to copy HandShake into Claude Code skill directories.
+- Documented Claude Code invocation forms for standalone skills and plugin testing.
+
+Compatibility:
+
+- Backward compatible with `1.2.0`.
+
+## Previous Releases
+
+### 1.2.0
+
 Date: 2026-05-08
 Status: device/environment continuity release
 
@@ -16,8 +34,6 @@ Changes:
 Compatibility:
 
 - Backward compatible with `1.1.2`.
-
-## Previous Releases
 
 ### 1.1.2
 
