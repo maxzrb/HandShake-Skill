@@ -170,9 +170,11 @@ Management workflow skills must follow this release process:
 4. Verify all referenced files exist.
 5. Record compatibility and breaking changes.
 6. Commit the release changes.
-7. Push the branch.
-8. Create an annotated tag on the release commit.
-9. Push the tag.
-10. Verify that both the remote branch and remote tag are visible.
+7. Confirm `skills/handshake/` and the root-level `handshake/` mirror are synchronized.
+8. Validate both skill package paths.
+9. Push the branch.
+10. Create an annotated tag on the release commit.
+11. Push the tag.
+12. Verify that both the remote branch and remote tag are visible.
 
 Released versions must be immutable in practice. Corrections require a new version.

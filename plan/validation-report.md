@@ -1,11 +1,11 @@
 # Validation Report
 
 Date: 2026-05-09
-Skill version: 1.3.1
+Skill version: 1.4.0
 
 ## Scope
 
-Validated the `handshake` skill package and planning artifacts for the release push/tag checklist update.
+Validated the `handshake` skill package and planning artifacts for the root install path compatibility update.
 
 ## Files Checked
 
@@ -14,9 +14,12 @@ Validated the `handshake` skill package and planning artifacts for the release p
 - `plan/templates-draft/`
 - `plan/skill-design.md`
 - `skills/handshake/SKILL.md`
+- `handshake/SKILL.md`
 - `skills/handshake/agents/openai.yaml`
 - `skills/handshake/scripts/init_project_handoff.py`
 - `skills/handshake/scripts/install_claude_skill.py`
+- `scripts/sync_root_mirror.py`
+- `handshake/`
 - `skills/handshake/assets/project-template/`
 - `skills/handshake/references/protocol.md`
 - `skills/handshake/references/templates.md`
@@ -37,6 +40,30 @@ Result:
 
 ```text
 Skill is valid!
+```
+
+Root mirror validator command:
+
+```text
+python C:\Users\MAX2EB\.codex\skills\.system\skill-creator\scripts\quick_validate.py handshake
+```
+
+Result:
+
+```text
+Skill is valid!
+```
+
+Root mirror synchronization command:
+
+```text
+python scripts\sync_root_mirror.py --check
+```
+
+Result:
+
+```text
+root mirror is synchronized
 ```
 
 Note:
@@ -63,7 +90,7 @@ Static skill frontmatter check passed
 Dry-run command:
 
 ```text
-python skills\handshake\scripts\init_project_handoff.py outputs\handshake-init-test-1.3.1 --all --dry-run
+python skills\handshake\scripts\init_project_handoff.py outputs\handshake-init-test-1.4.0 --all --dry-run
 ```
 
 Result:
@@ -101,7 +128,7 @@ Result:
 
 - `plugin.json` parsed as valid JSON.
 - Plugin name is `handshake-skill`.
-- Plugin version is `1.3.1`.
+- Plugin version is `1.4.0`.
 
 Standalone installer dry-run command:
 
@@ -133,9 +160,10 @@ Result:
 
 Confirmed:
 
-- `SKILL.md` declares `Version: 1.3.1`.
-- `references/versioning.md` records the current release as `1.3.1`.
-- `.claude-plugin/plugin.json` records plugin version `1.3.1`.
+- `skills/handshake/SKILL.md` declares `Version: 1.4.0`.
+- `handshake/SKILL.md` declares `Version: 1.4.0`.
+- `references/versioning.md` records the current release as `1.4.0`.
+- `.claude-plugin/plugin.json` records plugin version `1.4.0`.
 - Semantic versioning rules are documented.
 - The immutability rule for released workflow versions is documented.
 - The release checklist requires version update, release notes, reference validation, structure validation, sensitive-data review, branch push, annotated tag creation, tag push, and remote verification.
@@ -191,7 +219,17 @@ Covered by:
 - `references/versioning.md` Git publish checklist.
 - Planning release flow requiring branch push, annotated tag creation, tag push, and remote verification.
 
-Status: covered at workflow/documentation level; this release should be completed by pushing `main`, creating `v1.3.1`, pushing that tag, and verifying the remote tag.
+Status: covered at workflow/documentation level; this release should be completed by pushing `main`, creating `v1.4.0`, pushing that tag, and verifying the remote tag.
+
+### Root Install Path Compatibility
+
+Covered by:
+
+- Root-level `handshake/` mirror for Codex direct GitHub installation.
+- `skills/handshake/` retained for Claude Code plugin use.
+- Release checklist requiring both package paths to remain synchronized and validated.
+
+Status: covered at package layout level; remote install should use `--path handshake`.
 
 ### Python Project
 
@@ -232,4 +270,4 @@ Status: covered at protocol level.
 
 ## Recommendation
 
-Treat `handshake` version `1.3.1` as the HandShake release that adds an explicit release push/tag checklist to prevent branch-only releases. The next release step is to push both `main` and the annotated `v1.3.1` tag, then verify the remote tag.
+Treat `handshake` version `1.4.0` as the HandShake release that adds a root-level install path mirror so Codex GitHub installers do not need to locate `skills/handshake/`. The next release step is to push both `main` and the annotated `v1.4.0` tag, then verify the remote tag.

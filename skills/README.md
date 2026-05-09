@@ -13,6 +13,14 @@ skills/
   handshake/
 ```
 
+为了让 Codex 从 GitHub 仓库安装时不用二次定位，仓库根目录还维护了同内容镜像：
+
+```text
+handshake/
+```
+
+`skills/handshake/` 用于 Claude Code plugin 和仓库内开发；根目录 `handshake/` 用于 Codex 直接安装。
+
 这个 skill 已通过结构校验：
 
 ```text
@@ -22,7 +30,7 @@ Skill is valid!
 当前版本：
 
 ```text
-1.3.1
+1.4.0
 ```
 
 它是一个自包含 skill，包含：
@@ -73,6 +81,12 @@ handshake/
 Use the HandShake skill in skills/handshake.
 ```
 
+如果是从 GitHub 安装给 Codex 使用，推荐直接使用根目录镜像路径：
+
+```text
+python C:\Users\MAX2EB\.codex\skills\.system\skill-installer\scripts\install-skill-from-github.py --repo maxzrb/HandShake-Skill --path handshake
+```
+
 然后让 Codex 初始化目标项目，例如：
 
 ```text
@@ -115,14 +129,14 @@ C:\Users\maxzr\.codex\skills\
 
 #### 方式 C：其他电脑如何更新全局 HandShake
 
-建议每台电脑都保留一份本 GitHub 仓库克隆，然后把仓库里的 `skills/handshake/` 同步到全局 Codex skills 目录。
+建议每台电脑都保留一份本 GitHub 仓库克隆，然后把仓库里的 `handshake/` 同步到全局 Codex skills 目录。`skills/handshake/` 仍然保留给 Claude Code plugin 和仓库开发使用。
 
 第一次在某台电脑配置：
 
 ```text
 git clone https://github.com/maxzrb/HandShake-Skill.git
 cd HandShake
-robocopy skills\handshake "$env:USERPROFILE\.codex\skills\handshake" /MIR
+robocopy handshake "$env:USERPROFILE\.codex\skills\handshake" /MIR
 ```
 
 以后当你在主电脑更新 HandShake 并推送到 GitHub 后，其他电脑这样更新：
@@ -130,13 +144,13 @@ robocopy skills\handshake "$env:USERPROFILE\.codex\skills\handshake" /MIR
 ```text
 cd HandShake
 git pull --ff-only
-robocopy skills\handshake "$env:USERPROFILE\.codex\skills\handshake" /MIR
+robocopy handshake "$env:USERPROFILE\.codex\skills\handshake" /MIR
 ```
 
 注意：
 
 - `git pull --ff-only` 只接受正常快进更新，能避免意外合并。
-- `robocopy /MIR` 会让全局 skill 目录完全等于仓库中的 `skills/handshake/`。
+- `robocopy /MIR` 会让全局 skill 目录完全等于仓库中的 `handshake/`。
 - 不要在 `$env:USERPROFILE\.codex\skills\handshake` 里保留私人手改内容；要改就改仓库，再提交和推送。
 - 更新后开启新的 Codex 会话，通常就会读取新版 skill。
 
@@ -326,6 +340,14 @@ skills/
   handshake/
 ```
 
+The repository also keeps an equivalent root-level mirror so Codex GitHub installers can find the skill without a second path scan:
+
+```text
+handshake/
+```
+
+Use `skills/handshake/` for Claude Code plugin use and repository development. Use root-level `handshake/` for direct Codex installation.
+
 It has passed skill validation:
 
 ```text
@@ -335,7 +357,7 @@ Skill is valid!
 Current version:
 
 ```text
-1.3.1
+1.4.0
 ```
 
 The skill is self-contained:
@@ -385,6 +407,12 @@ Tell Codex:
 Use the HandShake skill in skills/handshake.
 ```
 
+For Codex installation from GitHub, prefer the root-level mirror path:
+
+```text
+python C:\Users\MAX2EB\.codex\skills\.system\skill-installer\scripts\install-skill-from-github.py --repo maxzrb/HandShake-Skill --path handshake
+```
+
 Then initialize a target project:
 
 ```text
@@ -427,14 +455,14 @@ Use HandShake to initialize Codex handoff records for this project.
 
 #### Option C: Update HandShake On Other PCs
 
-Recommended setup: keep one clone of this GitHub repository on each PC, then mirror `skills/handshake/` into the global Codex skills directory.
+Recommended setup: keep one clone of this GitHub repository on each PC, then mirror `handshake/` into the global Codex skills directory. `skills/handshake/` remains available for Claude Code plugin use and repository development.
 
 First-time setup on another PC:
 
 ```text
 git clone https://github.com/maxzrb/HandShake-Skill.git
 cd HandShake
-robocopy skills\handshake "$env:USERPROFILE\.codex\skills\handshake" /MIR
+robocopy handshake "$env:USERPROFILE\.codex\skills\handshake" /MIR
 ```
 
 After you update HandShake on the main PC and push to GitHub, update another PC with:
@@ -442,13 +470,13 @@ After you update HandShake on the main PC and push to GitHub, update another PC 
 ```text
 cd HandShake
 git pull --ff-only
-robocopy skills\handshake "$env:USERPROFILE\.codex\skills\handshake" /MIR
+robocopy handshake "$env:USERPROFILE\.codex\skills\handshake" /MIR
 ```
 
 Notes:
 
 - `git pull --ff-only` avoids accidental merge commits.
-- `robocopy /MIR` makes the global skill folder exactly match `skills/handshake/` from the repository.
+- `robocopy /MIR` makes the global skill folder exactly match `handshake/` from the repository.
 - Do not keep private manual edits inside `$env:USERPROFILE\.codex\skills\handshake`; edit the repository, then commit and push.
 - Start a new Codex session after updating so the new skill version is loaded.
 

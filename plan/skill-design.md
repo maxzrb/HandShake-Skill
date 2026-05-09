@@ -38,6 +38,9 @@ skills/handshake/
     versioning.md
 .claude-plugin/
   plugin.json
+handshake/
+  SKILL.md
+  ...
 ```
 
 ## Version
@@ -45,11 +48,12 @@ skills/handshake/
 Current version:
 
 ```text
-1.3.1
+1.4.0
 ```
 
 Rationale:
 
+- `1.4.0` adds a root-level `handshake/` package mirror so Codex GitHub installers can find the skill directly.
 - `1.3.1` clarifies that every release must push both the branch and the annotated release tag, with remote verification.
 - `1.3.0` adds Claude Code standalone skill and plugin support.
 - `1.2.0` adds device/environment continuity checks so Codex can decide whether local setup assumptions can be reused across sessions.
@@ -74,6 +78,7 @@ Every release must:
 - Verify referenced files and templates before release.
 - Push the release branch and matching annotated release tag.
 - Verify the remote branch and tag after pushing.
+- Keep `skills/handshake/` and the root-level `handshake/` mirror synchronized.
 
 ## Core Workflow
 
@@ -151,6 +156,8 @@ Claude Code support has two supported paths:
 
 - Standalone skill: copy `skills/handshake/` into `~/.claude/skills/handshake` or `<project>/.claude/skills/handshake`, then invoke `/handshake`.
 - Plugin development: load the repository root with `claude --plugin-dir .`, then invoke `/handshake-skill:handshake`.
+
+Codex GitHub installer support uses the root-level `handshake/` mirror so agents can install with `--path handshake` without locating `skills/handshake/` first.
 
 ## References
 

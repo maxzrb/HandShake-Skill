@@ -87,6 +87,7 @@ The repository must support Claude Code without changing the core HandShake work
 It must:
 
 - Keep `skills/handshake/SKILL.md` compatible with Agent Skills frontmatter.
+- Keep a root-level `handshake/` mirror so Codex GitHub installers can install from `--path handshake` without scanning nested folders.
 - Provide Claude Code plugin metadata at the repository root.
 - Document personal and project skill installation under `.claude/skills/handshake`.
 - Provide a script or clear commands for installing the standalone Claude Code skill.
