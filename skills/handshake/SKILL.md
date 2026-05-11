@@ -5,7 +5,7 @@ description: Use HandShake for AI coding agent handoff when Codex, Claude Code, 
 
 # HandShake
 
-Version: 1.7.0
+Version: 1.7.1
 
 Use this skill to make AI coding agent sessions portable across tools, devices, and local environments. HandShake is designed for projects that may be alternately handled by Codex and Claude Code, where the next agent must understand project state without relying on conversation history.
 
@@ -205,7 +205,7 @@ Every release must record the version, release date, changes, compatibility note
 
 When releasing this skill repository, do not stop after `git push`. Complete the branch push and tag push as one release flow:
 
-1. Update the version in `SKILL.md`, `.claude-plugin/plugin.json` when present, `README.md`, `skills/README.md`, and `references/versioning.md`.
+1. Update the version in `SKILL.md`, `.claude-plugin/plugin.json` when present, `README.md`, `skills/README.md`, and `references/versioning.md` (both `skills/handshake/references/versioning.md` and the root `handshake/references/versioning.md` mirror).
 2. Update both install path copies: `skills/handshake/` and the root-level `handshake/` mirror.
 3. Move the previous current release entry in `references/versioning.md` under Previous Releases.
 4. Run validation:

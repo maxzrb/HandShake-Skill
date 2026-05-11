@@ -2,7 +2,12 @@
 
 HandShake-Skill 是一个面向 AI 编程工具的项目交接工作流。它不是普通文档模板，而是让 Codex、Claude Code 等工具在交替接手同一个项目时，先读取同一组仓库内记录，再继续开发或写作。
 
-当前版本：`1.5.0`
+当前版本：`1.7.0`
+
+## 最近更新
+
+- **1.7.0**：新增强制性启动 `git pull`、分步计划执行、每步完成后提醒提交。
+- **1.6.0**：`version/工作进度.md` 升级为每次会话必需更新（增量追加不覆盖），`版本迭代记录.md` 要求先迁移历史再写入新版。
 
 ## 解决的问题
 
@@ -177,7 +182,7 @@ Python 项目换环境后继续开发：
 ## 每次结束任务的提示词
 
 ```text
-请按 HandShake 收尾：最低更新 docs/codex/HANDOFF.md 和 STATUS.md，记录本次修改文件、运行命令、验证结果、遗留问题和下一步。只有任务变化才更新 TODO.md，长期决策才更新 DECISIONS.md，环境变化才更新 ENVIRONMENT.md。最后告诉我 git status 是否干净，是否建议现在提交。
+请按 HandShake 收尾：最低更新 docs/codex/HANDOFF.md、STATUS.md 和 version/工作进度.md（追加不覆盖），记录本次修改文件、运行命令、验证结果、遗留问题和下一步。只有任务变化才更新 TODO.md，长期决策才更新 DECISIONS.md，环境变化才更新 ENVIRONMENT.md，版本号变化才更新 version/版本迭代记录.md。最后告诉我 git status 是否干净，是否建议现在提交。
 ```
 
 ## 最佳实践

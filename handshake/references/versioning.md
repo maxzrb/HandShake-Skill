@@ -2,7 +2,42 @@
 
 ## Current Release
 
-Version: 1.5.0
+Version: 1.7.0
+Date: 2026-05-11
+Status: mandatory workflow discipline release
+
+Changes:
+
+- Added mandatory `git pull` at startup when Git is available, to prevent working from an outdated local repository.
+- Added a "Phased Execution" section requiring step-by-step plans confirmed by the user before implementation.
+- Added a rule requiring the agent to remind the user to consider a git commit after each completed step.
+- These rules are written into `SKILL.md`, `CLAUDE.md`, `AGENTS.md`, and `protocol.md` for both Codex and Claude Code.
+
+Compatibility:
+
+- Backward compatible with `1.6.0`.
+
+## Previous Releases
+
+### 1.6.0
+
+Date: 2026-05-11
+Status: mandatory incremental version/ session records release
+
+Changes:
+
+- Elevated `version/工作进度.md` from conditional to minimum required closure for both Codex and Claude Code shutdown workflows.
+- Added incremental log templates with explicit "append, never overwrite" rules.
+- Added explicit version migration rules for `version/版本迭代记录.md` (move old to history first, then write new).
+- Updated all agent entry points: `SKILL.md`, `CLAUDE.md`, `AGENTS.md`, `openai.yaml`, and `protocol.md`.
+- Synced missing template files (`CLAUDE.md`, `PROGRESS.zh-CN.md`, `check_project_handoff.py`) to the repo.
+
+Compatibility:
+
+- Backward compatible with `1.5.0`.
+
+### 1.5.0
+
 Date: 2026-05-09
 Status: Codex and Claude Code handoff compatibility release
 
@@ -18,8 +53,6 @@ Changes:
 Compatibility:
 
 - Backward compatible with `1.4.0`.
-
-## Previous Releases
 
 ### 1.4.0
 
