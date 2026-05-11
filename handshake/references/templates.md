@@ -209,12 +209,14 @@ Recommended fields:
 
 Purpose:
 
-- Chinese user-facing progress summary.
+- Chinese user-facing progress summary with an incremental session log.
 - Helps the user quickly understand project progress without reading Codex's internal handoff files.
+- Contains a dated iteration log table where each session appends one row.
 
 Rules:
 
 - Keep it readable for a non-technical or semi-technical Chinese-speaking user.
+- **Always append a new row to the iteration log table; never overwrite previous rows.**
 - Summarize current goal, current progress, recent work, risks, and next recommendations.
 - Do not treat it as Codex's source of truth.
 - If it disagrees with `docs/codex/` or Git state, update it from authoritative records.
@@ -225,10 +227,12 @@ Purpose:
 
 - Chinese user-facing version history and release/change log.
 - Helps the user understand version changes, impact, verification, and migration needs.
+- Accumulates version entries over time; older versions move to the historical section.
 
 Rules:
 
 - Prefer semantic versioning.
+- **When publishing a new version: (1) copy the current "当前版本" section to the top of "历史版本", (2) write the new version info in "当前版本", (3) never delete or overwrite historical entries.**
 - Explain changes in user-facing language.
 - Record verification and known risks.
 - Do not treat it as Codex's source of truth.

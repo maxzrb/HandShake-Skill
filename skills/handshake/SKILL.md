@@ -5,7 +5,7 @@ description: Use HandShake for AI coding agent handoff when Codex, Claude Code, 
 
 # HandShake
 
-Version: 1.5.0
+Version: 1.6.0
 
 Use this skill to make AI coding agent sessions portable across tools, devices, and local environments. HandShake is designed for projects that may be alternately handled by Codex and Claude Code, where the next agent must understand project state without relying on conversation history.
 
@@ -31,9 +31,10 @@ Minimum required closure:
 
 1. Update `docs/codex/HANDOFF.md`.
 2. Update `docs/codex/STATUS.md`.
-3. Record changed files, commands run, verification results, remaining issues, and next recommended steps.
-4. Record the current device, whether it matches the previous device, and whether future sessions may reuse local environment assumptions.
-5. Report current Git status, whether the working tree is clean, and whether a commit is recommended before switching agents or devices.
+3. Update `version/工作进度.md` — append a dated session entry; never overwrite previous entries.
+4. Record changed files, commands run, verification results, remaining issues, and next recommended steps.
+5. Record the current device, whether it matches the previous device, and whether future sessions may reuse local environment assumptions.
+6. Report current Git status, whether the working tree is clean, and whether a commit is recommended before switching agents or devices.
 
 Conditional updates:
 
@@ -41,7 +42,7 @@ Conditional updates:
 - Update `docs/codex/DECISIONS.md` only when a durable design, architecture, dependency, or paper-writing stance was chosen.
 - Update `docs/codex/ENVIRONMENT.md` only when Python version, virtual environment, dependency installation, system path, command, device, or local execution environment changed.
 - Update `docs/codex/PAPER.md` or equivalent paper records only when chapter state, source state, research scope, or citation status changed.
-- Update the Chinese user-facing progress and version summaries under `version/` only when meaningful progress, milestone, or release information changed.
+- Update `version/版本迭代记录.md` when the project version number changed: move the old current version to history first, then write the new version. Do not delete or overwrite historical version entries.
 
 ## Initialize a Project
 
@@ -135,10 +136,10 @@ If a specialized workflow conflicts with this skill, use the specialized workflo
 
 ## User-Facing Version Documents
 
-Maintain these Chinese user-facing documents when the target project has meaningful progress, release, or milestone changes:
+Maintain these Chinese user-facing documents with incremental updates:
 
-- the progress summary under `version/`
-- the version history under `version/`
+- `version/工作进度.md`: append a dated session entry at the end of every substantial session. Never overwrite previous entries.
+- `version/版本迭代记录.md`: when the project version number changes, move the old current version section to history first, then write the new version. Never delete or overwrite historical version entries.
 
 Write them for a Chinese-speaking user who wants to quickly understand progress and version changes. Prefer clear summaries, short sections, and practical next steps.
 

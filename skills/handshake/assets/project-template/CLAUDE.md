@@ -19,6 +19,7 @@ Before ending substantial work, Claude Code must at minimum update:
 
 - `docs/codex/HANDOFF.md`
 - `docs/codex/STATUS.md`
+- `version/工作进度.md` — append a dated session entry; do not overwrite previous entries
 
 Record changed files, commands run, verification results, remaining issues, and next recommended steps.
 
@@ -28,6 +29,7 @@ Update conditionally:
 - `docs/codex/DECISIONS.md` when a long-term decision is made.
 - `docs/codex/ENVIRONMENT.md` when environment, path, Python, dependency, or command behavior changes.
 - `docs/codex/PAPER.md` or equivalent writing records when chapter status, literature status, research scope, or citation state changes.
+- `version/版本迭代记录.md` when the project version number changed: move the old current version to history first, then write the new version. Do not delete or overwrite historical version entries.
 
 When replying to the user, explain in Chinese. Keep commands, paths, errors, code, package names, and file names in their original form.
 

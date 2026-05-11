@@ -181,7 +181,6 @@ Recommended fields:
 - Source verification
 - Figures and tables
 - Writing rules
-- Writing preferences
 - Last updated agent/session for chapter and source state
 
 Rules:
@@ -189,11 +188,6 @@ Rules:
 - Do not invent citations.
 - Mark unsupported claims as pending verification.
 - Do not mark chapters complete without source or evidence status.
-- Prefer Simplified Chinese for user-facing academic writing unless the user asks otherwise.
-- Keep formal writing natural, readable, and suitable for graduate-student or teacher-training-student work.
-- Avoid stiff AI-style prose, excessive frameworks, repetitive phrasing, unnecessary bulleting, and hollow academic wording.
-- Mark unverifiable source or bibliographic details as `待人工复核`.
-- Verify online-checkable and time-sensitive policy, data, journal, software, API, model, price, time, and version information when available.
 
 ## `docs/codex/PROGRESS.zh-CN.md`
 
@@ -215,12 +209,14 @@ Recommended fields:
 
 Purpose:
 
-- Chinese user-facing progress summary.
+- Chinese user-facing progress summary with an incremental session log.
 - Helps the user quickly understand project progress without reading Codex's internal handoff files.
+- Contains a dated iteration log table where each session appends one row.
 
 Rules:
 
 - Keep it readable for a non-technical or semi-technical Chinese-speaking user.
+- **Always append a new row to the iteration log table; never overwrite previous rows.**
 - Summarize current goal, current progress, recent work, risks, and next recommendations.
 - Do not treat it as Codex's source of truth.
 - If it disagrees with `docs/codex/` or Git state, update it from authoritative records.
@@ -231,10 +227,12 @@ Purpose:
 
 - Chinese user-facing version history and release/change log.
 - Helps the user understand version changes, impact, verification, and migration needs.
+- Accumulates version entries over time; older versions move to the historical section.
 
 Rules:
 
 - Prefer semantic versioning.
+- **When publishing a new version: (1) copy the current "当前版本" section to the top of "历史版本", (2) write the new version info in "当前版本", (3) never delete or overwrite historical entries.**
 - Explain changes in user-facing language.
 - Record verification and known risks.
 - Do not treat it as Codex's source of truth.

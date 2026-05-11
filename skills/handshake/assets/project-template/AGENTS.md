@@ -24,6 +24,7 @@ At minimum, update:
 
 - `docs/codex/HANDOFF.md` with completed work, changed files, commands, verification, blockers or remaining issues, and next steps.
 - `docs/codex/STATUS.md` with the current objective, current state, active work, synchronization state, and environment reuse status.
+- `version/工作进度.md` with a dated session entry (append, never overwrite previous entries).
 - The final user reply must mention current Git status, whether the worktree is clean, and whether a commit is recommended before switching tools or devices.
 
 Update conditionally:
@@ -32,13 +33,7 @@ Update conditionally:
 - `docs/codex/DECISIONS.md` only when durable design, architecture, dependency, workflow, or writing-position decisions are made.
 - `docs/codex/ENVIRONMENT.md` only when Python version, virtual environment, dependency installation, system paths, run/test commands, device, or local execution environment changes.
 - `docs/codex/PAPER.md` or equivalent writing records only when chapter state, source state, research scope, or citation status changes.
-
-The active AI agent should also update these Chinese user-facing summaries when meaningful progress or version information changed:
-
-- `version/工作进度.md`
-- `version/版本迭代记录.md`
-
-These two files are for users to read. AI project management must not depend on them.
+- `version/版本迭代记录.md` when the project version number changed: move the old current version to history first, then write the new version. Do not delete or overwrite historical version entries.
 
 ## Workflow Priority
 

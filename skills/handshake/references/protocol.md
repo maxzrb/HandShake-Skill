@@ -74,6 +74,7 @@ Do not use `version/工作进度.md` or `version/版本迭代记录.md` as start
 - Avoid destructive Git commands unless explicitly requested.
 - Prefer existing project patterns and commands.
 - Record meaningful state changes as they happen.
+- Append incrementally to user-facing `version/` records; never overwrite previous entries.
 - Keep sensitive values out of repository files.
 - Use environment variable names instead of secret values.
 - Treat local execution details as device-scoped unless the current device has been matched and the handoff explicitly allows reuse.
@@ -86,9 +87,10 @@ Minimum required closure:
 
 1. Update `docs/codex/HANDOFF.md`.
 2. Update `docs/codex/STATUS.md`.
-3. Record completed work, changed or created files, commands run, result summaries, verification, remaining issues, and next steps.
-4. Record the current device, whether it matched the previous device, and whether local environment assumptions may be reused.
-5. Report Git synchronization state, whether the working tree is clean, and whether a commit is recommended before switching tools or devices.
+3. Update `version/工作进度.md` — append a dated session entry; never overwrite previous entries.
+4. Record completed work, changed or created files, commands run, result summaries, verification, remaining issues, and next steps.
+5. Record the current device, whether it matched the previous device, and whether local environment assumptions may be reused.
+6. Report Git synchronization state, whether the working tree is clean, and whether a commit is recommended before switching tools or devices.
 
 Conditional updates:
 
@@ -96,7 +98,7 @@ Conditional updates:
 - Update `docs/codex/DECISIONS.md` only when durable project decisions were made, including architecture, dependency, workflow, or paper-writing stance decisions.
 - Update `docs/codex/ENVIRONMENT.md` only when device identity, Python version, virtual environment, dependency state, setup path, system path, or run/test command availability changed.
 - Update `docs/codex/PAPER.md` or equivalent writing records only when chapter status, source verification, research scope, figures/tables, or citation state changed.
-- Update `version/工作进度.md` and `version/版本迭代记录.md` only when user-facing progress, milestone, release, or version information changed.
+- Update `version/版本迭代记录.md` when the project version number changed: move the old current version to history first, then write the new version. Do not delete or overwrite historical version entries.
 
 ## Conflict Handling
 
