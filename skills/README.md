@@ -30,7 +30,7 @@ Skill is valid!
 当前版本：
 
 ```text
-1.7.0
+1.7.1
 ```
 
 它是一个自包含 skill，包含：
@@ -360,7 +360,7 @@ Skill is valid!
 Current version:
 
 ```text
-1.7.0
+1.7.1
 ```
 
 The skill is self-contained:
