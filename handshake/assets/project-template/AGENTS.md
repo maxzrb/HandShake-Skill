@@ -10,11 +10,14 @@ Before substantial work, the active AI agent must:
 2. If running in Claude Code, read `CLAUDE.md` if present.
 3. Read `docs/codex/INDEX.md`.
 4. Read the latest project status and handoff files linked from the index.
-5. Check Git status when this is a Git repository.
+5. If this is a Git repository:
+   a. Run `git pull` to synchronize with the remote before making any changes.
+   b. Run `git status` to see branch, commit, staged, unstaged, and untracked files.
 6. Identify whether this is a new session, Codex taking over from Claude Code, Claude Code taking over from Codex, or a cross-device/cross-environment continuation.
 7. Compare the current device/environment with the latest recorded device in `STATUS.md`, `HANDOFF.md`, or `ENVIRONMENT.md`.
 8. If the device is different or unknown, verify local paths, interpreters, virtual environments, dependencies, and commands before relying on previous environment notes.
 9. Report the orientation files used and whether the local environment appears reusable before editing.
+10. For non-trivial tasks, draft a phased plan and confirm with the user before implementing. Execute step by step.
 
 ## Required Handoff
 
@@ -26,6 +29,7 @@ At minimum, update:
 - `docs/codex/STATUS.md` with the current objective, current state, active work, synchronization state, and environment reuse status.
 - `version/工作进度.md` with a dated session entry (append, never overwrite previous entries).
 - The final user reply must mention current Git status, whether the worktree is clean, and whether a commit is recommended before switching tools or devices.
+- After each completed execution step, remind the user to consider a git commit before proceeding to the next step.
 
 Update conditionally:
 

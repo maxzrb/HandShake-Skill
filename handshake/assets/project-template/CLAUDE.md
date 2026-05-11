@@ -10,8 +10,11 @@ Before making substantive edits, Claude Code must:
 2. Read `docs/codex/STATUS.md`, `docs/codex/HANDOFF.md`, `docs/codex/TODO.md`, and `docs/codex/ENVIRONMENT.md`.
 3. Read `docs/codex/DECISIONS.md` when durable project choices may affect the task.
 4. Read `docs/codex/PAPER.md` for paper-writing work and `docs/codex/PYTHON.md` for Python environment or code execution work, when present.
-5. Check `git status` before editing.
+5. If this is a Git repository:
+   a. Run `git pull` to sync with the remote before making changes.
+   b. Run `git status` before editing.
 6. Identify whether Claude Code is taking over work last handled by Codex, continuing its own previous work, or resuming on a different device, directory, or virtual environment.
+7. For non-trivial tasks, draft a phased plan, confirm with the user, then execute step by step.
 
 ## Claude Code Shutdown
 
@@ -30,6 +33,8 @@ Update conditionally:
 - `docs/codex/ENVIRONMENT.md` when environment, path, Python, dependency, or command behavior changes.
 - `docs/codex/PAPER.md` or equivalent writing records when chapter status, literature status, research scope, or citation state changes.
 - `version/版本迭代记录.md` when the project version number changed: move the old current version to history first, then write the new version. Do not delete or overwrite historical version entries.
+
+After each completed execution step, remind the user to consider a git commit before continuing.
 
 When replying to the user, explain in Chinese. Keep commands, paths, errors, code, package names, and file names in their original form.
 

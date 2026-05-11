@@ -58,12 +58,13 @@ The `version/` files are readable Chinese summaries for users. They are not auth
    - same device and reuse allowed: perform a light sanity check before using recorded local paths or commands
    - different device, unknown device, or reuse not recorded: verify local paths, interpreters, dependencies, and commands before relying on them
 11. Check for `PYTHON.md`, `PAPER.md`, or equivalent domain workflow records.
-12. Check Git state when possible:
-   - current branch
-   - latest commit
-   - staged, unstaged, and untracked files
+12. If Git is available:
+    a. Run `git pull` to synchronize with the remote before making changes.
+    b. Check current branch, latest commit, staged, unstaged, and untracked files.
+    c. If the pull reveals new remote commits, review them before editing.
 13. Detect whether a specialized skill or project workflow applies.
 14. Summarize orientation sources, device comparison, environment reuse status, and current risks before substantial edits.
+15. For non-trivial tasks, draft a phased plan and confirm with the user. Execute step by step; do not batch unrelated changes into one step.
 
 Do not use `version/工作进度.md` or `version/版本迭代记录.md` as startup source-of-truth files. Read them only when the user specifically asks about user-facing progress/version summaries or when updating those summaries.
 
@@ -72,6 +73,9 @@ Do not use `version/工作进度.md` or `version/版本迭代记录.md` as start
 - Follow the current user request first.
 - Preserve user changes.
 - Avoid destructive Git commands unless explicitly requested.
+- When Git is available, run `git pull` before starting work to avoid working from an outdated local repository.
+- For non-trivial tasks, plan in phases, confirm the plan with the user, then execute step by step.
+- After completing each execution step, remind the user to consider a git commit before continuing.
 - Prefer existing project patterns and commands.
 - Record meaningful state changes as they happen.
 - Append incrementally to user-facing `version/` records; never overwrite previous entries.

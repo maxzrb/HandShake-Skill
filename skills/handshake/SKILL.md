@@ -5,7 +5,7 @@ description: Use HandShake for AI coding agent handoff when Codex, Claude Code, 
 
 # HandShake
 
-Version: 1.6.0
+Version: 1.7.0
 
 Use this skill to make AI coding agent sessions portable across tools, devices, and local environments. HandShake is designed for projects that may be alternately handled by Codex and Claude Code, where the next agent must understand project state without relying on conversation history.
 
@@ -16,7 +16,9 @@ At the start of substantial work:
 1. Read applicable `AGENTS.md` files.
 2. In Claude Code, read `CLAUDE.md` when present. It should import `AGENTS.md` and add Claude-specific startup/shutdown reminders.
 3. Read `docs/codex/INDEX.md` if present, then follow it to the status, handoff, todo, decision, and environment records.
-4. Check Git state if the workspace is a Git repository.
+4. If the workspace is a Git repository:
+     a. Run `git pull` to synchronize with the remote before making changes.
+     b. Check `git status` for branch, commit, staged, unstaged, and untracked files.
 5. Identify whether this is a new AI session, Codex taking over from Claude Code, Claude Code taking over from Codex, or a cross-device/cross-environment continuation.
 6. Identify the current device or local environment signature from available evidence such as hostname, OS, workspace path, active shell, Python interpreter, virtual environment, and package manager.
 7. Compare the current device with the most recent device recorded in `STATUS.md`, `HANDOFF.md`, or `ENVIRONMENT.md`.
@@ -24,6 +26,7 @@ At the start of substantial work:
 9. Identify Python, academic writing, or project-specific workflow records.
 10. If another skill has a more specific project management flow, follow it and bridge results back to the repository records.
 11. Tell the user which orientation files were used and whether the local environment appears reusable before making substantial edits.
+12. For non-trivial tasks, draft a phased plan and confirm with the user before implementing. Execute step by step; do not batch unrelated changes into a single step.
 
 At the end of substantial work:
 
@@ -43,6 +46,15 @@ Conditional updates:
 - Update `docs/codex/ENVIRONMENT.md` only when Python version, virtual environment, dependency installation, system path, command, device, or local execution environment changed.
 - Update `docs/codex/PAPER.md` or equivalent paper records only when chapter state, source state, research scope, or citation status changed.
 - Update `version/版本迭代记录.md` when the project version number changed: move the old current version to history first, then write the new version. Do not delete or overwrite historical version entries.
+
+## Phased Execution
+
+For non-trivial work:
+
+1. Plan first: break the task into numbered steps. Confirm the plan with the user before writing code.
+2. Execute one step at a time. After each step, pause and verify the result.
+3. After each completed step, remind the user: "Step N complete. Consider `git add` + `git commit` before continuing."
+4. Do not batch unrelated changes into a single step. If a step grows too large, split it.
 
 ## Initialize a Project
 
