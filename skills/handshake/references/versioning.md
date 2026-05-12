@@ -2,7 +2,39 @@
 
 ## Current Release
 
-Version: 1.7.0
+Version: 1.8.0
+Date: 2026-05-12
+Status: proactive trigger optimization release
+
+Changes:
+
+- Expanded the `SKILL.md` frontmatter description with broader auto-trigger phrases for non-trivial repository work, startup orientation, shutdown handoff, status checks, tool/device/environment switches, and common Chinese continuation requests.
+- Added an "Implicit Trigger Guidance" section that tells agents not to wait for an explicit HandShake request when repository continuity signals are present.
+- Updated Codex UI metadata in `agents/openai.yaml` to emphasize proactive use for continuation, closeout, and project state workflows.
+- Updated Claude plugin metadata so installed plugin listings describe proactive project continuity rather than only explicit handoff.
+
+Compatibility:
+
+- Backward compatible with `1.7.1`.
+
+## Previous Releases
+
+### 1.7.1
+
+Date: 2026-05-11
+Status: version reference synchronization release
+
+Changes:
+
+- Synchronized README version references to `1.7.1`.
+- Preserved the `1.7.0` workflow behavior while aligning user-facing documentation with the tagged package version.
+
+Compatibility:
+
+- Backward compatible with `1.7.0`.
+
+### 1.7.0
+
 Date: 2026-05-11
 Status: mandatory workflow discipline release
 
@@ -16,8 +48,6 @@ Changes:
 Compatibility:
 
 - Backward compatible with `1.6.0`.
-
-## Previous Releases
 
 ### 1.6.0
 

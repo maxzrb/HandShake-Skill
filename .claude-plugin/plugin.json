@@ -1,7 +1,7 @@
 {
   "name": "handshake-skill",
-  "description": "HandShake workflow skill for Codex/Claude Code project handoff, cross-device continuity, and repository-local project records.",
-  "version": "1.7.1",
+  "description": "HandShake workflow skill for proactive Codex/Claude Code project continuity, startup/shutdown handoff, cross-device work, and repository-local state records.",
+  "version": "1.8.0",
   "author": {
     "name": "maxzrb"
   },

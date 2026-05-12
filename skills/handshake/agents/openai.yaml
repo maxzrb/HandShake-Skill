@@ -1,4 +1,4 @@
 interface:
   display_name: "HandShake"
-  short_description: "Maintain Codex/Claude Code handoff, device checks, and project records."
-  default_prompt: "Use HandShake to initialize or inspect project handoff records, compare the current device/environment with prior records, continue work safely across Codex and Claude Code, update minimum closure records (including `version/工作进度.md` with a dated session entry), and refresh conditional records (including `version/版本迭代记录.md` when the version number changed) only when relevant."
+  short_description: "Project continuity, startup/shutdown handoff, and Codex/Claude Code state records."
+  default_prompt: "Use HandShake proactively for non-trivial repository work, continuation, status checks, tool/device/environment switches, and session closeout even when the user does not explicitly name the skill. Read project orientation records, compare the current device/environment with prior records, continue safely across Codex and Claude Code, update minimum closure records including `version/工作进度.md`, and refresh conditional records including `version/版本迭代记录.md` only when relevant."

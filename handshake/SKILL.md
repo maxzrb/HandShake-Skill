@@ -1,13 +1,19 @@
 ---
 name: handshake
-description: Use HandShake for AI coding agent handoff when Codex, Claude Code, or another agent needs to resume, inspect, initialize, or update the same project across sessions, devices, directories, or virtual environments; trigger on handoff, resume, continue project, switch agent, Claude Code, Codex, cross-device, project status, AGENTS.md, CLAUDE.md, docs/codex, and Chinese requests meaning handoff, takeover, or continue development; maintains lightweight repository-local status, handoff, task, decision, environment, Python, and paper-writing records.
+description: Use HandShake for any non-trivial repository work that needs project continuity, startup orientation, shutdown handoff, project status, or AI agent coordination. Trigger even when the user does not name HandShake if they ask to start, continue, resume, pick up, take over, inspect status, update records, finish, close out, switch between Codex and Claude Code, change devices, change directories, change virtual environments, or work in a repo containing AGENTS.md, CLAUDE.md, docs/codex, version/工作进度.md, or version/版本迭代记录.md. Also trigger on Chinese requests such as 继续, 接手, 上次, 项目进度, 交接, 换电脑, 换环境, 收尾, 记录进度, 更新状态, Codex 接手 Claude, or Claude 接手 Codex. Maintains repository-local status, handoff, todo, decision, environment, Python, and paper-writing records.
 ---
 
 # HandShake
 
-Version: 1.7.1
+Version: 1.8.0
 
 Use this skill to make AI coding agent sessions portable across tools, devices, and local environments. HandShake is designed for projects that may be alternately handled by Codex and Claude Code, where the next agent must understand project state without relying on conversation history.
+
+## Implicit Trigger Guidance
+
+Use HandShake proactively. Do not wait for the user to explicitly say "use HandShake" when a request is about continuing repository work, checking project status, taking over prior work, switching tools or machines, changing local environments, making a non-trivial edit in a repository with HandShake records, or closing out a session.
+
+The frontmatter `description` is the main auto-trigger surface for Codex and Claude Code before this file is loaded. Keep it broad, compact, and rich in natural trigger phrases when updating this skill.
 
 ## Quick Start
 
