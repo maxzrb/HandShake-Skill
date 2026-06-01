@@ -2,7 +2,34 @@
 
 ## Current Release
 
-Version: 1.8.0
+Version: 2.0.0
+Date: 2026-06-01
+Status: single-status workflow release
+
+Changes:
+
+- Replaced the default multi-file handoff model with one AI-facing `docs/codex/STATUS.md` source of truth.
+- Removed default generation and validation for `HANDOFF.md`, `TODO.md`, `DECISIONS.md`, `ENVIRONMENT.md`, `PROGRESS.zh-CN.md`, `PYTHON.md`, and `PAPER.md`.
+- Updated `STATUS.md` to contain the current snapshot, TODOs, decisions, risks, environment notes, verification, Git sync, and timestamped session logs.
+- Required substantial sessions to append `YYYY-MM-DD HH:MM` entries at the end of `STATUS.md`.
+- Kept `version/工作进度.md` as the Chinese user-facing progress log with the same timestamped append-at-end discipline.
+- Kept `version/版本迭代记录.md` for user-facing release and version changes only.
+- Updated initializer and checker scripts to enforce the new required record set.
+- Updated Codex, Claude Code, protocol, template, and plugin metadata for the new workflow.
+- Strengthened `docs/codex/INDEX.md`, `AGENTS.md`, and `CLAUDE.md` so agents are explicitly routed to `STATUS.md` instead of treating the index as sufficient context.
+- Added `scripts/update_installed_skill.py` and documented update paths for Codex GitHub installation, remote repository clone/pull updates, downloaded zip updates, local source updates, and Claude Code standalone skill updates.
+- Added the `--latest` shortcut and update/upgrade trigger wording so "update HandShake skill" can route to the canonical repository without the user repeating the URL.
+
+Compatibility:
+
+- Breaking change from `1.8.0`.
+- Old HandShake projects should migrate useful content from split records into `docs/codex/STATUS.md`.
+- Old split records may be archived or deleted by the project owner after migration.
+
+## Previous Releases
+
+### 1.8.0
+
 Date: 2026-05-12
 Status: proactive trigger optimization release
 
@@ -16,8 +43,6 @@ Changes:
 Compatibility:
 
 - Backward compatible with `1.7.1`.
-
-## Previous Releases
 
 ### 1.7.1
 
@@ -52,7 +77,7 @@ Compatibility:
 ### 1.6.0
 
 Date: 2026-05-11
-Status: mandatory incremental version/ session records release
+Status: mandatory incremental version session records release
 
 Changes:
 

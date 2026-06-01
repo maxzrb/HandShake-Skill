@@ -15,14 +15,15 @@ Use `scripts/init_project_handoff.py` to copy these templates into a target proj
 Purpose:
 
 - Mandatory repository-carried instructions for AI coding agents.
-- Points Codex and Claude Code to `docs/codex/INDEX.md`.
-- Defines startup and minimum/conditional shutdown requirements.
-- Records project-specific safety rules.
+- Points Codex and Claude Code to `docs/codex/INDEX.md` and `docs/codex/STATUS.md`.
+- Defines startup, mandatory status logging, shutdown, safety, and versioning requirements.
+- Forces substantial work to be recorded in the repository.
 
 Required sections:
 
 - Required Startup
-- Required Handoff
+- Required Status Logging
+- Required Closeout
 - Workflow Priority
 - Safety
 - Versioning
@@ -38,188 +39,67 @@ Purpose:
 Required sections:
 
 - Claude Code Startup
-- Claude Code Shutdown
+- Claude Code Closeout
 
 ## `docs/codex/INDEX.md`
 
 Purpose:
 
 - Entrypoint for project state.
-- Lists required reading order.
-- Links status, handoff, todo, decisions, and environment files.
-- Explains minimum closure, conditional records, task-specific reading, and how to judge whether work can continue.
+- Points agents to the single AI-facing operational record.
+- Explains required reading order, required closeout, migration of old split files, and how to judge whether work can continue.
 
 Required sections:
 
+- Mandatory Status Entry
 - New Session Reading Order
 - Before Editing
-- Required Closure
-- Conditional Records
-- Task-Specific Reading
-- Current State Files
+- Required Closeout
+- Old Record Migration
 - Can Work Continue?
 
 ## `docs/codex/STATUS.md`
 
 Purpose:
 
-- Current objective and synchronization state.
+- Single AI-facing source of truth for current project state, TODOs, decisions, environment notes, commands, verification, Git sync, and chronological session logs.
 
-Recommended fields:
+Recommended sections:
 
-- Last updated
-- Current objective
-- Current state
-- Current device/environment
-- Active work
-- Recently completed
-- Current risks
-- Synchronization state
-- Environment reuse status
-- Next recommended step
-- Last active agent and likely next agent
-- Whether a commit is recommended before switching agents or devices
-
-## `docs/codex/HANDOFF.md`
-
-Purpose:
-
-- Latest session handoff for the next device or Codex session.
-
-Recommended fields:
-
-- Date
-- Current device
-- Previous device comparison
-- Environment reuse guidance
-- Session summary
-- Work completed
-- Commands run
-- Verification
-- Decisions made
-- Open questions
-- Blockers
-- Next steps
-- Notes for next device
-- Previous agent/session and recommended next agent
-- Git status at handoff
-- Which conditional records were updated and why
-
-## `docs/codex/DECISIONS.md`
-
-Purpose:
-
-- Durable decisions that should survive across sessions.
-- Only updated for durable choices, not every minor implementation detail.
-
-Recommended fields:
-
-- Date
-- Status
-- Context
-- Decision
-- Reason
-- Consequences
-- Superseded decisions
-- Related files
-
-## `docs/codex/TODO.md`
-
-Purpose:
-
-- Active, waiting, done, and dropped tasks.
-
-Use checkbox lists and include blockers for active tasks. Update only when tasks are added, completed, cancelled, reprioritized, or moved between sections.
-
-## `docs/codex/ENVIRONMENT.md`
-
-Purpose:
-
-- Portable setup instructions and local-only notes.
-- Device identity and environment continuity records.
+- Current Snapshot
+- Active TODO
+- Recently Completed
+- Decisions
+- Risks And Blockers
+- Environment Notes
+- Verification And Commands
+- Git Sync
+- Next Recommended Step
+- Session Log
 
 Rules:
 
-- Do not record secret values.
-- Prefer relative paths.
-- Mark machine-specific paths as local.
-- Record whether the current device matches the previous device.
-- Record whether local paths, virtual environments, dependencies, and command results may be reused.
-- If device identity is unknown or different, require local environment verification before command execution.
-- Update only when environment, command, dependency, path, Python, virtual environment, or device facts changed.
-
-## `docs/codex/PYTHON.md`
-
-Purpose:
-
-- Python-specific setup and execution records.
-
-Recommended fields:
-
-- Python version
-- Dependency manager
-- Install commands
-- Run commands
-- Test commands
-- Lint and type-check commands
-- Project layout
-- Local data notes
-- Environment switch notes
-
-## `docs/codex/PAPER.md`
-
-Purpose:
-
-- Academic writing workflow state.
-
-Recommended fields:
-
-- Paper identity
-- Research question
-- Structure
-- Chapter status
-- Source verification
-- Figures and tables
-- Writing rules
-- Last updated agent/session for chapter and source state
-
-Rules:
-
-- Do not invent citations.
-- Mark unsupported claims as pending verification.
-- Do not mark chapters complete without source or evidence status.
-
-## `docs/codex/PROGRESS.zh-CN.md`
-
-Purpose:
-
-- Short Chinese progress summary inside the operational record folder.
-- Helps a human user or next AI agent quickly understand current progress.
-- Does not replace `STATUS.md`, `HANDOFF.md`, `TODO.md`, `DECISIONS.md`, `ENVIRONMENT.md`, or Git state.
-
-Recommended fields:
-
-- Current goal
-- Current progress
-- Recent work
-- Blockers or risks
-- Switch-agent or switch-device reminders
+- Keep the current snapshot short and current.
+- Append each session entry to the end of `Session Log`.
+- Use `YYYY-MM-DD HH:MM` timestamps in every session entry.
+- Record changed files, commands, verification, TODO changes, durable decisions, risks, blockers, and next steps in the entry.
+- Do not create separate default `HANDOFF.md`, `TODO.md`, `DECISIONS.md`, `ENVIRONMENT.md`, `PROGRESS.zh-CN.md`, `PYTHON.md`, or `PAPER.md` files. Fold those concerns into `STATUS.md`.
 
 ## `version/工作进度.md`
 
 Purpose:
 
-- Chinese user-facing progress summary with an incremental session log.
-- Helps the user quickly understand project progress without reading Codex's internal handoff files.
-- Contains a dated iteration log table where each session appends one row.
+- Chinese user-facing progress log.
+- Helps the user quickly understand project progress without reading Codex's internal status file.
+- Uses the same timestamped append-at-end log discipline as `STATUS.md`.
 
 Rules:
 
-- Keep it readable for a non-technical or semi-technical Chinese-speaking user.
-- **Always append a new row to the iteration log table; never overwrite previous rows.**
+- Keep it readable for a Chinese-speaking user.
+- Append a new timestamped entry at the end for every substantial session; never overwrite previous log entries.
 - Summarize current goal, current progress, recent work, risks, and next recommendations.
 - Do not treat it as Codex's source of truth.
-- If it disagrees with `docs/codex/` or Git state, update it from authoritative records.
+- If it disagrees with `STATUS.md` or Git state, update it from authoritative records.
 
 ## `version/版本迭代记录.md`
 
@@ -232,7 +112,7 @@ Purpose:
 Rules:
 
 - Prefer semantic versioning.
-- **When publishing a new version: (1) copy the current "当前版本" section to the top of "历史版本", (2) write the new version info in "当前版本", (3) never delete or overwrite historical entries.**
+- When publishing a new version: copy the current version section to the top of historical versions, write the new version info in current version, and never delete or overwrite historical entries.
 - Explain changes in user-facing language.
 - Record verification and known risks.
 - Do not treat it as Codex's source of truth.

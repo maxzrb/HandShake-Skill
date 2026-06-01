@@ -2,39 +2,56 @@
 
 Last updated: YYYY-MM-DD HH:MM
 Updated by: Codex / Claude Code / user
-Device/session: optional stable label
-Environment reuse: same-device reusable / recheck required / unknown
-Last active agent: Codex / Claude Code / user / unknown
-Likely next agent: Codex / Claude Code / either / unknown
 
-## Current Objective
+## Current Snapshot
 
-Describe the active project goal.
+- Current objective:
+- Current state:
+- Last active agent:
+- Likely next agent:
+- Next recommended step:
 
-## Current State
+## Active TODO
 
-Summarize what is currently true about the project.
-
-## Active Work
-
-- Task:
-- Owner:
-- Status:
-- Relevant files:
-- Previous agent/session:
-- Next handoff target:
+- [ ] Task:
+  - Owner:
+  - Status:
+  - Relevant files:
+  - Notes/blockers:
 
 ## Recently Completed
 
-- YYYY-MM-DD: Completed item and evidence.
+- YYYY-MM-DD HH:MM: Completed item and evidence.
 
-## Current Risks
+## Decisions
 
-- Risk:
-- Impact:
-- Mitigation:
+- YYYY-MM-DD HH:MM:
+  - Decision:
+  - Reason:
+  - Impact:
 
-## Synchronization State
+## Risks And Blockers
+
+- Risk/blocker:
+  - Impact:
+  - Mitigation or next check:
+
+## Environment Notes
+
+Record only when local setup matters, such as changed device, path, interpreter, virtual environment, dependency, run/test command, or failed command.
+
+- Current known environment:
+- Recheck required before:
+- Local-only notes:
+
+## Verification And Commands
+
+- Commands run:
+  - `command`: result summary
+- Tests/checks:
+- Not run:
+
+## Git Sync
 
 - Git repository: yes/no
 - Branch:
@@ -42,11 +59,20 @@ Summarize what is currently true about the project.
 - Uncommitted changes:
 - Working tree clean: yes/no/unknown
 - Commit recommended before switching agents/devices: yes/no
-- Cross-device concerns:
-- Last recorded device:
-- Current device comparison:
-- Local environment reuse:
 
-## Next Recommended Step
+## Session Log
 
-Describe the next concrete action.
+Append new entries below this line. Use `YYYY-MM-DD HH:MM` so same-day work remains ordered. Do not overwrite previous entries.
+
+### YYYY-MM-DD HH:MM - Codex / Claude Code / user
+
+- Objective:
+- Work completed:
+- Files changed:
+- Commands run:
+- Verification:
+- TODO changes:
+- Decisions/risks:
+- Environment notes:
+- Git status:
+- Next step:

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Initialize AI agent handoff records in a target project."""
+"""Initialize HandShake status records in a target project."""
 
 from __future__ import annotations
 
@@ -11,17 +11,12 @@ from pathlib import Path
 SKILL_ROOT = Path(__file__).resolve().parents[1]
 TEMPLATE_ROOT = SKILL_ROOT / "assets" / "project-template"
 
-OPTIONAL_DOMAIN_FILES = {
-    "python": Path("docs/codex/PYTHON.md"),
-    "paper": Path("docs/codex/PAPER.md"),
-}
-
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description=(
-            "Copy lightweight Codex/Claude Code handoff templates into a target "
-            "project without overwriting existing files unless --force is used."
+            "Copy HandShake status templates into a target project without "
+            "overwriting existing files unless --force is used."
         )
     )
     parser.add_argument(
@@ -29,21 +24,6 @@ def parse_args() -> argparse.Namespace:
         nargs="?",
         default=".",
         help="Target project directory. Defaults to the current directory.",
-    )
-    parser.add_argument(
-        "--python",
-        action="store_true",
-        help="Include the Python workflow template.",
-    )
-    parser.add_argument(
-        "--paper",
-        action="store_true",
-        help="Include the academic writing workflow template.",
-    )
-    parser.add_argument(
-        "--all",
-        action="store_true",
-        help="Include all optional domain templates.",
     )
     parser.add_argument(
         "--force",
@@ -64,23 +44,9 @@ def required_files() -> list[Path]:
         Path("CLAUDE.md"),
         Path("docs/codex/INDEX.md"),
         Path("docs/codex/STATUS.md"),
-        Path("docs/codex/HANDOFF.md"),
-        Path("docs/codex/DECISIONS.md"),
-        Path("docs/codex/TODO.md"),
-        Path("docs/codex/ENVIRONMENT.md"),
-        Path("docs/codex/PROGRESS.zh-CN.md"),
         Path("version/工作进度.md"),
         Path("version/版本迭代记录.md"),
     ]
-
-
-def selected_files(args: argparse.Namespace) -> list[Path]:
-    files = required_files()
-    if args.all or args.python:
-        files.append(OPTIONAL_DOMAIN_FILES["python"])
-    if args.all or args.paper:
-        files.append(OPTIONAL_DOMAIN_FILES["paper"])
-    return files
 
 
 def copy_file(source: Path, target: Path, *, force: bool, dry_run: bool) -> str:
@@ -114,7 +80,7 @@ def main() -> int:
     print(f"target: {target_root}")
     print(f"template: {TEMPLATE_ROOT}")
 
-    for relative_path in selected_files(args):
+    for relative_path in required_files():
         message = copy_file(
             TEMPLATE_ROOT / relative_path,
             target_root / relative_path,

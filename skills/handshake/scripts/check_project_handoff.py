@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
-"""Check lightweight HandShake project readiness."""
+"""Check HandShake status-record readiness."""
 
 from __future__ import annotations
 
 import argparse
-import os
+import re
 import subprocess
-import sys
 from pathlib import Path
 
 
@@ -15,24 +14,19 @@ KEY_FILES = [
     Path("CLAUDE.md"),
     Path("docs/codex/INDEX.md"),
     Path("docs/codex/STATUS.md"),
-    Path("docs/codex/HANDOFF.md"),
-    Path("docs/codex/TODO.md"),
-    Path("docs/codex/DECISIONS.md"),
-    Path("docs/codex/ENVIRONMENT.md"),
-    Path("docs/codex/PROGRESS.zh-CN.md"),
-]
-
-OPTIONAL_FILES = [
-    Path("docs/codex/PYTHON.md"),
-    Path("docs/codex/PAPER.md"),
     Path("version/工作进度.md"),
     Path("version/版本迭代记录.md"),
 ]
 
+TIMESTAMP_RE = re.compile(
+    r"^#{2,3} (?:\d{4}-\d{2}-\d{2} \d{2}:\d{2}|YYYY-MM-DD HH:MM)",
+    re.MULTILINE,
+)
+
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Report Git, Python, virtual environment, and HandShake file status."
+        description="Report Git and HandShake status-record readiness."
     )
     parser.add_argument(
         "target",
@@ -69,19 +63,50 @@ def print_section(title: str) -> None:
 def check_files(target: Path) -> int:
     missing_required = 0
 
-    print_section("Handoff files")
+    print_section("HandShake files")
     for relative_path in KEY_FILES:
         exists = (target / relative_path).is_file()
         if not exists:
             missing_required += 1
         print(f"{'ok' if exists else 'missing'} {relative_path}")
 
-    print_section("Optional files")
-    for relative_path in OPTIONAL_FILES:
-        exists = (target / relative_path).is_file()
-        print(f"{'ok' if exists else 'missing'} {relative_path}")
-
     return missing_required
+
+
+def check_status_shape(target: Path) -> int:
+    status_path = target / "docs/codex/STATUS.md"
+    progress_path = target / "version/工作进度.md"
+    issues = 0
+
+    print_section("Status log shape")
+
+    if not status_path.is_file():
+        print("missing docs/codex/STATUS.md")
+        return 1
+
+    status = status_path.read_text(encoding="utf-8")
+    for section in ["## Current Snapshot", "## Active TODO", "## Session Log"]:
+        if section not in status:
+            print(f"missing section in STATUS.md: {section}")
+            issues += 1
+        else:
+            print(f"ok STATUS.md contains {section}")
+
+    if TIMESTAMP_RE.search(status):
+        print("ok STATUS.md contains a timestamped log entry or placeholder")
+    else:
+        print("missing timestamped STATUS.md log entry or placeholder")
+        issues += 1
+
+    if progress_path.is_file():
+        progress = progress_path.read_text(encoding="utf-8")
+        if TIMESTAMP_RE.search(progress):
+            print("ok version/工作进度.md contains a timestamped log entry or placeholder")
+        else:
+            print("missing timestamped version/工作进度.md log entry or placeholder")
+            issues += 1
+
+    return issues
 
 
 def check_git(target: Path) -> int:
@@ -113,21 +138,6 @@ def check_git(target: Path) -> int:
     return 0
 
 
-def check_python(target: Path) -> int:
-    print_section("Python")
-    print(f"current executable: {sys.executable}")
-    print(f"current version: {sys.version.split()[0]}")
-    print(f"VIRTUAL_ENV: {os.environ.get('VIRTUAL_ENV', '(not set)')}")
-    print(f"CONDA_PREFIX: {os.environ.get('CONDA_PREFIX', '(not set)')}")
-
-    code, output = run_command([sys.executable, "--version"], target)
-    print(f"python command check: {'ok' if code == 0 else 'failed'}")
-    if output:
-        print(output)
-
-    return 0
-
-
 def main() -> int:
     args = parse_args()
     target = Path(args.target).expanduser().resolve()
@@ -141,15 +151,18 @@ def main() -> int:
         return 2
 
     missing_required = check_files(target)
+    shape_issues = check_status_shape(target)
     check_git(target)
-    check_python(target)
 
     print_section("Summary")
-    if missing_required:
-        print(f"missing required handoff files: {missing_required}")
+    if missing_required or shape_issues:
+        print(
+            "handoff readiness failed: "
+            f"{missing_required} missing required files, {shape_issues} status shape issues"
+        )
         return 1
 
-    print("required handoff files present")
+    print("required HandShake status records present")
     return 0
 
 

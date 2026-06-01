@@ -1,660 +1,138 @@
 # HandShake Skill
 
-中文说明在前，English instructions follow.
-
-## 中文使用说明
-
-### 1. 这里是不是可以直接使用的成品？
-
-是。`skills/` 文件夹中当前可用的成品是：
+This folder contains the ready-to-use HandShake skill package:
 
 ```text
 skills/
   handshake/
 ```
 
-为了让 Codex 从 GitHub 仓库安装时不用二次定位，仓库根目录还维护了同内容镜像：
+The repository also keeps a root-level mirror:
 
 ```text
 handshake/
 ```
 
-`skills/handshake/` 用于 Claude Code plugin 和仓库内开发；根目录 `handshake/` 用于 Codex 直接安装。
-
-这个 skill 已通过结构校验：
-
-```text
-Skill is valid!
-```
-
-当前版本：
-
-```text
-1.8.0
-```
-
-它是一个自包含 skill，包含：
-
-```text
-handshake/
-  SKILL.md                         # Codex 会读取的核心 skill 说明
-  agents/openai.yaml               # Codex 界面元数据
-  scripts/init_project_handoff.py  # 初始化目标项目的脚本
-  scripts/check_project_handoff.py # 检查目标项目交接文件、Git 和 Python 环境
-  scripts/install_claude_skill.py  # 安装为 Claude Code standalone skill 的脚本
-  assets/project-template/         # 要复制到目标项目的模板
-  references/                      # 协议、模板、版本规则说明
-```
-
-### 2. 这个 skill 解决什么问题？
-
-它用于解决 Codex、Claude Code、多台电脑和多个会话之间项目交接困难的问题。
-
-它会让 AI 工具在开始工作前先查看项目规则和项目状态，在结束工作前更新最低必要交接记录。这样下一台电脑、下一次 Codex 会话或下一次 Claude Code 会话可以知道：
-
-- 当前项目目标是什么。
-- 上一次做到哪里。
-- 当前设备和上次设备是否相同，能不能沿用本地环境。
-- 哪些文件被改过。
-- 哪些命令跑过。
-- 哪些测试通过或没跑。
-- 还有什么待办、阻塞和下一步。
-
-### 3. 适合哪些项目？
-
-适合：
-
-- Python 开发项目。
-- 论文写作项目。
-- 同时包含代码和论文的项目。
-- 需要在多台电脑上继续推进的项目。
-- 需要 Codex 或 Claude Code 每次启动都先读项目记录的项目。
-
-### 4. 推荐的使用方式
-
-有三类使用方式。
-
-#### 方式 A：在当前仓库中使用
-
-如果你只想在当前这个仓库里使用，不需要安装到全局，直接让 Codex 使用：
-
-```text
-Use the HandShake skill in skills/handshake.
-```
-
-如果是从 GitHub 安装给 Codex 使用，推荐直接使用根目录镜像路径：
-
-```text
-python C:\Users\MAX2EB\.codex\skills\.system\skill-installer\scripts\install-skill-from-github.py --repo maxzrb/HandShake-Skill --path handshake
-```
-
-然后让 Codex 初始化目标项目，例如：
-
-```text
-python skills\handshake\scripts\init_project_handoff.py F:\path\to\your-project --all
-```
-
-#### 方式 B：安装为全局 skill
-
-如果你想在所有项目中都使用它，需要把整个文件夹放到 Codex 的全局 skills 目录。
-
-Windows 常见目录：
-
-```text
-C:\Users\<你的用户名>\.codex\skills\
-```
-
-当前机器通常可以使用：
-
-```text
-C:\Users\maxzr\.codex\skills\
-```
-
-要安装时，应保留完整目录结构：
-
-```text
-C:\Users\maxzr\.codex\skills\
-  handshake\
-    SKILL.md
-    agents\
-    scripts\
-    assets\
-    references\
-```
-
-安装后，新的 Codex 会话就可以在任意项目中通过描述触发这个 skill，例如：
-
-```text
-使用 HandShake 初始化这个项目的 Codex 交接记录。
-```
-
-#### 方式 C：其他电脑如何更新全局 HandShake
-
-建议每台电脑都保留一份本 GitHub 仓库克隆，然后把仓库里的 `handshake/` 同步到全局 Codex skills 目录。`skills/handshake/` 仍然保留给 Claude Code plugin 和仓库开发使用。
-
-第一次在某台电脑配置：
-
-```text
-git clone https://github.com/maxzrb/HandShake-Skill.git
-cd HandShake
-robocopy handshake "$env:USERPROFILE\.codex\skills\handshake" /MIR
-```
-
-以后当你在主电脑更新 HandShake 并推送到 GitHub 后，其他电脑这样更新：
-
-```text
-cd HandShake
-git pull --ff-only
-robocopy handshake "$env:USERPROFILE\.codex\skills\handshake" /MIR
-```
-
-注意：
-
-- `git pull --ff-only` 只接受正常快进更新，能避免意外合并。
-- `robocopy /MIR` 会让全局 skill 目录完全等于仓库中的 `handshake/`。
-- 不要在 `$env:USERPROFILE\.codex\skills\handshake` 里保留私人手改内容；要改就改仓库，再提交和推送。
-- 更新后开启新的 Codex 会话，通常就会读取新版 skill。
-
-#### 方式 D：在 Claude Code 中使用
-
-HandShake 也可以作为 Claude Code skill 使用。仓库根目录提供了 `.claude-plugin/plugin.json`，可以直接用 Claude Code 的 plugin 方式测试：
-
-```text
-claude --plugin-dir .
-```
-
-进入 Claude Code 后调用：
-
-```text
-/handshake-skill:handshake
-```
-
-如果想作为个人 Claude Code skill 长期使用，可以复制 `skills/handshake/` 到 Claude Code 的个人 skills 目录：
-
-```text
-robocopy skills\handshake "$env:USERPROFILE\.claude\skills\handshake" /MIR
-```
-
-也可以用随包脚本安装：
-
-```text
-python skills\handshake\scripts\install_claude_skill.py --dry-run
-python skills\handshake\scripts\install_claude_skill.py --force
-```
-
-安装后在 Claude Code 中调用：
-
-```text
-/handshake
-```
-
-如果只想给某个项目启用 Claude Code project skill：
-
-```text
-python skills\handshake\scripts\install_claude_skill.py --project F:\my-project --force
-```
-
-### 5. 如何初始化一个目标项目？
-
-进入本仓库目录后运行：
-
-```text
-python skills\handshake\scripts\init_project_handoff.py <目标项目路径> --all
-```
-
-例子：
-
-```text
-python skills\handshake\scripts\init_project_handoff.py F:\my-project --all
-```
-
-执行后，目标项目会得到：
-
-```text
-AGENTS.md
-CLAUDE.md
-docs/codex/INDEX.md
-docs/codex/STATUS.md
-docs/codex/HANDOFF.md
-docs/codex/DECISIONS.md
-docs/codex/TODO.md
-docs/codex/ENVIRONMENT.md
-docs/codex/PROGRESS.zh-CN.md
-docs/codex/PYTHON.md
-docs/codex/PAPER.md
-version/工作进度.md
-version/版本迭代记录.md
-```
-
-### 6. 初始化脚本参数
-
-```text
---python
-```
-
-只额外加入 Python 项目模板 `docs/codex/PYTHON.md`。
-
-```text
---paper
-```
-
-只额外加入论文写作模板 `docs/codex/PAPER.md`。
-
-```text
---all
-```
-
-加入所有可选模板。推荐新手使用这个参数。
-
-```text
---dry-run
-```
-
-只预览会创建哪些文件，不实际写入。第一次使用时建议先跑这个。
-
-```text
---force
-```
-
-覆盖目标项目中已经存在的同名文件。这个参数要谨慎使用。
-
-### 7. 新手推荐流程
-
-第一次给某个项目启用交接协议时，推荐这样做：
-
-1. 先预览：
-
-```text
-python skills\handshake\scripts\init_project_handoff.py F:\my-project --all --dry-run
-```
-
-2. 确认输出没问题后正式初始化：
-
-```text
-python skills\handshake\scripts\init_project_handoff.py F:\my-project --all
-```
-
-3. 打开目标项目，让 Codex 接管时说：
-
-```text
-请使用 HandShake 流程，先读取 AGENTS.md 和 docs/codex/INDEX.md，再继续工作。
-```
-
-4. 每次结束较大工作时，让 Codex 更新交接：
-
-```text
-请按 HandShake 流程收尾：最低更新 docs/codex/HANDOFF.md、STATUS.md 和 version/工作进度.md（追加不覆盖）；只有任务变化才更新 TODO.md，长期决策才更新 DECISIONS.md，环境变化才更新 ENVIRONMENT.md，版本号变化才更新 version/版本迭代记录.md。最后说明 git status 是否干净。
-```
-
-### 8. 每个文件的作用
-
-`AGENTS.md`：
-项目规则入口。Codex 每次进入项目时应该先读它。
-
-`docs/codex/INDEX.md`：
-项目状态索引。告诉 Codex 接下来该读哪些状态文件。
-
-`docs/codex/STATUS.md`：
-当前项目状态。记录当前目标、进度、风险和同步状态。
-
-`docs/codex/HANDOFF.md`：
-交接说明。记录本次做了什么、改了什么、验证了什么、下一步是什么。
-
-`docs/codex/TODO.md`：
-待办清单。记录活跃任务、等待事项、已完成事项和放弃事项。
-
-`docs/codex/DECISIONS.md`：
-决策记录。记录长期有效的设计选择和原因。
-
-`docs/codex/ENVIRONMENT.md`：
-环境说明。记录安装、运行、测试命令、本地环境差异、设备识别和环境是否可沿用。
-
-`docs/codex/PYTHON.md`：
-Python 项目专用说明。记录 Python 版本、依赖管理、运行命令、测试命令等。
-
-`docs/codex/PAPER.md`：
-论文写作专用说明。记录论文结构、章节状态、引用核查、图表和待验证论断。
-
-`version/工作进度.md`：
-面向中文用户的可读进度说明。每次会话结束时追加一行迭代记录，不覆盖已有内容。它帮助用户快速了解项目推进情况，但不是 Codex 的项目管理依据。
-
-`version/版本迭代记录.md`：
-面向中文用户的版本变化记录。发布新版本时先将旧版本移至历史再写入新版，不删除历史记录。它帮助用户了解版本变化、影响和验证情况，但不是 Codex 的项目管理依据。
-
-### 9. 注意事项
-
-- 默认不会覆盖目标项目已有文件。
-- 如果看到 `skip existing`，表示已有文件被保留。
-- 不要把 API key、密码、token 写进 `docs/codex/`。
-- 如果多个电脑开发，建议把这些交接文件提交到 Git。
-- 如果目标项目还不是 Git 仓库，这个流程仍可使用，但跨设备同步需要你自己保证。
-- 管理流程 skill 必须按版本发布，不能静默改写已发布版本。
-- 每次 release 必须同时 push 分支和 annotated tag，例如 `git push`、`git tag -a v<version> -m "Release HandShake <version>"`、`git push origin v<version>`。
-- `version/` 下的两个中文文档只给用户阅读；Codex 自身管理仍依赖 `AGENTS.md`、`docs/codex/` 和 Git 状态。
-
-## English Instructions
-
-### 1. Is this a ready-to-use output?
-
-Yes. The ready-to-use skill in this folder is:
-
-```text
-skills/
-  handshake/
-```
-
-The repository also keeps an equivalent root-level mirror so Codex GitHub installers can find the skill without a second path scan:
-
-```text
-handshake/
-```
-
-Use `skills/handshake/` for Claude Code plugin use and repository development. Use root-level `handshake/` for direct Codex installation.
-
-It has passed skill validation:
-
-```text
-Skill is valid!
-```
+Use `skills/handshake/` for development and Claude Code plugin packaging. Use `handshake/` for direct Codex GitHub installation.
 
 Current version:
 
 ```text
-1.8.0
+2.0.0
 ```
 
-The skill is self-contained:
+## What HandShake Does
 
-```text
-handshake/
-  SKILL.md                         # Main skill instructions for Codex
-  agents/openai.yaml               # Codex UI metadata
-  scripts/init_project_handoff.py  # Target project initializer
-  scripts/check_project_handoff.py # Target project Git/Python/handoff checker
-  scripts/install_claude_skill.py  # Claude Code standalone skill installer
-  assets/project-template/         # Templates copied into target projects
-  references/                      # Protocol, templates, and versioning rules
-```
-
-### 2. What problem does it solve?
-
-It helps Codex and Claude Code continue project work across multiple PCs, tools, and sessions.
-
-Before work starts, the AI agent reads project rules and project state. Before work ends, it updates the minimum required handoff records. The next Codex or Claude Code session can then understand:
-
-- The current goal.
-- What was done last.
-- Whether the current device matches the previous device and whether local environment assumptions can be reused.
-- Which files changed.
-- Which commands were run.
-- What was verified.
-- What remains blocked.
-- What should happen next.
-
-### 3. Suitable projects
-
-Use it for:
-
-- Python development projects.
-- Academic writing projects.
-- Mixed code and paper projects.
-- Projects continued across multiple computers.
-- Projects where Codex must read local project records before working.
-
-### 4. Usage options
-
-#### Option A: Use from this repository
-
-Tell Codex:
-
-```text
-Use the HandShake skill in skills/handshake.
-```
-
-For Codex installation from GitHub, prefer the root-level mirror path:
-
-```text
-python C:\Users\MAX2EB\.codex\skills\.system\skill-installer\scripts\install-skill-from-github.py --repo maxzrb/HandShake-Skill --path handshake
-```
-
-Then initialize a target project:
-
-```text
-python skills\handshake\scripts\init_project_handoff.py F:\path\to\your-project --all
-```
-
-#### Option B: Install globally
-
-Put the full `handshake/` folder into your global Codex skills directory.
-
-Common Windows location:
-
-```text
-C:\Users\<your-user-name>\.codex\skills\
-```
-
-On this machine, that is usually:
-
-```text
-C:\Users\maxzr\.codex\skills\
-```
-
-Keep the full structure:
-
-```text
-C:\Users\maxzr\.codex\skills\
-  handshake\
-    SKILL.md
-    agents\
-    scripts\
-    assets\
-    references\
-```
-
-After global installation, you can use it in any project by asking:
-
-```text
-Use HandShake to initialize Codex handoff records for this project.
-```
-
-#### Option C: Update HandShake On Other PCs
-
-Recommended setup: keep one clone of this GitHub repository on each PC, then mirror `handshake/` into the global Codex skills directory. `skills/handshake/` remains available for Claude Code plugin use and repository development.
-
-First-time setup on another PC:
-
-```text
-git clone https://github.com/maxzrb/HandShake-Skill.git
-cd HandShake
-robocopy handshake "$env:USERPROFILE\.codex\skills\handshake" /MIR
-```
-
-After you update HandShake on the main PC and push to GitHub, update another PC with:
-
-```text
-cd HandShake
-git pull --ff-only
-robocopy handshake "$env:USERPROFILE\.codex\skills\handshake" /MIR
-```
-
-Notes:
-
-- `git pull --ff-only` avoids accidental merge commits.
-- `robocopy /MIR` makes the global skill folder exactly match `handshake/` from the repository.
-- Do not keep private manual edits inside `$env:USERPROFILE\.codex\skills\handshake`; edit the repository, then commit and push.
-- Start a new Codex session after updating so the new skill version is loaded.
-
-#### Option D: Use With Claude Code
-
-HandShake can also run as a Claude Code skill. The repository root includes `.claude-plugin/plugin.json`, so you can test it as a Claude Code plugin:
-
-```text
-claude --plugin-dir .
-```
-
-Inside Claude Code, invoke:
-
-```text
-/handshake-skill:handshake
-```
-
-For long-term personal use, copy `skills/handshake/` into Claude Code's personal skills directory:
-
-```text
-robocopy skills\handshake "$env:USERPROFILE\.claude\skills\handshake" /MIR
-```
-
-Or use the bundled installer:
-
-```text
-python skills\handshake\scripts\install_claude_skill.py --dry-run
-python skills\handshake\scripts\install_claude_skill.py --force
-```
-
-After standalone installation, invoke:
-
-```text
-/handshake
-```
-
-For a project-local Claude Code skill:
-
-```text
-python skills\handshake\scripts\install_claude_skill.py --project F:\my-project --force
-```
-
-### 5. Initialize a target project
-
-From this repository, run:
-
-```text
-python skills\handshake\scripts\init_project_handoff.py <target-project-path> --all
-```
-
-Example:
-
-```text
-python skills\handshake\scripts\init_project_handoff.py F:\my-project --all
-```
-
-The target project will receive:
+HandShake helps Codex and Claude Code continue project work across sessions, tools, computers, and local environments. Version 2.x uses a compact record model:
 
 ```text
 AGENTS.md
 CLAUDE.md
 docs/codex/INDEX.md
 docs/codex/STATUS.md
-docs/codex/HANDOFF.md
-docs/codex/DECISIONS.md
-docs/codex/TODO.md
-docs/codex/ENVIRONMENT.md
-docs/codex/PROGRESS.zh-CN.md
-docs/codex/PYTHON.md
-docs/codex/PAPER.md
 version/工作进度.md
 version/版本迭代记录.md
 ```
 
-### 6. Script options
+`docs/codex/STATUS.md` is the only AI-facing operational source of truth. It contains the current snapshot, TODOs, decisions, risks, environment notes when relevant, commands, verification, Git sync, and timestamped session logs.
+
+`version/工作进度.md` is the Chinese user-facing progress log. `version/版本迭代记录.md` is updated only when a project version or release changes.
+
+## Initialize A Project
+
+Preview:
 
 ```text
---python
+python skills\handshake\scripts\init_project_handoff.py F:\my-project --dry-run
 ```
 
-Also include the Python workflow template: `docs/codex/PYTHON.md`.
+Create missing files:
 
 ```text
---paper
+python skills\handshake\scripts\init_project_handoff.py F:\my-project
 ```
 
-Also include the academic writing template: `docs/codex/PAPER.md`.
+Overwrite existing files only when explicitly intended:
 
 ```text
---all
+python skills\handshake\scripts\init_project_handoff.py F:\my-project --force
 ```
 
-Include all optional templates. Recommended for beginners.
+## Check A Project
 
 ```text
---dry-run
+python skills\handshake\scripts\check_project_handoff.py F:\my-project
 ```
 
-Preview changes without writing files.
+The checker validates required files, the `STATUS.md` section shape, timestamped log placeholders or entries, and Git status when available.
+
+## Update Installed Skill
+
+Canonical repository:
 
 ```text
---force
+https://github.com/maxzrb/HandShake-Skill
 ```
 
-Overwrite existing files. Use with care.
-
-### 7. Beginner workflow
-
-1. Preview first:
+Codex can update from GitHub:
 
 ```text
-python skills\handshake\scripts\init_project_handoff.py F:\my-project --all --dry-run
+python C:\Users\MAX2EB\.codex\skills\.system\skill-installer\scripts\install-skill-from-github.py --repo maxzrb/HandShake-Skill --path handshake
 ```
 
-2. Initialize:
+Update from the remote repository on any computer:
 
 ```text
-python skills\handshake\scripts\init_project_handoff.py F:\my-project --all
+python skills\handshake\scripts\update_installed_skill.py --latest --all --force
 ```
 
-3. In the target project, ask Codex:
+`--latest` uses `https://github.com/maxzrb/HandShake-Skill.git`.
+
+From a local clone, update the clone first, then update installed copies:
 
 ```text
-Use the HandShake workflow. Read AGENTS.md and docs/codex/INDEX.md before continuing.
+git pull --ff-only
+python skills\handshake\scripts\update_installed_skill.py --all --dry-run
+python skills\handshake\scripts\update_installed_skill.py --all --force
 ```
 
-4. Before ending substantial work, ask Codex:
+From a downloaded GitHub zip:
 
 ```text
-Close out with HandShake: at minimum update docs/codex/HANDOFF.md, STATUS.md, and version/工作进度.md (append, don't overwrite); update TODO.md only if tasks changed, DECISIONS.md only for durable decisions, ENVIRONMENT.md only for environment changes, and version/版本迭代记录.md only when the version number changed. Report whether git status is clean.
+python skills\handshake\scripts\update_installed_skill.py --zip C:\Downloads\HandShake-Skill-main.zip --all --force
 ```
 
-### 8. What each generated file does
+From an extracted repository or package folder:
 
-`AGENTS.md`:
-Project instruction entrypoint. Codex should read it first.
+```text
+python skills\handshake\scripts\update_installed_skill.py --source C:\Downloads\HandShake-Skill-main --all --force
+python skills\handshake\scripts\update_installed_skill.py --source C:\Downloads\HandShake-Skill-main\handshake --all --force
+```
 
-`docs/codex/INDEX.md`:
-State index. Tells Codex which project records to read.
+Single target updates:
 
-`docs/codex/STATUS.md`:
-Current status, goal, risks, and synchronization notes.
+```text
+python skills\handshake\scripts\update_installed_skill.py --codex --force
+python skills\handshake\scripts\update_installed_skill.py --claude --force
+```
 
-`docs/codex/HANDOFF.md`:
-Latest handoff: completed work, changed files, verification, blockers, and next steps.
+## Closeout Record Behavior
 
-`docs/codex/TODO.md`:
-Active, waiting, done, and dropped tasks.
+Substantial project work is recorded in `docs/codex/STATUS.md`. Each session keeps the current snapshot up to date and appends a `YYYY-MM-DD HH:MM` entry to the `Session Log` section. Chinese user-facing progress is appended to `version/工作进度.md`. `version/版本迭代记录.md` changes only when the project version or release state changes.
 
-`docs/codex/DECISIONS.md`:
-Durable project decisions and rationale.
+## Old Project Migration
 
-`docs/codex/ENVIRONMENT.md`:
-Setup, run, test commands, local environment differences, device identity, and environment reuse status.
+If a project has older split records, migrate their useful content into `docs/codex/STATUS.md`:
 
-`docs/codex/PYTHON.md`:
-Python-specific setup, dependency, run, test, lint, and project layout notes.
+- `HANDOFF.md` -> latest session log entry.
+- `TODO.md` -> `Active TODO`.
+- `DECISIONS.md` -> `Decisions`.
+- `ENVIRONMENT.md` and `PYTHON.md` -> `Environment Notes`.
+- `PAPER.md` -> writing/citation sections inside `STATUS.md`.
+- `PROGRESS.zh-CN.md` -> `version/工作进度.md`.
 
-`docs/codex/PAPER.md`:
-Academic writing structure, chapter status, citation verification, figures, and unsupported claims.
+After migration, default maintenance should only update `STATUS.md`, `version/工作进度.md`, and `version/版本迭代记录.md` when version/release state changes.
 
-`version/工作进度.md`:
-Chinese user-facing progress summary. Each session appends a dated entry; never overwrites previous rows. It helps the user understand project progress, but it is not Codex's project management source of truth.
+## Release Discipline
 
-`version/版本迭代记录.md`:
-Chinese user-facing version history. When a new version is released, the old current version is moved to history first, then the new version is written. It helps the user understand version changes, impact, and verification, but it is not Codex's project management source of truth.
-
-### 9. Notes
-
-- Existing files are skipped by default.
-- `skip existing` means the existing target file was preserved.
-- Do not store API keys, passwords, or tokens in `docs/codex/`.
-- For cross-device work, commit these handoff files to Git when appropriate.
-- If the target project is not a Git repository, the workflow still works, but synchronization is your responsibility.
-- Management workflow skills must be released with explicit versions and must not silently rewrite released versions.
-- Each release must push both the branch and annotated tag, for example `git push`, `git tag -a v<version> -m "Release HandShake <version>"`, and `git push origin v<version>`.
-- The two files under `version/` are for users to read; Codex management still depends on `AGENTS.md`, `docs/codex/`, and Git state.
+Before release, keep `skills/handshake/` and `handshake/` synchronized, validate both packages, update version references, commit, push the branch, create an annotated tag, and push the tag.

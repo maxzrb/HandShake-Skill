@@ -8,36 +8,43 @@ Before substantial work, the active AI agent must:
 
 1. Read this file.
 2. If running in Claude Code, read `CLAUDE.md` if present.
-3. Read `docs/codex/INDEX.md`.
-4. Read the latest project status and handoff files linked from the index.
+3. Read `docs/codex/INDEX.md` for navigation.
+4. Read `docs/codex/STATUS.md` as the mandatory single AI-facing source of truth. Do not rely on `INDEX.md` alone.
 5. If this is a Git repository:
    a. Run `git pull` to synchronize with the remote before making any changes.
    b. Run `git status` to see branch, commit, staged, unstaged, and untracked files.
-6. Identify whether this is a new session, Codex taking over from Claude Code, Claude Code taking over from Codex, or a cross-device/cross-environment continuation.
-7. Compare the current device/environment with the latest recorded device in `STATUS.md`, `HANDOFF.md`, or `ENVIRONMENT.md`.
-8. If the device is different or unknown, verify local paths, interpreters, virtual environments, dependencies, and commands before relying on previous environment notes.
-9. Report the orientation files used and whether the local environment appears reusable before editing.
-10. For non-trivial tasks, draft a phased plan and confirm with the user before implementing. Execute step by step.
+6. Identify whether this is a new session, Codex taking over from Claude Code, Claude Code taking over from Codex, same-tool continuation, or cross-device/cross-environment continuation.
+7. Check local environment details only when the task involves execution, Python, dependencies, changed paths, changed devices, changed virtual environments, or `STATUS.md` says recheck is required.
+8. Report the orientation files used and current Git/workflow risk before editing.
+9. For non-trivial tasks, draft a phased plan and confirm with the user unless the user already gave clear implementation direction. Execute step by step.
 
-## Required Handoff
+## Required Status Logging
 
-Before ending substantial work, the active AI agent must update the project handoff records under `docs/codex/`.
+`docs/codex/STATUS.md` is the only AI-facing operational record.
 
-At minimum, update:
+The active agent must keep it current:
 
-- `docs/codex/HANDOFF.md` with completed work, changed files, commands, verification, blockers or remaining issues, and next steps.
-- `docs/codex/STATUS.md` with the current objective, current state, active work, synchronization state, and environment reuse status.
-- `version/工作进度.md` with a dated session entry (append, never overwrite previous entries).
-- The final user reply must mention current Git status, whether the worktree is clean, and whether a commit is recommended before switching tools or devices.
-- After each completed execution step, remind the user to consider a git commit before proceeding to the next step.
+- Update the current snapshot near the top when goals, state, risks, TODOs, decisions, verification, or Git sync changes.
+- Append every substantial session entry at the end of the `Session Log` section.
+- Use `YYYY-MM-DD HH:MM` timestamps so same-day operations remain ordered.
+- Record changed files, commands run, verification results, TODO changes, decisions, blockers, remaining issues, next steps, and Git status.
+- Record environment notes inside `STATUS.md` only when a changed device, path, interpreter, virtual environment, dependency, command, or local setup issue matters.
 
-Update conditionally:
+Do not create or rely on separate default `HANDOFF.md`, `TODO.md`, `DECISIONS.md`, `ENVIRONMENT.md`, `PROGRESS.zh-CN.md`, `PYTHON.md`, or `PAPER.md` files. If old split files exist, migrate their useful information into `STATUS.md`.
 
-- `docs/codex/TODO.md` only when tasks are added, completed, cancelled, or reprioritized.
-- `docs/codex/DECISIONS.md` only when durable design, architecture, dependency, workflow, or writing-position decisions are made.
-- `docs/codex/ENVIRONMENT.md` only when Python version, virtual environment, dependency installation, system paths, run/test commands, device, or local execution environment changes.
-- `docs/codex/PAPER.md` or equivalent writing records only when chapter state, source state, research scope, or citation status changes.
-- `version/版本迭代记录.md` when the project version number changed: move the old current version to history first, then write the new version. Do not delete or overwrite historical version entries.
+## Required Closeout
+
+Before ending substantial work, the active AI agent must:
+
+1. Update `docs/codex/STATUS.md`.
+2. Append a timestamped session log entry at the end of `STATUS.md`.
+3. Append a timestamped Chinese user-facing entry at the end of `version/工作进度.md`.
+4. Update `version/版本迭代记录.md` only when the project version or release changed.
+5. Tell the user current Git status, whether the worktree is clean, and whether a commit is recommended before switching tools or devices.
+
+The status update is mandatory. If the agent cannot update `STATUS.md`, it must say why before claiming the task is complete.
+
+After each completed execution step, remind the user to consider a git commit before continuing.
 
 ## Workflow Priority
 
@@ -47,10 +54,10 @@ Use this priority order:
 2. System and developer instructions.
 3. This `AGENTS.md`.
 4. Specialized project or domain skill.
-5. Files under `docs/codex/`.
-6. General cross-device and cross-agent handoff skill defaults.
+5. `docs/codex/STATUS.md`.
+6. General HandShake skill defaults.
 
-If a specialized workflow has its own management records, use that workflow but keep `docs/codex/` updated or clearly cross-linked.
+If a specialized workflow has its own management records, use that workflow but keep `docs/codex/STATUS.md` updated or clearly cross-linked.
 
 Do not treat `version/工作进度.md` or `version/版本迭代记录.md` as authoritative project state. They are derived summaries for Chinese-speaking users.
 
@@ -66,7 +73,7 @@ Do not treat `version/工作进度.md` or `version/版本迭代记录.md` as aut
 
 For papers, teaching designs, coursework, literature reviews, curriculum-standard analysis, and similar formal writing tasks:
 
-- Read `docs/codex/PAPER.md` before writing or revising.
+- Keep writing state, source state, citation checks, unsupported claims, and next writing tasks in `docs/codex/STATUS.md`.
 - Communicate with the user in Simplified Chinese unless asked otherwise.
 - Write naturally and clearly at a graduate-student or teacher-training-student level; avoid stiff AI-style prose, excessive frameworks, repetitive phrasing, and inflated abstractions.
 - Use bullets only when they help readability. Do not break ordinary prose into unnecessary lists.

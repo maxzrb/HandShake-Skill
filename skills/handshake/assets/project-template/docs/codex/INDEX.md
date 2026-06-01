@@ -1,71 +1,73 @@
-# AI Handoff Index
+# AI Status Index
 
-This directory stores project-local state for Codex and Claude Code handoff across sessions, tools, devices, directories, and local environments.
+This directory stores the single AI-facing operational status record for Codex and Claude Code continuity.
+
+## Mandatory Status Entry
+
+Before planning, editing, running commands beyond orientation, or answering project-status questions, every AI agent must read:
+
+```text
+docs/codex/STATUS.md
+```
+
+`STATUS.md` is the only AI-facing operational source of truth. This `INDEX.md` is only a navigation file; it does not replace reading `STATUS.md`.
 
 ## New Session Reading Order
 
 1. `AGENTS.md`
 2. `CLAUDE.md` when using Claude Code
-3. `docs/codex/STATUS.md`
-4. `docs/codex/HANDOFF.md`
-5. `docs/codex/TODO.md`
-6. `docs/codex/DECISIONS.md`
-7. `docs/codex/ENVIRONMENT.md`
+3. `docs/codex/INDEX.md`
+4. `docs/codex/STATUS.md`
+5. Git state with `git pull` and `git status` when this is a Git repository
+
+Do not use separate default `HANDOFF.md`, `TODO.md`, `DECISIONS.md`, `ENVIRONMENT.md`, `PROGRESS.zh-CN.md`, `PYTHON.md`, or `PAPER.md` records. Their concerns belong in `STATUS.md`.
 
 ## Before Editing
 
-- Check `git status`.
-- Identify whether this is a new session, Codex taking over from Claude Code, Claude Code taking over from Codex, or a cross-device/cross-environment continuation.
-- Compare the current device, workspace path, Python interpreter, virtual environment, package manager, and important commands with the latest records.
-- If the device or environment is different or unknown, verify commands locally before relying on previous results.
-- Read task-specific records before touching files.
+- Read the current snapshot in `STATUS.md`.
+- Read the latest entries at the end of the `Session Log`.
+- Check active TODOs, blockers, decisions, verification, and Git sync sections.
+- If the task involves running code, changing environments, Python dependencies, local paths, or a different device, check the environment notes section and verify locally before relying on old results.
+- Check `git status` before editing.
 
-## Required Closure
+## Required Closeout
 
 At the end of substantial work, always update:
 
-- `HANDOFF.md`: what changed, files touched, commands run, verification, remaining issues, next steps.
-- `STATUS.md`: current objective, current state, active work, sync state, environment reuse.
+- `STATUS.md`: current snapshot and a new timestamped session log entry appended at the end.
+- `version/工作进度.md`: Chinese user-facing progress entry appended at the end.
+
+Update `version/版本迭代记录.md` only when the project version or release changed.
 
 The final reply should tell the user whether `git status` is clean and whether a commit is recommended before switching agents or devices.
 
-## Conditional Records
+## Old Record Migration
 
-- `TODO.md`: update only when tasks are added, completed, cancelled, reprioritized, or moved between sections.
-- `DECISIONS.md`: update only for durable design, architecture, dependency, workflow, or paper-writing stance choices.
-- `ENVIRONMENT.md`: update only when Python version, virtual environment, dependency installation, system path, run/test commands, device, or local execution environment changes.
-- `PAPER.md`: update for paper-writing projects when chapter state, source state, research scope, figures/tables, or citation status changes.
-- `PYTHON.md`: update for Python projects when setup, dependency, run, test, lint, type-check, entry point, or data requirements change.
-- `PROGRESS.zh-CN.md`: update when a Chinese quick progress summary would help the next human or AI reader.
-- `version/工作进度.md` and `version/版本迭代记录.md`: update only when user-facing progress, milestone, or release information changes.
+If this project contains old HandShake files such as `HANDOFF.md`, `TODO.md`, `DECISIONS.md`, `ENVIRONMENT.md`, `PROGRESS.zh-CN.md`, `PYTHON.md`, or `PAPER.md`, treat them as migration sources only.
 
-## Task-Specific Reading
+Move useful content into `STATUS.md`:
 
-- Code task: read `STATUS.md`, `HANDOFF.md`, `TODO.md`, `DECISIONS.md`, and `ENVIRONMENT.md`; read `PYTHON.md` when Python is involved.
-- Python environment task: read `ENVIRONMENT.md` and `PYTHON.md`, then verify local interpreter and virtual environment state.
-- Paper-writing task: read `PAPER.md`, `DECISIONS.md`, and current citation/source notes before writing.
-- Cross-device continuation: read `ENVIRONMENT.md` and the device section in `HANDOFF.md` before running commands.
-- Agent switch: read `HANDOFF.md` first, then confirm whether the previous work was done by Codex, Claude Code, or a human.
+- Handoff details -> latest session log entry.
+- TODO lists -> `Active TODO`.
+- Decisions -> `Decisions`.
+- Environment and Python notes -> `Environment Notes`.
+- Paper or writing notes -> relevant snapshot sections and TODOs.
+- Chinese progress summary -> `version/工作进度.md`.
 
 ## Current State Files
 
 - [Status](STATUS.md)
-- [Handoff](HANDOFF.md)
-- [Todo](TODO.md)
-- [Decisions](DECISIONS.md)
-- [Environment](ENVIRONMENT.md)
-- [中文进度摘要](PROGRESS.zh-CN.md)
-- [Python](PYTHON.md)
-- [Paper](PAPER.md)
+- [中文工作进度](../../version/工作进度.md)
+- [中文版本迭代记录](../../version/版本迭代记录.md)
 
 ## Can Work Continue?
 
 Work can continue when:
 
-- The latest `STATUS.md` and `HANDOFF.md` are understandable.
-- Git state is known.
-- Current environment assumptions are either verified or marked for recheck.
-- Active tasks and blockers are visible in `TODO.md` or `HANDOFF.md`.
-- The next concrete action is clear.
+- `STATUS.md` has a clear current snapshot.
+- The latest `Session Log` entry is understandable.
+- Active TODOs, blockers, verification state, and next action are visible.
+- Git state is known, or the absence of Git is explicitly noted.
+- Any required environment recheck is stated.
 
-If any of these are missing, inspect the repository directly, update the records you can verify, and tell the user what remains uncertain.
+If any of these are missing, inspect the repository directly, update `STATUS.md` with what can be verified, and tell the user what remains uncertain.
