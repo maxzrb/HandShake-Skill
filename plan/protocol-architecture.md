@@ -50,7 +50,7 @@ Examples:
 - Python development workflow.
 - Academic writing workflow.
 - Existing project-specific management skill.
-- Existing research-writing skill.
+- Existing domain-specific skill.
 
 Purpose:
 

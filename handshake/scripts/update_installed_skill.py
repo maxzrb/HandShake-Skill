@@ -134,9 +134,9 @@ def source_option_count(args: argparse.Namespace) -> int:
 def locate_skill_source(root: Path) -> Path:
     root = root.expanduser().resolve()
     candidates = [
-        root,
         root / "handshake",
         root / "skills" / "handshake",
+        root,
     ]
 
     if root.is_dir():
@@ -150,11 +150,25 @@ def locate_skill_source(root: Path) -> Path:
                     ]
                 )
 
+    seen: set[Path] = set()
     for candidate in candidates:
-        if (candidate / "SKILL.md").is_file() and (candidate / "scripts").is_dir():
+        candidate = candidate.resolve()
+        if candidate in seen:
+            continue
+        seen.add(candidate)
+        if is_skill_package(candidate):
             return candidate.resolve()
 
     raise FileNotFoundError(f"could not locate HandShake skill package under: {root}")
+
+
+def is_skill_package(candidate: Path) -> bool:
+    return (
+        (candidate / "SKILL.md").is_file()
+        and (candidate / "scripts" / "init_project_handoff.py").is_file()
+        and (candidate / "scripts" / "check_project_handoff.py").is_file()
+        and (candidate / "assets" / "project-template").is_dir()
+    )
 
 
 def prepare_repo_source(args: argparse.Namespace) -> Path:
@@ -211,10 +225,8 @@ def prepare_source(args: argparse.Namespace) -> tuple[Path, tempfile.TemporaryDi
 def validate_source(skill_source: Path, *, dry_run: bool = False) -> None:
     if dry_run and not skill_source.exists():
         return
-    if not (skill_source / "SKILL.md").is_file():
-        raise FileNotFoundError(f"skill source missing SKILL.md: {skill_source}")
-    if not (skill_source / "scripts").is_dir():
-        raise FileNotFoundError(f"skill source missing scripts directory: {skill_source}")
+    if not is_skill_package(skill_source):
+        raise FileNotFoundError(f"source is not a complete HandShake skill package: {skill_source}")
 
 
 def validate_target(target: Path, skill_source: Path) -> None:

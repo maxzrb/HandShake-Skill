@@ -1,59 +1,35 @@
 # HandShake-Skill
 
-HandShake-Skill 用来帮助 Codex、Claude Code 等 AI 编程工具在同一个项目中连续工作。它会在项目目录里建立一组轻量记录文件，让项目目标、当前进度、待办事项、验证结果和下一步保持可追踪。
+当前版本：`2.1.0-beta`
 
-当前版本：`2.0.0`
+HandShake-Skill 用来让 Codex、Claude Code、Cursor、Gemini CLI、OpenCode 等 AI 编程工具在同一个项目里连续工作。它的核心很简单：在目标项目里维护一份面向 AI 的 `docs/codex/STATUS.md`，再用中文 `version/` 记录给用户看得懂的进度和版本变化。
 
-## 你可以用它做什么
+## 多平台入口
 
-- 在 Codex 和 Claude Code 之间切换同一个项目。
-- 在多台电脑上继续同一个项目。
-- 给长期项目保留清晰的当前状态、命令记录和验证结果。
-- 把写作、课程材料、代码项目的进度保存在项目目录中。
-- 用一份统一的状态文件替代分散的交接记录。
+| 平台 | 入口 |
+| --- | --- |
+| Codex | `handshake/` 根层镜像，用于 GitHub skill 安装 |
+| Claude Code | `.claude-plugin/plugin.json` 或 standalone skill |
+| Cursor | `.cursor-plugin/plugin.json` |
+| Gemini CLI | `GEMINI.md` |
+| OpenCode | `.opencode/INSTALL.md` |
+| 通用 agent | `AGENTS.md` 与根层兼容 `SKILL.md` |
 
-## 工作方式
-
-HandShake 2.x 默认只维护一个面向 AI 工具的状态文件：
-
-```text
-docs/codex/STATUS.md
-```
-
-这个文件包含：
-
-- 当前目标和项目状态
-- 活跃待办
-- 已完成事项
-- 决策记录
-- 风险和阻塞
-- 环境说明
-- 运行命令和验证结果
-- Git 同步状态
-- 按时间戳追加的会话日志
-
-面向中文用户的记录放在：
+本仓库的权威 skill 包是 `skills/handshake/`，`handshake/` 是给 Codex 直接安装用的镜像。开发时先改 `skills/handshake/`，再运行：
 
 ```text
-version/工作进度.md
-version/版本迭代记录.md
+python scripts\sync_root_mirror.py
 ```
-
-`工作进度.md` 用来快速查看项目推进情况。`版本迭代记录.md` 只在版本或发布状态变化时更新。
 
 ## 安装到 Codex
-
-从 GitHub 安装：
 
 ```text
 python C:\Users\MAX2EB\.codex\skills\.system\skill-installer\scripts\install-skill-from-github.py --repo maxzrb/HandShake-Skill --path handshake
 ```
 
-安装后，Codex 会使用仓库根目录的 `handshake/` 包。
+## Claude Code
 
-## 安装到 Claude Code
-
-在本仓库中测试 Claude Code 插件：
+在本仓库中测试插件：
 
 ```text
 claude --plugin-dir .
@@ -65,7 +41,7 @@ claude --plugin-dir .
 /handshake-skill:handshake
 ```
 
-安装为 Claude Code standalone skill：
+安装为 standalone skill：
 
 ```text
 python skills\handshake\scripts\install_claude_skill.py --dry-run
@@ -78,54 +54,31 @@ python skills\handshake\scripts\install_claude_skill.py --force
 %USERPROFILE%\.claude\skills\handshake
 ```
 
-## 更新 HandShake
+## Cursor / Gemini / OpenCode
 
-官方仓库：
-
-```text
-https://github.com/maxzrb/HandShake-Skill
-```
-
-从官方仓库更新本机 Codex 和 Claude Code 安装：
+Cursor plugin 元数据位于：
 
 ```text
-python skills\handshake\scripts\update_installed_skill.py --latest --all --force
+.cursor-plugin\plugin.json
 ```
 
-只更新 Codex：
+Gemini CLI 从 `GEMINI.md` 路由到：
 
 ```text
-python skills\handshake\scripts\update_installed_skill.py --codex --force
+skills/handshake/SKILL.md
 ```
 
-只更新 Claude Code：
+OpenCode 安装说明位于：
 
 ```text
-python skills\handshake\scripts\update_installed_skill.py --claude --force
+.opencode\INSTALL.md
 ```
 
-从下载的 GitHub zip 包更新：
+Claude/Cursor 插件共享 `hooks/session_start.py`。session-start hook 只注入轻量路由说明，真正执行时仍应读取当前 `SKILL.md`、项目 `AGENTS.md` 和目标项目的 `docs/codex/STATUS.md`。
 
-```text
-python skills\handshake\scripts\update_installed_skill.py --zip C:\Downloads\HandShake-Skill-main.zip --all --force
-```
+## 初始化目标项目
 
-从已解压目录或本地仓库更新：
-
-```text
-python skills\handshake\scripts\update_installed_skill.py --source C:\Downloads\HandShake-Skill-main --all --force
-python skills\handshake\scripts\update_installed_skill.py --source C:\Downloads\HandShake-Skill-main\handshake --all --force
-```
-
-覆盖安装前可以先预览：
-
-```text
-python skills\handshake\scripts\update_installed_skill.py --latest --all --dry-run
-```
-
-## 初始化一个项目
-
-预览将要创建的文件：
+预览将创建的文件：
 
 ```text
 python skills\handshake\scripts\init_project_handoff.py F:\my-project --dry-run
@@ -135,12 +88,6 @@ python skills\handshake\scripts\init_project_handoff.py F:\my-project --dry-run
 
 ```text
 python skills\handshake\scripts\init_project_handoff.py F:\my-project
-```
-
-覆盖已有模板文件：
-
-```text
-python skills\handshake\scripts\init_project_handoff.py F:\my-project --force
 ```
 
 初始化后，目标项目会包含：
@@ -154,99 +101,62 @@ version/工作进度.md
 version/版本迭代记录.md
 ```
 
-已有同名文件时，初始化脚本默认跳过；只有使用 `--force` 时才覆盖。
+`docs/codex/STATUS.md` 是唯一面向 AI 的项目状态来源。`version/工作进度.md` 是中文用户进度记录，`version/版本迭代记录.md` 只在版本或发布状态变化时更新。
 
-## 检查项目记录
+## 检查目标项目
 
 ```text
 python skills\handshake\scripts\check_project_handoff.py F:\my-project
 ```
 
-检查内容包括：
+检查内容包括必需文件、`STATUS.md` 结构、时间戳日志和 Git 状态。
 
-- 必需文件是否存在
-- `STATUS.md` 是否包含核心章节
-- `STATUS.md` 和 `version/工作进度.md` 是否具备时间戳日志结构
-- Git 状态是否可读取
+## 更新已安装的 HandShake
 
-## 文件说明
-
-### `AGENTS.md`
-
-项目内的通用入口文件。Codex 等工具会从这里了解项目记录位置和基本工作方式。
-
-### `CLAUDE.md`
-
-Claude Code 的项目入口文件。它会导入 `AGENTS.md`，避免同一套规则重复维护。
-
-### `docs/codex/INDEX.md`
-
-状态文件索引。它说明项目的状态入口是 `docs/codex/STATUS.md`。
-
-### `docs/codex/STATUS.md`
-
-项目状态主文件。日常的进度、待办、决策、命令、验证和下一步都集中在这里。
-
-### `version/工作进度.md`
-
-中文进度记录。适合用户快速查看项目做到哪里。
-
-### `version/版本迭代记录.md`
-
-中文版本记录。适合记录版本变化、发布结果和迁移说明。
-
-## 从旧版记录迁移
-
-旧版 HandShake 可能包含多个分散文件，例如：
+从官方仓库更新本机 Codex 和 Claude Code 安装：
 
 ```text
-HANDOFF.md
-TODO.md
-DECISIONS.md
-ENVIRONMENT.md
-PROGRESS.zh-CN.md
-PYTHON.md
-PAPER.md
+python skills\handshake\scripts\update_installed_skill.py --latest --all --force
 ```
 
-迁移到 2.x 时，可以把这些内容合并进 `docs/codex/STATUS.md`：
+从当前本地仓库预览或安装：
 
-- `HANDOFF.md` 合并到会话日志
-- `TODO.md` 合并到活跃待办
-- `DECISIONS.md` 合并到决策记录
-- `ENVIRONMENT.md` 和 `PYTHON.md` 合并到环境说明
-- `PAPER.md` 合并到写作状态和待办
-- `PROGRESS.zh-CN.md` 合并到 `version/工作进度.md`
+```text
+python skills\handshake\scripts\update_installed_skill.py --source . --all --dry-run
+python skills\handshake\scripts\update_installed_skill.py --source . --all --force
+```
 
-迁移后，默认只需要维护 `STATUS.md`、`工作进度.md` 和 `版本迭代记录.md`。
+从下载的 GitHub zip 包更新：
 
-## 常见用法
+```text
+python skills\handshake\scripts\update_installed_skill.py --zip C:\Downloads\HandShake-Skill-main.zip --all --force
+```
 
-### 新项目
-
-1. 安装 HandShake。
-2. 在目标项目中运行初始化脚本。
-3. 检查生成的 `docs/codex/STATUS.md`。
-4. 正常使用 Codex 或 Claude Code 继续项目。
-
-### 多台电脑
-
-1. 每台电脑安装或更新 HandShake。
-2. 项目文件通过 Git 或同步盘保持一致。
-3. 切换电脑后先查看 `docs/codex/STATUS.md`。
-
-### 离线或无法访问 GitHub
-
-1. 在能联网的电脑下载 GitHub zip 包。
-2. 把 zip 包复制到目标电脑。
-3. 使用 `update_installed_skill.py --zip ...` 更新本机安装。
+安装脚本会识别仓库根目录、`handshake/` 或 `skills/handshake/`，并验证目标确实是完整 HandShake skill 包，避免把根层兼容 `SKILL.md` 当成可安装包。
 
 ## 仓库结构
 
 ```text
-handshake/          # 根目录 skill 包，适合 Codex 直接安装
-skills/handshake/   # 开发和 Claude Code plugin 使用的主副本
+skills/handshake/   # 权威开发包
+handshake/          # Codex GitHub 安装镜像
+.claude-plugin/     # Claude Code plugin manifest
+.cursor-plugin/     # Cursor plugin manifest
+hooks/              # plugin session-start hook
+.codex/             # Codex 安装说明
+.opencode/          # OpenCode 安装说明
 scripts/            # 仓库维护脚本
 ```
 
-普通使用通常只需要安装 skill 并初始化目标项目，不需要把整个 HandShake-Skill 仓库复制进业务项目。
+## 发布前验证
+
+```text
+python scripts\sync_root_mirror.py --check
+python C:\Users\MAX2EB\.codex\skills\.system\skill-creator\scripts\quick_validate.py skills\handshake
+python C:\Users\MAX2EB\.codex\skills\.system\skill-creator\scripts\quick_validate.py handshake
+python -m json.tool .claude-plugin\plugin.json
+python -m json.tool .cursor-plugin\plugin.json
+python -m json.tool hooks\hooks.json
+python -m json.tool hooks\hooks-cursor.json
+python -m py_compile skills\handshake\scripts\init_project_handoff.py skills\handshake\scripts\check_project_handoff.py skills\handshake\scripts\install_claude_skill.py skills\handshake\scripts\update_installed_skill.py hooks\session_start.py
+git diff --check
+```

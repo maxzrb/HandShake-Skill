@@ -17,5 +17,5 @@
     "agent-skills"
   ],
   "skills": "./skills/",
-  "hooks": "./hooks/hooks.json"
+  "hooks": "./hooks/hooks-cursor.json"
 }

@@ -2,7 +2,30 @@
 
 ## Current Release
 
-Version: 2.0.0
+Version: 2.1.0-beta
+Date: 2026-06-08
+Status: multi-platform adaptation beta
+
+Changes:
+
+- Added repository-level multi-agent entry files: `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, and root compatibility `SKILL.md`.
+- Added `.cursor-plugin/plugin.json`, `.codex/INSTALL.md`, `.opencode/INSTALL.md`, and shared plugin hook metadata under `hooks/`.
+- Expanded `.claude-plugin/plugin.json` with `displayName`, `homepage`, `keywords`, `skills`, and `hooks`.
+- Added a lightweight Python session-start hook that routes plugin-capable agents to the authoritative HandShake skill and project status files.
+- Updated README files and Codex UI metadata to describe Codex, Claude Code, Cursor, Gemini CLI, OpenCode, and generic agent usage.
+- Hardened `update_installed_skill.py` so a root compatibility `SKILL.md` is not mistaken for an installable skill package.
+
+Compatibility:
+
+- Backward compatible with `2.0.0`.
+- Existing target-project records remain unchanged.
+- Installers should use `handshake/` or `skills/handshake/`, not the repository root compatibility `SKILL.md`.
+- Suggested Git tag after commit: `v2.1.0-beta`.
+
+## Previous Releases
+
+### 2.0.0
+
 Date: 2026-06-01
 Status: single-status workflow release
 
@@ -25,8 +48,6 @@ Compatibility:
 - Breaking change from `1.8.0`.
 - Old HandShake projects should migrate useful content from split records into `docs/codex/STATUS.md`.
 - Old split records may be archived or deleted by the project owner after migration.
-
-## Previous Releases
 
 ### 1.8.0
 

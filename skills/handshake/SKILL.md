@@ -1,11 +1,11 @@
 ---
 name: handshake
-description: Use HandShake for non-trivial repository work that needs project continuity, startup orientation, status logging, closeout records, AI agent coordination, or updating/upgrading the HandShake skill itself. Trigger even when the user does not name HandShake if they ask to start, continue, resume, pick up, take over, inspect status, update records, finish, close out, update HandShake skill, upgrade installed skill, switch between Codex and Claude Code, change devices, change directories, change virtual environments, or work in a repo containing AGENTS.md, CLAUDE.md, docs/codex/STATUS.md, version/工作进度.md, or version/版本迭代记录.md. Also trigger on Chinese requests such as 继续, 接手, 上次, 项目进度, 交接, 换电脑, 换环境, 收尾, 记录进度, 更新状态, 更新 HandShake skill, 更新 handshake skill, 升级 HandShake, Codex 接手 Claude, or Claude 接手 Codex. Maintains one repository-local AI status log plus Chinese user-facing progress and version records.
+description: Use HandShake for non-trivial repository work that needs project continuity, startup orientation, status logging, closeout records, AI agent coordination, multi-platform skill/plugin adaptation, or updating/upgrading the HandShake skill itself. Trigger even when the user does not name HandShake if they ask to start, continue, resume, pick up, take over, inspect status, update records, finish, close out, update HandShake skill, upgrade installed skill, switch between Codex, Claude Code, Cursor, Gemini CLI, OpenCode, or other coding agents, change devices, change directories, change virtual environments, or work in a repo containing AGENTS.md, CLAUDE.md, GEMINI.md, docs/codex/STATUS.md, version/工作进度.md, or version/版本迭代记录.md. Also trigger on Chinese requests such as 继续, 接手, 上次, 项目进度, 交接, 换电脑, 换环境, 收尾, 记录进度, 更新状态, 更新 HandShake skill, 更新 handshake skill, 升级 HandShake, Codex 接手 Claude, or Claude 接手 Codex. Maintains one repository-local AI status log plus Chinese user-facing progress and version records.
 ---
 
 # HandShake
 
-Version: 2.0.0
+Version: 2.1.0-beta
 
 Use this skill to make AI coding agent sessions portable across tools, devices, and local environments without forcing a heavy multi-file handoff system. HandShake keeps the AI-facing operational state in one required file, `docs/codex/STATUS.md`, and keeps Chinese user-facing summaries under `version/`.
 
@@ -13,7 +13,7 @@ Use this skill to make AI coding agent sessions portable across tools, devices, 
 
 Use HandShake proactively. Do not wait for the user to explicitly say "use HandShake" when a request is about continuing repository work, checking project status, taking over prior work, switching tools or machines, changing local environments, making a non-trivial edit in a repository with HandShake records, or closing out a session.
 
-The frontmatter `description` is the main auto-trigger surface for Codex and Claude Code before this file is loaded. Keep it broad, compact, and rich in natural trigger phrases when updating this skill.
+The frontmatter `description` is the main auto-trigger surface for Codex, Claude Code, Cursor, Gemini CLI, OpenCode, and similar agents before this file is loaded. Keep it broad, compact, and rich in natural trigger phrases when updating this skill.
 
 ## Required Record Model
 
@@ -110,7 +110,7 @@ This skill is self-contained and can be installed into a global Codex skills dir
 - `assets/project-template/`
 - `references/`
 
-For Claude Code plugin use, keep the repository root `.claude-plugin/plugin.json` with the repository-level `skills/handshake/` directory.
+For Claude Code and Cursor plugin use, keep the repository root plugin manifests with the repository-level `skills/handshake/` directory and `hooks/` directory.
 
 After global installation, use this skill in any project that needs cross-session continuity, then run the initialization script against the target project when repository-local records are missing.
 
@@ -177,17 +177,36 @@ The update script validates that the source contains a HandShake skill package b
 This repository intentionally exposes the same skill package in two locations:
 
 1. `handshake/`: root-level mirror for Codex GitHub installers or agents that check the repository root and `<repo>/handshake/` first.
-2. `skills/handshake/`: Claude Code plugin skill path and the original repository package path.
+2. `skills/handshake/`: authoritative development package and plugin skill path for Claude Code, Cursor, and similar runtimes.
 
 Keep these two directories synchronized for every release. If an installer reports that the skill is not in the repository root or `handshake/`, treat that as a packaging regression and restore the root-level `handshake/` mirror before release.
 
-## Claude Code Use
+The repository root may also contain a compatibility `SKILL.md` for platforms that inspect the root first. Do not install that wrapper as the package source; use `handshake/` or `skills/handshake/`.
 
-HandShake also works as a Claude Code skill because it uses the Agent Skills `SKILL.md` layout. Claude Code can use it in three ways:
+## Multi-Platform Use
+
+HandShake uses the Agent Skills `SKILL.md` layout and exposes platform entry files:
+
+- Codex: install the root-level `handshake/` package from GitHub.
+- Claude Code: use standalone `~/.claude/skills/handshake/` or load the repository with `.claude-plugin/plugin.json`.
+- Cursor: load the repository with `.cursor-plugin/plugin.json` when plugin support is available.
+- Gemini CLI: read `GEMINI.md`, which routes to `skills/handshake/SKILL.md`.
+- OpenCode: read `.opencode/INSTALL.md` and route to `skills/handshake/SKILL.md`.
+
+Claude Code can use HandShake in three ways:
 
 1. Standalone personal skill: copy the full `skills/handshake/` directory to `~/.claude/skills/handshake/`, then invoke it with `/handshake`.
 2. Standalone project skill: copy the full `skills/handshake/` directory to `<project>/.claude/skills/handshake/`, then invoke it with `/handshake` inside that project.
 3. Plugin during development: from this repository root, start Claude Code with `claude --plugin-dir .`, then invoke it with `/handshake-skill:handshake`.
+
+The plugin manifests point to:
+
+```text
+skills: ./skills/
+hooks: ./hooks/hooks.json or ./hooks/hooks-cursor.json
+```
+
+The session-start hook calls `hooks/session_start.py` and injects only lightweight routing context. Agents should still read the current `SKILL.md`, `AGENTS.md`, and project-local `docs/codex/STATUS.md` when the workflow requires them.
 
 The helper installer can create a standalone Claude Code skill:
 
